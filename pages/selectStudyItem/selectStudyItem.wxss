@@ -1,0 +1,38 @@
+/* pages/selectStudyItem/selectStudyItem.wxss */
+.selectStudy {
+  padding: 0 30rpx;
+}
+
+.selectStudy-title {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 32rpx;
+}
+
+.selectStudy-futitle {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #666666;
+  margin-bottom: 25rpx;
+}
+
+/*学习列表*/
+.studyItem {
+  padding: 0 12rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.studyItem-list {
+  width: 294rpx;
+  height: 176rpx;
+  background: #FFFFFF;
+  border-radius: 6rpx;
+  margin-bottom: 44rpx;
+}
+
+.pitchOn{
+  background: #DBE9FF;
+}

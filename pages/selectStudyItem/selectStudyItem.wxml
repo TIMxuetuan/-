@@ -1,0 +1,11 @@
+<!--pages/selectStudyItem/selectStudyItem.wxml-->
+<view class="selectStudy">
+  <view class="selectStudy-title">选择学习项目</view>
+  <view class="selectStudy-futitle">请放心选择，以后还可以更改哦！</view>
+  <view class="studyItem">
+    <view class="studyItem-list pitchOn"></view>
+    <view class="studyItem-list"></view>
+    <view class="studyItem-list"></view>
+    <view class="studyItem-list"></view>
+  </view>
+</view>
