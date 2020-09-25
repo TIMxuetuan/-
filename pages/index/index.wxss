@@ -1,21 +1,189 @@
-/**index.wxss**/
-.userinfo {
+/* pages/index/index.wxss */
+.indexContainer {
+  padding: 0 30rpx;
+}
+
+.container-title {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 40rpx;
+}
+
+.container-text {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #252525;
+  margin-right: 10rpx;
+}
+
+.sanjiao {
+  width: 0;
+  height: 0;
+  border-bottom: 12rpx solid #999999;
+  border-left: 12rpx solid transparent;
+  margin-bottom: 8rpx;
+}
+
+/*三个模块 错题本、做题记录、我的收藏*/
+.threeModul {
+  height: 270rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrongTopic {
+  width: 400rpx;
+  height: 100%;
+  position: relative;
+}
+
+.wrongTopic-backUrl {
+  width: 400rpx;
+  height: 100%;
+  position: absolute;
+}
+
+.wrongTopic-content {
+  width: 400rpx;
+  height: 100%;
+  padding: 42rpx 36rpx 0;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.wrongTopic-content-title {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #7B756A;
+  margin-bottom: 18rpx;
+}
+
+.wrongTopic-content-nei {
+  font-size: 20rpx;
+  font-weight: 400;
+  color: #A39784;
+}
+
+.goExercise {
+  width: 150rpx !important;
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  background-color: #FF671D;
+  border-radius: 4rpx;
+  padding: 0;
+  margin: 66rpx 0 0 !important;
+  align-items: flex-start;
+}
+
+.threeModul-right {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.threeModul-right-top {
+  position: relative;
+  width: 282rpx;
+  height: 130rpx;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.right-top-backUrl {
+  width: 282rpx;
+  height: 100%;
+  position: absolute;
 }
 
-.usermotto {
-  margin-top: 200px;
+.right-top-text {
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #7B756A;
+  position: relative;
+  z-index: 2;
+  padding: 22rpx 0 0 18rpx;
+}
+
+.subjectListSlide {
+  margin-top: 38rpx;
+}
+
+/*科目列表切换*/
+.van-tab {
+  flex-basis: auto !important;
+  padding: 0 20rpx !important;
+}
+
+.van-tabs__line {
+  width: 20rpx !important;
+  height: 6rpx !important;
+  left: 26rpx !important;
+}
+
+.sixSjlxModul {
+  /* display: flex;
+  justify-content: space-between; */
+  margin-top: 32rpx;
+}
+
+/*试题模块*/
+.testModule {
+  margin-top: 30rpx;
+}
+
+.testModule-item {
+  width: auto;
+  height: 140rpx;
+  margin-bottom: 30rpx;
+  padding: 36rpx 18rpx 26rpx 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #F6F6F6;
+  border-radius: 10rpx;
+}
+
+.testItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testItem-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+  line-height: 42rpx;
+}
+
+.testItem-number {
+  display: flex;
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #656565;
+  line-height: 13rpx;
+}
+
+.testItemBtn-btn{
+  height: 56rpx;
+  display: flex;
+}
+
+.testItemBtn-btn .van-button{
+  width: 136rpx;
+  height: 56rpx;
+  padding: 0;
+  font-size: 22rpx;
+  font-weight: 500;
+  color: #FF7549;
+  line-height: 56rpx;
+  background-color: #DBDBDB;
+  border: 1px solid #DBDBDB;
 }

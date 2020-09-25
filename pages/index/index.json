@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-tab": "/vant/tab/index",
+    "van-tabs": "/vant/tabs/index",
+    "van-tabbar": "/vant/tabbar/index",
+    "van-tabbar-item": "/vant/tabbar-item/index",
+    "van-button": "/vant/button/index"
+  }
 }

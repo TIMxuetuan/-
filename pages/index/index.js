@@ -1,81 +1,202 @@
-//index.js
-//获取应用实例
-const app = getApp()
+// pages/index/index.js
 const Service = require("../../Services/services")
-const MD5 = require("../../utils/md5.js")
-
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    AllXmId: "",
+    AllXmName: "",
+    page: 1,
+    kmlbList: [], //科目列表
+    sjlxList: [], //试卷类型
+    active: 0,
+    sixActive: "全部",
+    sortdtList: [], //试卷列表
+    cacheKey:"", //唯一标识
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(options)
+    var that = this;
+    wx.getStorage({
+      key: 'AllXmItem',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          AllXmId: res.data.id,
+          AllXmName: res.data.lb,
+        })
+        that.getkmlbList();
+        that.getSortdtList();
+      }
+    });
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          cacheKey:res.data
         })
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          console.log(res)
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    console.log(app.globalData.code)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
     })
+  },
+
+  //返回项目列表页，并传入id值
+  goToSelectStudy() {
+    console.log(this.data.AllXmId)
+    wx.redirectTo({
+      url: '/pages/selectStudyItem/selectStudyItem?id=' + this.data.AllXmId
+    })
+  },
+
+  //获得首页科目列表
+  getkmlbList() {
+    console.log("this.data.AllXmId", this.data.AllXmId)
     let dataLists = {
-      code:app.globalData.code,
-      encryptedData:e.detail.encryptedData,
-      iv:e.detail.iv,
+      xmlb_id: this.data.AllXmId
     }
     let jiamiData = {
-      code:app.globalData.code,
-      encryptedData:e.detail.encryptedData,
-      iv:e.detail.iv,
+      xmlb_id: this.data.AllXmId
     }
-    Service.getUserInfoLogin(dataLists, jiamiData).then(res=>{
+    Service.getkmlb(dataLists, jiamiData).then(res => {
       console.log(res)
-      if(res.event == 100){
-        wx.setStorage({
-          key:"cache_key",
-          data:res.data.cache_key
+      if (res.event == 100) {
+        this.setData({
+          kmlbList: res.list,
+          sjlxList: res.sjlx
         })
-        // wx.switchTab({
-        //   url: '/pages/index/index'
-        // })
-        // Toast[res.Flag?'success':'fail'](res.Content);
       }
     })
+  },
+
+  //tabs切换
+  onChangeSubject(event) {
+    console.log(event.detail)
+    wx.showToast({
+      title: `点击标签 ${event.detail.name}`,
+      icon: 'none',
+    });
+    this.setData({
+      active: event.detail.name
+    })
+    this.getSortdtList();
+  },
+
+  //六个模块选择
+  onChangeSjlx(event) {
+    console.log(event)
+    wx.showToast({
+      title: `点击标签 ${event.detail + 1}`,
+      icon: 'none',
+    });
+    this.setData({
+      sixActive: event.detail
+    })
+    this.getSortdtList();
+  },
+
+  //获得试卷列表数据
+  getSortdtList() {
+    console.log(this.data.active)
+    let dataLists = {
+      xmlb_id: this.data.AllXmId,
+      cache_key: "",
+      sj_lx: this.data.sixActive,
+      kmlb: this.data.active,
+      page: this.data.page
+    }
+    let jiamiData = {
+      xmlb_id: this.data.AllXmId,
+      cache_key: "",
+      sj_lx: this.data.sixActive,
+      kmlb: this.data.active,
+      page: this.data.page
+    }
+    Service.sortdt(dataLists, jiamiData).then(res => {
+      console.log(res)
+      if (res.event == 100) {
+        this.setData({
+          sortdtList: res.list
+        })
+      }
+    })
+  },
+
+  //去练习页面--进入答题
+  goToExercise(e){
+    wx.navigateTo({
+      url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id,
+    })
+    console.log(e.currentTarget.dataset.item)
+    // let dataLists = {
+    //   cache_key: this.data.cacheKey,
+    //   shijuan_id: e.currentTarget.dataset.item.id,
+    //   type:1
+    // }
+    // let jiamiData = {
+    //   cache_key: this.data.cacheKey,
+    //   shijuan_id: e.currentTarget.dataset.item.id,
+    //   type:1
+    // }
+    // Service.lxmsdt(dataLists, jiamiData).then(res => {
+    //   console.log(res)
+    //   if (res.event == 100) {
+    //     this.setData({
+    //     })
+    //   }
+    // })
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 })

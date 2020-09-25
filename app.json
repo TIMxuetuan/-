@@ -1,8 +1,10 @@
 {
   "pages":[
-    "pages/selectStudyItem/selectStudyItem",
+    "pages/my/my",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/selectStudyItem/selectStudyItem",
+    "pages/logs/logs",
+    "pages/answerIndex/answerIndex"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -10,6 +12,30 @@
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle":"black"
   },
-  "style": "v2",
+  "tabBar": {
+    "list": [
+      {
+        "selectedIconPath": "/images/tabbar/on_lianximoshi.png",
+        "iconPath": "/images/tabbar/lianximoshi.png",
+        "pagePath": "pages/index/index",
+        "text": "练习模式"
+      },
+      {
+        "selectedIconPath": "/images/tabbar/on_zhekaomoni.png",
+        "iconPath": "/images/tabbar/zhekaomoni.png",
+        "pagePath": "pages/index/index",
+        "text": "真题模考"
+      },
+      {
+        "selectedIconPath": "/images/tabbar/on_wo.png",
+        "iconPath": "/images/tabbar/wo.png",
+        "pagePath": "pages/index/index",
+        "text": "我的"
+      }
+    ],
+    "color": "#A1A1A1",
+    "backgroundColor": "#fff",
+    "selectedColor": "#373737"
+  },
   "sitemapLocation": "sitemap.json"
 }

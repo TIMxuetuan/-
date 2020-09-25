@@ -75,6 +75,7 @@ const getConfig = (isjson, params, jiamiData, level) => {
     //注意：登陆时用户信息需要加密，所以拼接在签名中；后续接口参数不需要加密，就不需要拼接如签名
     // 签名
     let timestamp = new Date().getTime();
+    console.log("时间戳",timestamp)
     // 获取token
     let token = wx.getStorageSync("communityToken") || "";
     // 签名串

@@ -1,13 +1,67 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<!--pages/index/index.wxml-->
+<view class="indexContainer">
+  <!--头部标题模块-->
+  <view class="container-title">
+    <view class="container-text" bindtap="goToSelectStudy">{{AllXmName}}</view>
+    <view class="sanjiao"></view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <!--错题本、做题记录、收藏模块-->
+  <view class="threeModul">
+    <view class="wrongTopic">
+      <image class="wrongTopic-backUrl" src="../../images/index/bg_cuotiben@2x.png"></image>
+      <view class="wrongTopic-content">
+        <view class="wrongTopic-content-title">错题本</view>
+        <view class="wrongTopic-content-nei">错题收集，打破错题</view>
+        <button class="goExercise">去练习</button>
+      </view>
+    </view>
+    <view class="threeModul-right">
+      <view class="threeModul-right-top">
+        <image class="right-top-backUrl" src="../../images/index/bg_jilu@2x.png"></image>
+        <view class="right-top-text">做题记录</view>
+      </view>
+      <view class="threeModul-right-top">
+        <image class="right-top-backUrl" src="../../images/index/bg_shoucang@2x.png"></image>
+        <view class="right-top-text">我的收藏</view>
+      </view>
+    </view>
+  </view>
+
+  <!--科目列表滑动-->
+  <view class="subjectListSlide">
+    <van-tabs active="{{ active }}" bind:change="onChangeSubject">
+      <van-tab wx:for="{{kmlbList}}" wx:for-index="idx" wx:for-item="item" title="{{item.lb}}" name="{{item.id}}">
+      </van-tab>
+    </van-tabs>
+
+    <!--六块内容-->
+    <view class="sixSjlxModul">
+      <view>
+        <van-tabbar active="{{ sixActive }}" bind:change="onChangeSjlx" fixed="{{false}}" active-color="#2595E4"
+          inactive-color="#999999">
+          <van-tabbar-item wx:for="{{sjlxList}}" wx:for-index="idx" wx:for-item="item" name="{{item.name}}">
+            <image slot="icon" src="{{ item.Android }}" mode="aspectFit" style="width: 30px; height: 18px;" />
+            <image slot="icon-active" src="{{ item.Android_on }}" mode="aspectFit" style="width: 30px; height: 18px;" />
+            {{item.name}}
+          </van-tabbar-item>
+        </van-tabbar>
+      </view>
+    </view>
+
+    <!--试题模块-->
+    <view class="testModule">
+      <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="idx" wx:for-item="item">
+        <view class="testItem">
+          <view class="testItem-title">{{item.sj_name}}</view>
+          <view class="testItem-number">
+            <view>总计:{{item.num}}道</view>
+            <view>满分:{{item.fz}}分</view>
+          </view>
+        </view>
+        <view class="testItemBtn">
+          <van-button class="testItemBtn-btn" round type="info" data-item="{{item}}" bindtap="goToExercise">去练习</van-button>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

@@ -1,6 +1,6 @@
 let debug = 'development'; //production生产环境  development开发环境
 let host_map = {
-  development: 'https://caigua.zhongjianedu.com/ztk.php/',
+  development: 'https://caigua.zhongjianedu.com/ztk.php',
   production: 'https://party.keji01.com',
 }
 let host = host_map[debug];

@@ -3,9 +3,13 @@
   <view class="selectStudy-title">选择学习项目</view>
   <view class="selectStudy-futitle">请放心选择，以后还可以更改哦！</view>
   <view class="studyItem">
-    <view class="studyItem-list pitchOn"></view>
-    <view class="studyItem-list"></view>
-    <view class="studyItem-list"></view>
-    <view class="studyItem-list"></view>
+    <view wx:for="{{getAllXmList}}" wx:for-index="idx" wx:for-item="item">
+      <view class="{{selectNowId === item.id ? 'pitchOn, studyItem-list' : 'pitchOff, studyItem-list'}}" data-item="{{item}}" bindtap="goToindex">
+        <view class="listImage-vessel">
+          <image class="listImage" src="{{item.icon}}"></image>
+        </view>
+        <view class="listName">{{item.lb}}</view>
+      </view>
+    </view>
   </view>
 </view>
