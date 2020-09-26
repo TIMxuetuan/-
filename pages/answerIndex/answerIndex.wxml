@@ -1,4 +1,40 @@
 <!--pages/answerIndex/answerIndex.wxml-->
-<view>
-  试卷首页
+<view class="answerIndex-content">
+  <view class="answerIndex-title">{{sjztsyLists.sj_name}}</view>
+
+  <view class="answerIndex-three">
+    <view class="threeItem">
+      <view class="threeItem-top">{{sjztsyLists.num}}<text style="font-size:30rpx;margin-left:10rpx">道</text></view>
+      <view class="threeItem-bot">总题数</view>
+    </view>
+    <view class="threeItem">
+      <view class="threeItem-top">{{sjztsyLists.fz}}<text style="font-size:30rpx;margin-left:10rpx">分</text></view>
+      <view class="threeItem-bot">总分</view>
+    </view>
+    <view class="threeItem">
+      <view class="threeItem-top">{{sjztsyLists.sc}}<text style="font-size:30rpx;margin-left:10rpx">分钟</text></view>
+      <view class="threeItem-bot">建议用时</view>
+    </view>
+  </view>
+
+  <!--单、多选-->
+  <view class="answerIndex-oneMore">
+    <view class="oneMoreItem marbottom">
+      <view>一、 单项选择题</view>
+      <view>{{sjztsyLists.danNum}}道</view>
+    </view>
+    <view class="oneMoreItem marbottom">
+      <view>二、 多项选择题</view>
+      <view>{{sjztsyLists.duoNum}}道</view>
+    </view>
+    <view class="oneMoreItem" wx:if="{{sjztsyLists.caiNum != ''}}">
+      <view>三、 材料题</view>
+      <view>{{sjztsyLists.caiNum}}道</view>
+    </view>
+  </view>
+
+  <!--开始答题按钮-->
+  <view class="startingWork">
+    <van-button class="startingWork-btn" round type="info" bindtap="goToAnswerPage">开始答题</van-button>
+  </view>
 </view>

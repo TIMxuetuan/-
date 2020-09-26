@@ -1,0 +1,17 @@
+<!--pages/start/item/item-index.wxml-->
+<scroll-view style="height:{{swiperHeight}}px" scroll-y >
+  <view class="page-item" wx:if="{{item.index != null}}">
+    <view class="count-box">
+      <text class="text-current-count" wx:if="{{item.index != null || item.index < 0}}">{{item.index + 1}}</text>
+      <text class="text-total-count" wx:if="{{item.index != null}}">/{{item.total}}</text>
+    </view>
+
+    <view class="content"> 这是第{{item.index + 1}}题</view>
+  </view>
+
+  <!--单项选择题封面-->
+  <view class="oneSelectCover" wx:if="{{item.index == -1}}">
+1
+  </view>
+
+</scroll-view>

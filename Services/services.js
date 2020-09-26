@@ -21,6 +21,11 @@ const Services = {
         return util._post(`${config.api}/TkWeChat/sortdt`,data, jiamiData, 2)
     },
 
+    //进入试卷答题首页
+    sjztsy(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/sjztsy`,data, jiamiData, 2)
+    },
+
     //进入答题
     lxmsdt(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/lxmsdt`,data, jiamiData, 2)

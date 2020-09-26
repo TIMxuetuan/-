@@ -1,10 +1,12 @@
 {
   "pages":[
+    "pages/answerIndex/answerIndex",
     "pages/my/my",
     "pages/index/index",
     "pages/selectStudyItem/selectStudyItem",
-    "pages/logs/logs",
-    "pages/answerIndex/answerIndex"
+    "pages/answerPage/answerPage",
+    "pages/answer_card/answer_card",
+    "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -23,13 +25,13 @@
       {
         "selectedIconPath": "/images/tabbar/on_zhekaomoni.png",
         "iconPath": "/images/tabbar/zhekaomoni.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/logs/logs",
         "text": "真题模考"
       },
       {
         "selectedIconPath": "/images/tabbar/on_wo.png",
         "iconPath": "/images/tabbar/wo.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/my/my",
         "text": "我的"
       }
     ],

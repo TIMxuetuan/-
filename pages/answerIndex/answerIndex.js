@@ -1,20 +1,61 @@
 // pages/answerIndex/answerIndex.js
+const Service = require("../../Services/services")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    shijuan_id:"",//试卷id
+    shijuan_id: "", //试卷id
+    cacheKey: "", //用户cacheKey
+    sjztsyLists:{}, //数据列表
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this
     console.log(options.shijuan_id);
-    this.setData({
-      shijuan_id:options.shijuan_id
+    that.setData({
+      shijuan_id: options.shijuan_id
+    })
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          cacheKey: res.data
+        })
+        that.getSjztsyList();
+      }
+    })
+  },
+
+  //获得试卷答题首页内容
+  getSjztsyList() {
+    let dataLists = {
+      cache_key: this.data.cacheKey,
+      shijuan_id: this.data.shijuan_id
+    }
+    let jiamiData = {
+      cache_key: this.data.cacheKey,
+      shijuan_id: this.data.shijuan_id
+    }
+    Service.sjztsy(dataLists, jiamiData).then(res => {
+      console.log(res)
+      if (res.event == 100) {
+        this.setData({
+          sjztsyLists:res.list
+        })
+      }
+    })
+  },
+
+  //跳转答题页面内容
+  goToAnswerPage(){
+    wx.redirectTo({
+      url: '/pages/answerPage/answerPage?shijuan_id=' + this.data.sjztsyLists.id,
     })
   },
 
