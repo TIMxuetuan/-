@@ -13,6 +13,7 @@ Page({
    */
   onClickCardItem: function (e) {
     let pages = getCurrentPages();
+    console.log(pages.length)
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
       current: e.currentTarget.dataset.index

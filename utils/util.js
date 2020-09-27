@@ -37,11 +37,11 @@ let ajax = function (obj) {
 
     if (typeof res.data == 'string' && res.data.indexOf('Warning') > 0) {
       if (config.debug) {
-        wx.showToast({
-          title: res.data,
-          icon: 'none',
-          duration: 2000
-        });
+        // wx.showToast({
+        //   title: res.data,
+        //   icon: 'none',
+        //   duration: 2000
+        // });
       }
     }
   };
@@ -171,11 +171,11 @@ let _get = function (url, obj, message='') {
 }
 
 let _post = function (url, params,jiamiData,level, message='') {
-  wx.showNavigationBarLoading();
+  // wx.showNavigationBarLoading();
   if (!message && typeof message === "string"){
-    wx.showLoading({
-      title: message,
-    })
+    // wx.showLoading({
+    //   title: message,
+    // })
   }
   // let dataParams = getConfig(params, jiamiData)
   let dataParams = getConfig("false", params, jiamiData, level)

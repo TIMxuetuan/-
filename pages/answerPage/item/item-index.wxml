@@ -1,17 +1,40 @@
 <!--pages/start/item/item-index.wxml-->
-<scroll-view style="height:{{swiperHeight}}px" scroll-y >
-  <view class="page-item" wx:if="{{item.index != null}}">
+<!-- <scroll-view style="height:{{swiperHeight}}px" scroll-y >
+  {{lxmsdtList.ztnum}}
+  <view class="page-item" wx:if="{{item != null}}">
     <view class="count-box">
-      <text class="text-current-count" wx:if="{{item.index != null || item.index < 0}}">{{item.index + 1}}</text>
-      <text class="text-total-count" wx:if="{{item.index != null}}">/{{item.total}}</text>
+      <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+      <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
     </view>
-
-    <view class="content"> 这是第{{item.index + 1}}题</view>
+    <view class="content"> {{item.nr}}</view>
   </view>
+</scroll-view> -->
 
-  <!--单项选择题封面-->
-  <view class="oneSelectCover" wx:if="{{item.index == -1}}">
-1
+<!--答题内容-->
+<wxs module="filter" src="../../../utils/filter.wxs"></wxs>
+
+<scroll-view style="height:{{swiperHeight}}px" scroll-y>
+  <view class="page-item" wx:if="{{item != null}}">
+    <view class="count-box">
+      <view class="count-box-title">
+        <text>单项选择</text>
+      </view>
+      <view>
+        <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+        <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
+      </view>
+    </view>
+    <!--内容题和选项-->
+    <view class="content">
+      <view class="contentFath">
+        <view>{{item.nr}}</view>
+        <view class="contentFath-select">
+          <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem">
+            <view class="selectItem-left">{{filter.filtrationAbcd(idx)}}</view>
+            <view class="selectItem-right">{{stxxItem}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
-
 </scroll-view>

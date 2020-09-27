@@ -1,18 +1,93 @@
-<swiper-limited-load 
+<!-- <item-view item="{{item}}" index="{{index}}" lxmsdtList="{{lxmsdtList}}" swiperHeight="{{swiperHeight}}"></item-view> -->
+<wxs module="filter" src="../../utils/filter.wxs"></wxs>
+
+<!--第一版-->
+<swiper style="height:{{swiperHeight}}px" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
+  <swiper-item>
+    单选封面页
+  </swiper-item>
+  <swiper-item wx:key="idx" wx:for="{{questionList}}" wx:item="item">
+    <scroll-view style="height:{{swiperHeight}}px" scroll-y>
+      <view class="page-item" wx:if="{{item != null}}">
+        <view class="count-box">
+          <view class="count-box-title">
+            <text wx:if="{{item.tx == 1}}">单项选择</text>
+            <text wx:elif="{{item.tx == 2}}">多项选择</text>
+            <text wx:elif="{{item.tx == 3}}">材料题</text>
+          </view>
+          <view>
+            <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+            <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
+          </view>
+        </view>
+        <view class="content">
+          <view class="contentFath">
+            <view>{{item.nr}}</view>
+            <view class="contentFath-select">
+              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem">
+                <view class="selectItem-left">{{filter.filtrationAbcd(idx)}}</view>
+                <view class="selectItem-right">{{stxxItem}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </swiper-item>
+
+  <swiper-item>
+    多选封面页
+  </swiper-item>
+
+  <swiper-item wx:key="idx" wx:for="{{questionListDuo}}" wx:item="item">
+    <scroll-view style="height:{{swiperHeight}}px" scroll-y>
+      <view class="page-item" wx:if="{{item != null}}">
+        <view class="count-box">
+          <view class="count-box-title">
+            <text wx:if="{{item.tx == 1}}">单项选择</text>
+            <text wx:elif="{{item.tx == 2}}">多项选择</text>
+            <text wx:elif="{{item.tx == 3}}">材料题</text>
+          </view>
+          <view>
+            <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+            <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
+          </view>
+        </view>
+        <view class="content">
+          <view class="contentFath">
+            <view>{{item.nr}}</view>
+            <view class="contentFath-select">
+              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem">
+                <view class="selectItem-left">{{filter.filtrationAbcd(idx)}}</view>
+                <view class="selectItem-right">{{stxxItem}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </swiper-item>
+
+</swiper>
+
+
+<!--第二版-->
+<!-- <swiper-limited-load 
     id="swiper"
     generic:item-view="item-view"
     swiperHeight="{{swiperHeight}}"
     swiperDuration="{{swiperDuration}}"
-    list="{{list}}"
+    list="{{questionList}}"
+    lxmsdtList="{{lxmsdtList}}"
     current="{{current}}"
     bindchange="swiperChange">
-  </swiper-limited-load>
+  </swiper-limited-load> -->
 
-  <view class="change-question">
-    <button catchtap="onClickLast">上一题</button>
-    <button catchtap="onClickNext">下一题</button>
-  </view>
+<view class="change-question">
+  <button catchtap="onClickLast">上一题</button>
+  <button catchtap="onClickNext">下一题</button>
+</view>
 
-  <view class="answer-card">
-    <button class="btn-answer-card" catchtap="onClickAnswerCard">答题卡</button>  
-  </view>
+<view class="answer-card">
+  <button class="btn-answer-card" catchtap="onClickAnswerCard">答题卡</button>
+</view>

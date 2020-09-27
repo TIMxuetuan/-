@@ -6,7 +6,6 @@ const MD5 = require("../../utils/md5.js")
 
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')

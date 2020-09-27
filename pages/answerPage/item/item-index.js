@@ -8,11 +8,16 @@ Component({
       type: Object,
       value: null
     },
+    lxmsdtList: {
+      type: Object,
+      value: null
+    },
     swiperHeight: {
       type: Number,
       value: 0
     }
   },
+
 
   /**
    * 组件的初始数据
@@ -28,3 +33,4 @@ Component({
 
   }
 })
+

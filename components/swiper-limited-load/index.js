@@ -40,6 +40,10 @@ Component({
       type: Array,
       value: []
     },
+    lxmsdtList: {
+      type: Object,
+      value: null
+    },
     current: {
       type: Number,
       value: 0
@@ -89,7 +93,7 @@ Component({
 
     swiperChange: function (e) {
       let that = this
-      
+      console.log(that.data.swiperList)
       let current = e.detail.current
       let lastIndex = that.data.swiperIndex
       let currentItem = that.data.swiperList[current]

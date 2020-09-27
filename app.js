@@ -27,9 +27,9 @@ App({
               this.globalData.userInfo = res.userInfo
               if (this.globalData.userInfo){
                 //跳首页
-                wx.redirectTo({
-                  url: '/pages/selectStudyItem/selectStudyItem'
-                })
+                // wx.redirectTo({
+                //   url: '/pages/selectStudyItem/selectStudyItem'
+                // })
               }
 
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回

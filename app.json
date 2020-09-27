@@ -1,8 +1,8 @@
 {
   "pages":[
-    "pages/answerIndex/answerIndex",
-    "pages/my/my",
     "pages/index/index",
+    "pages/my/my",
+    "pages/answerIndex/answerIndex",
     "pages/selectStudyItem/selectStudyItem",
     "pages/answerPage/answerPage",
     "pages/answer_card/answer_card",

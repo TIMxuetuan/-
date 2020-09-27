@@ -9,60 +9,99 @@ Page({
   data: {
     shijuan_id: "", //试卷id
     cacheKey: "", //用户cacheKey
-    lxmsdtList:{}, //试题内容
-    type:1, //试题类型：1-练习; 2-考试
-
+    lxmsdtList: {}, //试题内容
+    xhlist: [], //序号列表
+    type: 1, //试题类型：1-练习; 2-考试
+    timeList: {}, //临时数据
     //
-    list: [],
-    current: 0,
-    currentIndex: 0,
-    swiperDuration: "0"
+    questionList: [], //循环用的数组
+    questionListDuo:[], //多选存的数据
+    current: 0, //初始显示页下标
+    // 值为0禁止切换动画
+    swiperDuration: "250",
+    currentIndex: 0
 
   },
 
   requestQuestionInfo: function () {
     let that = this
     // 模拟网络请求成功
-    let questionList = []
-    for (let i = 0; i < 10; i++) {
-      let item = {}
-      item.index = i
-      item.total = 10
-      questionList.push(item)
-    }
-
-    // 初始化重要的是这三步:
-    that.setData({
-      list: questionList
-    })
-    // 假设初始是第二题
-    that.setData({
-      current: 0
-    })
-    // 初始化后再把动画弄出来，否则初始的current不是0，界面会自动跳动到当前位置，体验不太好
-    that.setData({
-      swiperDuration: '250'
-    })
-
-   
-     // 全局记一下list, 答题卡页暂时就直接用了
-     app.globalData.questionList = questionList
+    // let questionList = []
+    // for (let i = 0; i < 2; i++) {
+    //   let item = {}
+    //   item.index = i
+    //   item.total = 2
+    //   item.img = "../../../img/kebi.jpeg"
+    //   questionList.push(item)
+    // }
+    // 暂时全局记一下list, 答题卡页直接用了
+    // app.globalData.questionList = questionList
   },
 
-  swiperChange (e) {
+  //选题接口
+  selectTopic() {
+    let dataLists = {
+      cache_key: this.data.cacheKey,
+      shijuan_id: this.data.shijuan_id,
+      xl_id: this.data.timeList.xl_id,
+      xh: this.data.timeList.xh * 1 + 1,
+    }
+    let jiamiData = {
+      cache_key: this.data.cacheKey,
+      shijuan_id: this.data.shijuan_id,
+      xl_id: this.data.timeList.xl_id,
+      xh: this.data.timeList.xh * 1 + 1,
+    }
+    Service.cxxt(dataLists, jiamiData).then(res => {
+      console.log(res)
+      if (res.event == 100) {
+        this.setData({
+          timeList: res.list,
+          // questionList: this.data.questionList.concat(listL)
+        })
+        if(res.list.tx == 1){
+          let listL = []
+          listL.push(res.list)
+          this.setData({
+            questionList: this.data.questionList.concat(listL)
+          })
+        }else if(res.list.tx == 2){
+          let listLduo = []
+          listLduo.push(res.list)
+          this.setData({
+            questionListDuo: this.data.questionListDuo.concat(listLduo)
+          })
+        }
+        console.log(this.data.questionList)
+        console.log(this.data.questionListDuo)
+      }
+    })
+  },
+
+
+  swiperChange(e) {
     let that = this
     console.log(e.detail)
+    // console.log(that.data.current)
     let current = e.detail.current
+    if (current > that.data.current) {
+      console.log(this.data.currentIndex)
+      console.log(this.data.questionList)
+      console.log("大于")
+      that.selectTopic()
+    }
     that.setData({
-      currentIndex: current
+      currentIndex: current,
+      current: current
     })
-    // if (current == -1) {
-    //   wx.showToast({
-    //     title: "已经是第一题了",
-    //     icon: "none"
-    //   })
-    //   return
-    // }
+
+    if (current == -1) {
+      wx.showToast({
+        title: "已经是第一题了",
+        icon: "none"
+      })
+      return
+    }
 
     if (current == -2) {
       wx.showModal({
@@ -74,7 +113,7 @@ Page({
   },
 
   onClickAnswerCard: function (e) {
-    let that = this
+    let that = this;
     // 因为某一项不一定是在当前项的左侧还是右侧
     // 跳转前将动画去除，以免点击某选项回来后切换的体验很奇怪
     that.setData({
@@ -88,7 +127,7 @@ Page({
   onClickLast: function (e) {
     let that = this
     if (that.data.currentIndex - 1 < 0) {
-      return 
+      return
     }
     that.setData({
       current: that.data.currentIndex - 1
@@ -98,12 +137,13 @@ Page({
   onClickNext: function (e) {
     let that = this
     if (that.data.currentIndex + 1 > that.data.list.length - 1) {
-      return 
+      return
     }
     that.setData({
       current: that.data.currentIndex + 1
     })
   },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -114,7 +154,7 @@ Page({
     that.setData({
       swiperHeight: wx.getSystemInfoSync().windowHeight,
     })
-    that.requestQuestionInfo()
+    // that.requestQuestionInfo()
     that.setData({
       shijuan_id: options.shijuan_id
     });
@@ -145,9 +185,16 @@ Page({
     Service.lxmsdt(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
+        let listOne = []
+        listOne.push(res.list)
         this.setData({
-          lxmsdtList:res.list
+          lxmsdtList: res.list,
+          timeList: res.list,
+          xhlist: res.list.xhlist,
+          questionList: listOne
         })
+        console.log(this.data.questionList)
+        app.globalData.questionList = this.data.xhlist
       }
     })
   },

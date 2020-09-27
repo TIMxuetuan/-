@@ -30,5 +30,10 @@ const Services = {
     lxmsdt(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/lxmsdt`,data, jiamiData, 2)
     },
+
+    //选择答题（上一题、下一题）
+    cxxt(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/cxxt`,data, jiamiData, 2)
+    },
 }
 module.exports = Services;

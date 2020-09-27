@@ -1,13 +1,56 @@
 <!--index.wxml-->
-<view class="container">
+<view class="myContainer">
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    <block>
+      <view class="userinfo-content">
+        <!--头部--未登录-->
+        <view class="contentHead" wx:if="{{!hasUserInfo && canIUse}}">
+          <view class="contentHead-left">
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/my/morentouxing.png" mode="cover"></image>
+            <view class="noLogin">
+              <button style="border:none;background-color:#fff;font-size:30rpx;color: #343434;" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击获取微信授权 </button>
+            </view>
+          </view>
+        </view>
+
+        <!--头部--登陆过-->
+        <view class="contentHead" wx:else>
+          <view class="contentHead-left">
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+            <view class="contentHead-text">
+              <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+              <text class="userinfo-fubiao">中题库</text>
+            </view>
+          </view>
+          <view class="contentHead-compile">
+            <van-button round type="info">编辑资料</van-button>
+          </view>
+        </view>
+
+        <!--累计做题-->
+        <view class="addUpExercise">
+          <view class="addUpExercise-text">累积做题 <text class="exercise-num">20</text> 套</view>
+          <view class="addUpExercise-wire"></view>
+          <view class="addUpExercise-text">累积做题 <text class="exercise-num">200</text> 道</view>
+        </view>
+
+        <!--三个模块 历史记录、错题本、收藏中心-->
+        <view class="threeModul">
+          <view class="threeModul-item threebg-one">
+            <image class="threeModul-image" src="../../images/my/wo_lishiliju.png"></image>
+            <view class="threeModul-title">历史记录</view>
+          </view>
+          <view class="threeModul-item threebg-two">
+            <image class="threeModul-image" src="../../images/my/wo_cuotiben.png"></image>
+            <view class="threeModul-title">错题本</view>
+          </view>
+          <view class="threeModul-item threebg-three">
+            <image class="threeModul-image" src="../../images/my/wo_shoucang.png"></image>
+            <view class="threeModul-title">收藏中心</view>
+          </view>
+        </view>
+      </view>
+
     </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
   </view>
 </view>

@@ -1,0 +1,30 @@
+//选项abcd过滤  过滤器的使用
+function filtrationAbcd(value) {
+  var returnValue = ""
+  if (value == 0) {
+    returnValue = "A"
+    return returnValue
+  } else if (value == 1) {
+    returnValue = "B"
+    return returnValue
+  } else if (value == 2) {
+    returnValue = "C"
+    return returnValue
+  } else if (value == 3) {
+    returnValue = "D"
+    return returnValue
+  } else if (value == 4) {
+    returnValue = "E"
+    return returnValue
+  } else if (value == 5) {
+    returnValue = "F"
+    return returnValue
+  } else if (value == 6) {
+    returnValue = "G"
+    return returnValue
+  }
+}
+
+module.exports = {
+  filtrationAbcd: filtrationAbcd
+}
