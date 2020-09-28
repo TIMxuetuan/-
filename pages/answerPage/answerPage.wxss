@@ -96,3 +96,27 @@
   margin: 80rpx 0rpx 0rpx 30rpx;
   border-radius: 10rpx;
 }
+
+/*单选样式*/
+.selected{
+  background-color: #48E08E;
+  color: rgba(255, 255, 255, 1);
+  border:1px solid #48E08E;
+}
+
+/*固定底部*/
+.fixedBottom {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 100rpx;
+  border-top: 1px solid #F5F5F5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.fixedBottom-img{
+  width: 44rpx;
+  height: 44rpx;
+}

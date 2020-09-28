@@ -6,6 +6,9 @@
     "pages/selectStudyItem/selectStudyItem",
     "pages/answerPage/answerPage",
     "pages/answer_card/answer_card",
+    "pages/historyList/historyList",
+    "pages/wrongTopic/wrongTopic",
+    "pages/collect/collect",
     "pages/logs/logs"
   ],
   "window":{

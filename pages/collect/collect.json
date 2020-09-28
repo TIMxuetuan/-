@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-tab": "/vant/tab/index",
+    "van-tabs": "/vant/tabs/index",
+    "van-tabbar": "/vant/tabbar/index",
+    "van-tabbar-item": "/vant/tabbar-item/index",
+    "van-button": "/vant/button/index",
+    "van-icon": "/vant/icon/index"
+  },
+  "navigationBarTitleText": "收藏中心"
+}

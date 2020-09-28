@@ -2,7 +2,8 @@
 <view class="indexContainer">
   <!--头部标题模块-->
   <view class="container-title">
-    <view class="container-text" bindtap="goToSelectStudy">{{AllXmName}}</view>
+    <view class="container-text" wx:if="{{AllXmName != ''}}" bindtap="goToSelectStudy">{{AllXmName}}</view>
+    <view class="container-text" wx:else bindtap="goToSelectStudy">请选择学习项目</view>
     <view class="sanjiao"></view>
   </view>
   <!--错题本、做题记录、收藏模块-->
@@ -54,7 +55,7 @@
         <view class="testItem">
           <view class="testItem-title">{{item.sj_name}}</view>
           <view class="testItem-number">
-            <view>总计:{{item.num}}道</view>
+            <view class="number-right">总计:{{item.num}}道</view>
             <view>满分:{{item.fz}}分</view>
           </view>
         </view>

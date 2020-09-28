@@ -76,5 +76,26 @@ Page({
         // Toast[res.Flag?'success':'fail'](res.Content);
       }
     })
+  },
+
+  //跳转到历史记录页面
+  goToHistory(){
+    wx.navigateTo({
+      url: '/pages/historyList/historyList',
+    })
+  },
+
+  //跳转到错题本页面
+  goToWrongTopic(){
+    wx.navigateTo({
+      url: '/pages/wrongTopic/wrongTopic',
+    })
+  },
+
+  //跳转到错题本页面
+  goToCollect(){
+    wx.navigateTo({
+      url: '/pages/collect/collect',
+    })
   }
 })

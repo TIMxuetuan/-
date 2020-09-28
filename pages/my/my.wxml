@@ -36,15 +36,15 @@
 
         <!--三个模块 历史记录、错题本、收藏中心-->
         <view class="threeModul">
-          <view class="threeModul-item threebg-one">
+          <view class="threeModul-item threebg-one" bindtap="goToHistory">
             <image class="threeModul-image" src="../../images/my/wo_lishiliju.png"></image>
             <view class="threeModul-title">历史记录</view>
           </view>
-          <view class="threeModul-item threebg-two">
+          <view class="threeModul-item threebg-two" bindtap="goToWrongTopic">
             <image class="threeModul-image" src="../../images/my/wo_cuotiben.png"></image>
             <view class="threeModul-title">错题本</view>
           </view>
-          <view class="threeModul-item threebg-three">
+          <view class="threeModul-item threebg-three" bindtap="goToCollect">
             <image class="threeModul-image" src="../../images/my/wo_shoucang.png"></image>
             <view class="threeModul-title">收藏中心</view>
           </view>

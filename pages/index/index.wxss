@@ -168,7 +168,9 @@
   font-size: 24rpx;
   font-weight: 500;
   color: #656565;
-  line-height: 13rpx;
+}
+.number-right{
+  margin-right: 30rpx;
 }
 
 .testItemBtn-btn{

@@ -1,0 +1,104 @@
+/* pages/historyList/historyList.wxss */
+.historyContent {
+  margin-top: 30rpx;
+}
+
+/*科目列表切换*/
+.van-tab {
+  flex-basis: auto !important;
+  padding: 0 20rpx !important;
+}
+
+.van-tabs__line {
+  width: 20rpx !important;
+  height: 6rpx !important;
+  left: 26rpx !important;
+}
+
+.sixSjlxModul {
+  /* display: flex;
+  justify-content: space-between; */
+  margin-top: 32rpx;
+}
+
+/*试题模块*/
+.testModule {
+  margin-top: 30rpx;
+  padding: 0 40rpx;
+}
+
+.testModule-item {
+  height: 140rpx;
+  margin-bottom: 20rpx;
+  padding: 34rpx 24rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #F6F6F6;
+  border-radius: 10rpx;
+  box-shadow: 1rpx 3rpx 35rpx 0px rgba(128, 128, 128, 0.13);
+}
+
+.testItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testItem-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+  line-height: 42rpx;
+}
+
+.testItem-number {
+  display: flex;
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #656565;
+}
+
+.testItemBtn-btn {
+  height: 56rpx;
+  display: flex;
+}
+
+.testItemBtn-btn .van-button {
+  width: 136rpx;
+  height: 56rpx;
+  padding: 0;
+  font-size: 22rpx;
+  font-weight: 500;
+  color: #FF7549;
+  line-height: 56rpx;
+  background-color: #DBDBDB;
+  border: 1px solid #DBDBDB;
+}
+
+.noMore {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150rpx;
+}
+
+.noMoreImg {
+  width: 524rpx;
+  height: 312rpx;
+}
+
+.noMoreText {
+  margin-top: 50rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #CCCCCC;
+}
