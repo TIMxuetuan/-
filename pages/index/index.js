@@ -77,10 +77,10 @@ Page({
   //tabs切换
   onChangeSubject(event) {
     console.log(event.detail)
-    wx.showToast({
-      title: `点击标签 ${event.detail.name}`,
-      icon: 'none',
-    });
+    // wx.showToast({
+    //   title: `点击标签 ${event.detail.name}`,
+    //   icon: 'none',
+    // });
     this.setData({
       active: event.detail.name
     })
@@ -90,10 +90,10 @@ Page({
   //六个模块选择
   onChangeSjlx(event) {
     console.log(event)
-    wx.showToast({
-      title: `点击标签 ${event.detail + 1}`,
-      icon: 'none',
-    });
+    // wx.showToast({
+    //   title: `点击标签 ${event.detail + 1}`,
+    //   icon: 'none',
+    // });
     this.setData({
       sixActive: event.detail
     })

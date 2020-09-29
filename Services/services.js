@@ -40,6 +40,11 @@ const Services = {
     csbcdt(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/csbcdt`,data, jiamiData, 2)
     },
+    
+    //交卷
+    jjzt(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/jjzt`,data, jiamiData, 2)
+    },
 
 
 
@@ -62,6 +67,21 @@ const Services = {
     //错题本
     ctbst(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/ctbst`,data, jiamiData, 2)
+    },
+
+    //我的-头像上传地址
+    UpHeardImage(data, jiamiData){
+        return util._post(`${config.api}/TkWeChatLogin/UpHeardImage`,data, jiamiData, 2)
+    },
+
+    //我的-退出登录
+    logOut(data, jiamiData){
+        return util._post(`${config.api}/TkWeChatLogin/logOut`,data, jiamiData, 2)
+    },
+
+    //我的-统计试卷 试题
+    mySjTotal(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/mySjTotal`,data, jiamiData, 2)
     },
 }
 module.exports = Services;

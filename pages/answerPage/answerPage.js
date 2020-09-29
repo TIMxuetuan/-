@@ -1,25 +1,30 @@
 // pages/answerPage/answerPage.js
 const Service = require("../../Services/services")
 const app = getApp();
+// import Dialog from '../../vant/dialog/index';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    keyLists: ["A", "B", "C", "D", "E", "F", "G"],
     shijuan_id: "", //试卷id
     cacheKey: "", //用户cacheKey
     lxmsdtList: {}, //试题内容
     xhlist: [], //序号列表
     type: 2, //试题类型：1-练习; 2-考试
     timeList: {}, //临时数据
-    danXuanidx: null, //单选时，存的选择中的下标数据
+    danXuanid: null, //单选时，存的选择中的下标数据id
     topicXh: "", //题目的序号，用于查询上下题的序号
     nowClickList: {}, //点击答案时获得的当前页的数据
     danAnswerValue: '', //单选时的答案 需要转换为 A B C 
     danDuiOrCuo: "", //单选时 确定答案的对与错
     danFenZhi: "", // 单选时 答案的得分
     danWhenTiem: 1000, //单选答题的用时
+
+    moreValue: [], //多选时，选中的值
+    show: false, //弹窗
     //
     questionList: [], //循环用的数组
     questionListDuo: [], //多选存的数据
@@ -63,7 +68,7 @@ Page({
           this.setData({
             [sczt]: 0
           })
-        }else if(res.msg == "收藏成功"){
+        } else if (res.msg == "收藏成功") {
           this.setData({
             [sczt]: 1
           })
@@ -104,11 +109,12 @@ Page({
     Service.cxxt(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
+        this.transformShape(res.list)
         let listL = []
         listL.push(res.list)
         let array = this.data.questionList
         for (let index = 0; index < array.length; index++) {
-          if (array[index].id == res.list.id) {
+          if (index + 1 == res.list.xh) {
             //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
             var deletedtodo = 'questionList[' + index + ']';
             this.setData({
@@ -263,30 +269,135 @@ Page({
   //单选点击事件
   radioClick(e) {
     console.log(e.currentTarget.dataset.item)
+    let itemId = e.currentTarget.dataset.item.id
     console.log(e.currentTarget.dataset.stxxitem)
-    console.log(e.currentTarget.dataset.idx)
-    let idx = e.currentTarget.dataset.idx
-    if (this.data.danXuanidx != idx) {
+    console.log(e.currentTarget.dataset.id)
+    let id = e.currentTarget.dataset.id
+    if (this.data.danXuanid != id) {
+      // this.data.questionList.map(item => {
+      //   if (item.id == itemId) {
+      //     console.log(item)
+      //     var deletedtodo = item.stxx;
+      //     deletedtodo.map(items => {
+      //       console.log(items)
+      //       if (items.id == id) {
+      //         items.isType = true
+      //       } else {
+      //         items.isType = false
+      //       }
+      //     })
+      //   }
+      // })
       this.setData({
-        danXuanidx: idx,
+        questionList: this.data.questionList,
+        danXuanid: id,
         nowClickList: e.currentTarget.dataset.item
       })
       console.log("提交问题")
-      this.data.danAnswerValue = this.switchAnswier(idx)
+      this.data.danAnswerValue = id
       this.judgeScore(this.data.danAnswerValue)
       this.saveAnswerMessage()
     } else {
       this.setData({
-        danXuanidx: null
+        danXuanid: null
       })
     }
   },
 
+  //多选点击选项
+  moreSelectClick(e) {
+    console.log("确认答案")
+    let itemId = e.currentTarget.dataset.item.id
+    let id = e.currentTarget.dataset.id
+    let udaList = []
+
+    console.log(e.currentTarget.dataset.stxxitem)
+    console.log(id)
+    this.data.questionList.map(item => {
+      if (item.id == itemId) {
+        if (item.uda.indexOf(id) == -1) {
+          udaList.push(id)
+          item.uda = Array.from(new Set(item.uda.concat(udaList)))
+        } else {
+          var arr = item.uda;
+          var key = arr.indexOf(id)
+          arr.splice(key, 1)
+        }
+        this.setData({
+          moreValue: item.uda
+        })
+      }
+    })
+
+    this.setData({
+      questionList: this.data.questionList,
+      danXuanid: id,
+      nowClickList: e.currentTarget.dataset.item
+    })
+    console.log("多选", this.data.moreValue)
+    console.log(this.data.questionList)
+  },
+
+  //多选确认答案
+  quRenAnswer(e) {
+    let item = e.currentTarget.dataset.item
+    console.log(item)
+    let da = item.da
+    let uda = item.uda
+    for (let u = 0; u < uda.length; u++) {
+      if (da.indexOf(uda[u]) != -1) {
+        if (uda.length == da.length) {
+          console.log("全对")
+          this.setData({
+            danDuiOrCuo: "对",
+            danFenZhi: 2,
+            danAnswerValue: item.uda
+          })
+        } else {
+          console.log("少选的")
+          this.setData({
+            danDuiOrCuo: "对",
+            danFenZhi: uda.length * 0.5,
+            danAnswerValue: item.uda
+          })
+        }
+      } else {
+        console.log("多选错的")
+        this.setData({
+          danDuiOrCuo: "错",
+          danFenZhi: 0,
+          danAnswerValue: item.uda
+        })
+        break
+        // return
+      }
+    }
+    console.log(this.data.danDuiOrCuo, this.data.danFenZhi, this.data.danAnswerValue)
+    this.saveAnswerMessage()
+  },
+
+
+  //将选项0：选项一 ，序号转为 A：选项一形式
+  transformShape(item) {
+    let stxx = item.stxx;
+    let obj = []
+    for (const key in stxx) {
+      var zanli = {}
+      zanli['name'] = stxx[key]
+      zanli['id'] = this.data.keyLists[key]
+      zanli['isType'] = false
+      obj.push(zanli)
+    }
+    item.stxx = obj
+    return item
+  },
+
   //保存答题试题信息,点击选项时，进行提交答题信息
   saveAnswerMessage() {
-    console.log(this.data.danAnswerValue, this.data.danDuiOrCuo, this.data.danFenZhi)
     console.log(this.data.nowClickList)
-    let sendList = this.data.nowClickList
+    console.log(this.data.timeList)
+    // let sendList = this.data.nowClickList
+    let sendList = this.data.timeList
     let dataLists = {
       cache_key: this.data.cacheKey,
       shijuan_id: this.data.shijuan_id,
@@ -317,8 +428,53 @@ Page({
       console.log(res)
       if (res.event == 100) {
         this.selectTopic(sendList.xh)
+        console.log(sendList.xh)
+        if (sendList.xh < this.data.questionList.length) {
+          this.selectTopic(sendList.xh * 1 + 2)
+          this.setData({
+            current: sendList.xh * 1
+          })
+        } else {
+          this.setData({
+            show: true
+          })
+        }
+
       }
     })
+  },
+
+  //点击右下角 交卷图标，打开弹窗
+  handInPaper() {
+    this.setData({
+      show: true
+    })
+  },
+
+  //点击交卷弹窗确认事件
+  getUserInfo(event) {
+    let sendList = this.data.timeList
+    let jjztList = {
+      shijuan_id: this.data.shijuan_id,
+      xl_id: sendList.xl_id,
+      xh: sendList.xh,
+      ys: this.data.danWhenTiem,
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.redirectTo({
+      url: '/pages/answerGrade/answerGrade',
+    })
+    this.onClose()
+  },
+
+  //关闭弹窗
+  onClose() {
+    this.setData({
+      close: false
+    });
   },
 
   /**
@@ -361,18 +517,44 @@ Page({
     Service.lxmsdt(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
-        let listOne = []
-        listOne.push(res.list)
+        this.transformShape(res.list)
+        console.log(res.list)
+        let linshiList = []
+        for (let i = 0; i < res.list.ztnum; i++) {
+          let item = {}
+          linshiList.push(item)
+        }
+        this.setData({
+          questionList: linshiList
+        })
+        let listL = []
+        listL.push(res.list)
+        let array = this.data.questionList
+        for (let index = 0; index < array.length; index++) {
+          if (index + 1 == res.list.xh) {
+            //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
+            var deletedtodo = 'questionList[' + index + ']';
+            this.setData({
+              [deletedtodo]: res.list,
+            })
+            listL = []
+          }
+        }
+        console.log("listl", listL)
+        // let listOne = []
+        // listOne.push(res.list)
         this.setData({
           lxmsdtList: res.list,
           timeList: res.list,
           xhlist: res.list.xhlist,
-          questionList: listOne
+          questionList: this.data.questionList,
+          current: res.list.xh * 1 - 1
         })
         console.log(this.data.questionList)
+        console.log(this.data.xhlist)
         app.globalData.questionList = this.data.xhlist
         this.selectTopic(res.list.xh * 1 + 1)
-        // this.selectTopic(res.list.xh * 1 - 1)
+        this.selectTopic(res.list.xh * 1 - 1)
       }
     })
   },

@@ -1,0 +1,21 @@
+<!--pages/compileMy/compileMy.wxml-->
+<view class="compileMy">
+  <view class="compileMy-top">
+    <view class="compileMy-top-text">头像</view>
+    <view class="compileMy-top-right">
+      <van-uploader bind:after-read="afterRead">
+        <image class="topRight-img" src="../../images/my/morentouxing.png"></image>
+      </van-uploader>
+      <van-icon class="topRight-icon centerIcon" name="arrow" />
+    </view>
+  </view>
+  <view class="compileMy-two">
+    <view class="compileMy-top-text">昵称</view>
+    <view class="compileMy-top-right">
+      <van-icon class="topRight-icon" name="arrow" />
+    </view>
+  </view>
+  <view class="compileMy-btn">
+    <van-button round color="#FF5519" bind:click="logOut">退出登录</van-button>
+  </view>
+</view>

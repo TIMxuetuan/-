@@ -97,12 +97,47 @@
   border-radius: 10rpx;
 }
 
-/*单选样式*/
+/*单选选中样式*/
 .selected{
   background-color: #48E08E;
   color: rgba(255, 255, 255, 1);
   border:1px solid #48E08E;
 }
+
+/*多选题样式*/
+.moreSelect-left{
+  width: 70rpx;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2rpx solid #FF764A;
+  color: #FF764A;
+}
+
+.selectedMore{
+  background-color: #48E08E;
+  color: rgba(255, 255, 255, 1);
+  border:1px solid #48E08E;
+}
+
+.moreConfirm{
+  display: flex;
+  justify-content: center;
+}
+
+.moreConfirm .van-button{
+  width: 526rpx;
+  height: 85rpx;
+  padding: 0;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 85rpx;
+  /* background-color: #FF5519;
+  border: 1px solid #FF5519; */
+}
+
 
 /*固定底部*/
 .fixedBottom {
@@ -119,4 +154,9 @@
 .fixedBottom-img{
   width: 44rpx;
   height: 44rpx;
+}
+
+/*交卷弹窗*/
+.jiaoDialog .van-dialog__header {
+  padding-bottom: 20rpx;
 }

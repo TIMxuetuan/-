@@ -4,7 +4,8 @@
     <block>
       <view class="userinfo-content">
         <!--头部--未登录-->
-        <view class="contentHead" wx:if="{{!hasUserInfo && canIUse}}">
+        <!-- <view class="contentHead" wx:if="{{!hasUserInfo && canIUse}}"> -->
+        <view class="contentHead" wx:if="{{!userDataList}}">
           <view class="contentHead-left">
             <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/my/morentouxing.png" mode="cover"></image>
             <view class="noLogin">
@@ -16,14 +17,14 @@
         <!--头部--登陆过-->
         <view class="contentHead" wx:else>
           <view class="contentHead-left">
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userDataList.avatar}}" mode="cover"></image>
             <view class="contentHead-text">
-              <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+              <text class="userinfo-nickname">{{userDataList.nickname}}</text>
               <text class="userinfo-fubiao">中题库</text>
             </view>
           </view>
           <view class="contentHead-compile">
-            <van-button round type="info">编辑资料</van-button>
+            <van-button round type="info" bindtap="goToCompileMy">编辑资料</van-button>
           </view>
         </view>
 

@@ -20,17 +20,43 @@
             <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
           </view>
         </view>
-        <view class="content">
+
+        <!--单项选择 内容-->
+        <view class="content" wx:if="{{item.tx == 1}}">
           <view class="contentFath">
             <view>{{item.nr}}</view>
             <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem" data-idx="{{idx}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="radioClick">
-                <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view>
-                <view class="selectItem-right">{{stxxItem}}</view>
+              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
+                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="radioClick">
+                <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
+                <view class="selectItem-left {{stxxItem.id == item.uda ? 'selected' :''}}">{{stxxItem.id}}</view>
+                <view class="selectItem-right">{{stxxItem.name}}</view>
               </view>
             </view>
           </view>
         </view>
+
+        <!--多项选择内容-->
+        <view class="content" wx:elif="{{item.tx == 2}}">
+          <view class="contentFath">
+            <view>{{item.nr}}</view>
+            <view class="contentFath-select">
+              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
+                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="moreSelectClick">
+                <!-- <view class="moreSelect-left {{stxxItem.id == item.uda ? 'selectedMore' :''}}">{{stxxItem.id}}</view> -->
+                <view
+                  class="moreSelect-left {{filter.defineIndexOf(item.uda, stxxItem.id) != -1 ? 'selectedMore' :''}}">
+                  {{stxxItem.id}}</view>
+                <view class="selectItem-right">{{stxxItem.name}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="moreConfirm">
+            <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
+              bind:click="quRenAnswer">确认答案</van-button>
+          </view>
+        </view>
+
       </view>
     </scroll-view>
   </swiper-item>
@@ -96,8 +122,10 @@
 <view class="fixedBottom">
   <!--试题收藏-->
   <view class="fixedBottom-item">
-    <image bindtap="collectClick" data-type="1" wx:if="{{timeList.sczt == 0}}" class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
-    <image bindtap="collectClick" data-type="0" wx:else class="fixedBottom-img" src="../../images/my/shoucang.png"></image>
+    <image bindtap="collectClick" data-type="1" wx:if="{{timeList.sczt == 0}}" class="fixedBottom-img"
+      src="../../images/my/no_shoucang.png"></image>
+    <image bindtap="collectClick" data-type="0" wx:else class="fixedBottom-img" src="../../images/my/shoucang.png">
+    </image>
   </view>
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
@@ -105,7 +133,11 @@
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
   </view>
-  <view class="fixedBottom-item">
+  <view class="fixedBottom-item" bindtap="handInPaper">
     <image class="fixedBottom-img" src="../../images/my/jiaojuan.png"></image>
   </view>
 </view>
+
+<van-dialog class="jiaoDialog" use-slot title="是否确认交卷" show="{{ show }}" show-cancel-button confirm-button-open-type="getUserInfo"
+  bind:close="onClose" bind:getuserinfo="getUserInfo">
+</van-dialog>

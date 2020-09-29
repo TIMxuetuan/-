@@ -4,7 +4,10 @@ const MD5 = require('./md5');
 let _promise = function (api) {
   return (options, ...params) => {
     return new Promise((resolve, reject) => {
-      api(Object.assign({}, options, { success: resolve, fail: reject }), ...params);
+      api(Object.assign({}, options, {
+        success: resolve,
+        fail: reject
+      }), ...params);
     });
   }
 }
@@ -26,22 +29,31 @@ let ajax = function (obj) {
   obj.header = header;
 
   obj.complete = function (res) {
-    if (res.statusCode == 401) {
-      /*
-      wx.setStorageSync('userinfo', '');
-      wx.navigateTo({
-        url: '../a_login/a_login'
+    console.log("res", res)
+    if (res.data.event == 105) {
+      wx.showToast({
+        title: res.data.msg,
+        icon: 'none',
+        duration: 2000
       });
-      */
+      wx.removeStorage({
+        key: 'userDataList',
+        success(res) {
+          console.log(res)
+        }
+      })
+      wx.switchTab({
+        url: '/pages/my/my'
+      })
     }
 
     if (typeof res.data == 'string' && res.data.indexOf('Warning') > 0) {
       if (config.debug) {
-        // wx.showToast({
-        //   title: res.data,
-        //   icon: 'none',
-        //   duration: 2000
-        // });
+        wx.showToast({
+          title: res.data,
+          icon: 'none',
+          duration: 2000
+        });
       }
     }
   };
@@ -70,12 +82,14 @@ const getConfig = (isjson, params, jiamiData, level) => {
   };
   // 时间戳
   if (level === 1) {
-    params = { encrypt: MD5(JSON.stringify(params)) }; // 加密
+    params = {
+      encrypt: MD5(JSON.stringify(params))
+    }; // 加密
   } else if (level === 2) {
     //注意：登陆时用户信息需要加密，所以拼接在签名中；后续接口参数不需要加密，就不需要拼接如签名
     // 签名
     let timestamp = new Date().getTime();
-    console.log("时间戳",timestamp)
+    console.log("时间戳", timestamp)
     // 获取token
     let token = wx.getStorageSync("communityToken") || "";
     // 签名串
@@ -100,8 +114,8 @@ const getConfig = (isjson, params, jiamiData, level) => {
     const reverse_key = Object.keys(obj).sort();
     let resource_code =
       reverse_key
-        .reduce((rst, v) => (rst += `${v}=${obj[v]}&`), "")
-        .slice(0, -1) + suffix;
+      .reduce((rst, v) => (rst += `${v}=${obj[v]}&`), "")
+      .slice(0, -1) + suffix;
     let sign = MD5.hexMD5(resource_code);
     console.log("resource_code", resource_code);
 
@@ -138,7 +152,7 @@ const getConfig = (isjson, params, jiamiData, level) => {
   return params;
 };
 
-let _get = function (url, obj, message='') {
+let _get = function (url, obj, message = '') {
   wx.showNavigationBarLoading()
   if (!message && typeof message === "string") {
     wx.showLoading({
@@ -170,9 +184,9 @@ let _get = function (url, obj, message='') {
   })
 }
 
-let _post = function (url, params,jiamiData,level, message='') {
+let _post = function (url, params, jiamiData, level, message = '') {
   // wx.showNavigationBarLoading();
-  if (!message && typeof message === "string"){
+  if (!message && typeof message === "string") {
     // wx.showLoading({
     //   title: message,
     // })
@@ -192,7 +206,7 @@ let _post = function (url, params,jiamiData,level, message='') {
     success: function (response) {
       let res = response.data;
       wx.hideNavigationBarLoading()
-      if (!message && typeof message === "string"){
+      if (!message && typeof message === "string") {
         wx.hideLoading()
       }
     }
