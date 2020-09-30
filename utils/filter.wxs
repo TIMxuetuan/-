@@ -29,7 +29,13 @@ function defineIndexOf(str, val) {
   return str.indexOf(val);
 }
 
+//判断两个数组有共同参数
+function compare(arr1, arr2) {
+  // return arr1.some(item => arr2.includes(item))
+}
+
 module.exports = {
   filtrationAbcd: filtrationAbcd,
-  defineIndexOf:defineIndexOf
+  defineIndexOf: defineIndexOf,
+  compare:compare
 }

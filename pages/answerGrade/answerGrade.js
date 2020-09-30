@@ -7,7 +7,8 @@ Page({
    */
   data: {
     cache_key:"",
-    jjztList: {} //获得的数据，用来展示交卷内容
+    jjztList: {}, //获得上一页的数据，用来展示交卷内容
+    pageLists:{}, //用于页面展示的数据
   },
 
   //交卷接口
@@ -30,9 +31,16 @@ Page({
     Service.jjzt(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
-
+        this.setData({
+          pageLists:res.list
+        })
       }
     })
+  },
+
+  //跳转到练习模式答题页面
+  goToExercise(){
+
   },
 
   /**

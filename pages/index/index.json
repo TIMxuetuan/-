@@ -5,5 +5,6 @@
     "van-tabbar": "/vant/tabbar/index",
     "van-tabbar-item": "/vant/tabbar-item/index",
     "van-button": "/vant/button/index"
-  }
+  },
+  "navigationBarTitleText": "中题库"
 }

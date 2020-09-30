@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-circle": "/vant/circle/index",
+    "van-icon": "/vant/icon/index"
+  },
+  "navigationBarTitleText": "评分报告",
+  "navigationBarBackgroundColor": "#4084E5",
+  "navigationBarTextStyle": "white"
 }

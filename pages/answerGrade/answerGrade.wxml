@@ -1,2 +1,86 @@
 <!--pages/answerGrade/answerGrade.wxml-->
-<text>pages/answerGrade/answerGrade.wxml</text>
+<view class="answerGrade">
+  <!--头部对错分析-->
+  <view class="answerGrade-head">
+    <view class="headCircle">
+      <van-circle value="{{ pageLists.zql }}" stroke-width="6" size="100" text="{{pageLists.df}}分" layer-color="#ffffff"
+        color="#48E08E" />
+    </view>
+    <view class="headTypeNum">
+      <view class="headTypeNum-item">
+        <view class="headItem-left">
+          <view class="headTypeNum-type">正确</view>
+          <view class="circleDot"></view>
+        </view>
+        <view class="headTypeNum-num">{{pageLists.duinum}}道</view>
+      </view>
+      <view class="headTypeNum-item">
+        <view class="headItem-left">
+          <view class="headTypeNum-type">错误</view>
+          <view class="circleDot bg-wrong"></view>
+        </view>
+        <view class="headTypeNum-num">{{pageLists.cuonum}}道</view>
+      </view>
+      <view class="headTypeNum-item">
+        <view class="headItem-left">
+          <view class="headTypeNum-type">未做</view>
+          <view class="circleDot bg-wei"></view>
+        </view>
+        <view class="headTypeNum-num">{{pageLists.mznum}}道</view>
+      </view>
+    </view>
+  </view>
+
+  <!--用时、等分率、平均分-->
+  <view class="threeAnalyse">
+    <view class="threeAnalyse-one">
+      <view class="analyseOne-top">
+        <text class="analyseOne-time">{{pageLists.ys}}</text>
+        <text class="analyseOne-unit">分钟</text>
+      </view>
+      <view class="analyseOne-title">用时</view>
+    </view>
+    <view class="threeAnalyse-one">
+      <view class="analyseOne-top">
+        <text class="analyseOne-time">{{pageLists.zql}}</text>
+        <text class="analyseOne-unit">%</text>
+      </view>
+      <view class="analyseOne-title">得分率</view>
+    </view>
+    <view class="threeAnalyse-one">
+      <view class="analyseOne-top">
+        <text class="analyseOne-time">{{pageLists.userpjf}}</text>
+        <text class="analyseOne-unit">分</text>
+      </view>
+      <view class="analyseOne-title">平均分</view>
+    </view>
+  </view>
+
+  <!--错题添加提示、请及时复习-->
+  <view class="wrongHint">
+    <view class="wrongHint-left">
+      <view class="wrongHint-leftIcon">
+        <van-icon color="#F52626" size="14px" name="clear" />
+      </view>
+      <view class="wrongHint-leftNum">{{pageLists.cuonum}}道</view>
+    </view>
+    <view class="wrongHint-right">错题已经添加至“我的错题”，记得及时复习哦</view>
+  </view>
+
+  <!--点击序号查看解析-->
+  <view class="serialNumber">
+    <view class="serialNumber-title">
+      点击序号查看解析
+    </view>
+    <view class="serialNumber-dataList">
+      <view class="dataList-item {{item.dct == '对' ? 'daDui' : (item.dct == '错' ? 'daCuo' : '')}}" wx:key="idx" wx:for="{{pageLists.datika}}" wx:item="item" data-item="{{item}}" bindtap="goToExercise">{{item.xh}}</view>
+    </view>
+  </view>
+
+  <!--查看错题、全部解析-->
+  <view class="bottomTwo">
+    <view class="bottomTwo-item">查看错题</view>
+    <view class="bottomTwo-item">全部解析</view>
+  </view>
+
+</view>

@@ -16,7 +16,8 @@ Page({
     console.log(pages.length)
     let prevPage = pages[pages.length - 2];
     prevPage.setData({
-      current: e.currentTarget.dataset.index
+      current: e.currentTarget.dataset.index,
+      
     })
     wx.navigateBack({
       delta: 1,
@@ -30,6 +31,7 @@ Page({
     this.setData({
       list: app.globalData.questionList,
     })
+    console.log(this.data.list)
   },
 
   /**

@@ -4,6 +4,7 @@
     "pages/my/my",
     "pages/answerIndex/answerIndex",
     "pages/selectStudyItem/selectStudyItem",
+    "pages/exercisePage/exercisePage",
     "pages/answerPage/answerPage",
     "pages/answerGrade/answerGrade",
     "pages/answer_card/answer_card",

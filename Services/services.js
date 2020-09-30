@@ -83,5 +83,12 @@ const Services = {
     mySjTotal(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/mySjTotal`,data, jiamiData, 2)
     },
+
+    //首页显示最新测试信息
+    userXlInfo(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/userXlInfo`,data, jiamiData, 2)
+    },
+
+
 }
 module.exports = Services;

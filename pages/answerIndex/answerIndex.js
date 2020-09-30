@@ -7,8 +7,9 @@ Page({
    */
   data: {
     shijuan_id: "", //试卷id
+    shiType: "", //控制跳转到那个模式，1-练习; 2-考试 
     cacheKey: "", //用户cacheKey
-    sjztsyLists:{}, //数据列表
+    sjztsyLists: {}, //数据列表
   },
 
   /**
@@ -17,8 +18,10 @@ Page({
   onLoad: function (options) {
     var that = this
     console.log(options.shijuan_id);
+    console.log(options.shiType);
     that.setData({
-      shijuan_id: options.shijuan_id
+      shijuan_id: options.shijuan_id,
+      shiType: options.shiType
     })
     wx.getStorage({
       key: 'cache_key',
@@ -46,17 +49,26 @@ Page({
       console.log(res)
       if (res.event == 100) {
         this.setData({
-          sjztsyLists:res.list
+          sjztsyLists: res.list
         })
       }
     })
   },
 
   //跳转答题页面内容
-  goToAnswerPage(){
-    wx.redirectTo({
-      url: '/pages/answerPage/answerPage?shijuan_id=' + this.data.sjztsyLists.id,
-    })
+  goToAnswerPage() {
+    if (this.data.shiType == 1) {
+      //跳转到练习模式
+      wx.redirectTo({
+        url: '/pages/exercisePage/exercisePage?shijuan_id=' + this.data.sjztsyLists.id,
+      })
+    }else if(this.data.shiType == 2){
+      //跳转到考试模式
+      wx.redirectTo({
+        url: '/pages/answerPage/answerPage?shijuan_id=' + this.data.sjztsyLists.id,
+      })
+    }
+
   },
 
   /**

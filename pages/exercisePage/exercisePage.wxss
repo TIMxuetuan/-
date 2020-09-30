@@ -104,6 +104,12 @@
   border: 1px solid #48E08E;
 }
 
+.selectedCuo{
+  background-color: #FF5E5E;
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid #FF5E5E;
+}
+
 /*多选题样式*/
 .moreSelect-left {
   width: 70rpx;
@@ -119,6 +125,12 @@
   background-color: #48E08E;
   color: rgba(255, 255, 255, 1);
   border: 1px solid #48E08E;
+}
+
+.selectedMoreCuo{
+  background-color: #FF5E5E;
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid #FF5E5E;
 }
 
 .moreConfirm {
@@ -145,6 +157,7 @@
   position: fixed;
   bottom: 0;
   height: 100rpx;
+  background-color: #ffffff;
   border-top: 1px solid #F5F5F5;
   display: flex;
   justify-content: space-around;
@@ -241,4 +254,62 @@
 .baYida {
   background: #FF671D;
   color: #fff;
+}
+
+/*解析*/
+.analysis {
+  margin-top: 54rpx;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 36rpx 120rpx 0;
+}
+
+.analysis-text {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #FF681E;
+  margin-right: 15rpx;
+}
+
+.analysis-all{
+  padding-bottom: 120rpx;
+}
+
+.huiXian {
+  width: 100%;
+  height: 15rpx;
+  background: #F3F3F3;
+}
+
+.analysis-content {
+  margin-top: 46rpx;
+  padding: 0 42rpx;
+}
+
+.analysis-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #7A7A7A;
+  margin-bottom: 46rpx;
+}
+
+.analysis-shuoMing {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #7A7A7A;
+}
+
+.analysis-jieXi {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #525252;
+  line-height: 48rpx;
+}
+
+.colorDui {
+  color: #48E08E;
+}
+
+.colorCuo {
+  color: #FF5E5E;
 }

@@ -75,6 +75,25 @@ Page({
     })
   },
 
+  //跳到评分报告页面
+  goToAnswerGrade(e) {
+    let sendList = e.currentTarget.dataset.item
+    console.log(sendList)
+    let jjztList = {
+      shijuan_id: sendList.sj_id,
+      xl_id: sendList.id,
+      xh: sendList.dyxh,
+      ys: 2000,
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.redirectTo({
+      url: '/pages/answerGrade/answerGrade',
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载

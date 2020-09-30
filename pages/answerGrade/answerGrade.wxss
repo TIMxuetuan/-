@@ -1,1 +1,205 @@
 /* pages/answerGrade/answerGrade.wxss */
+.answerGrade {
+  position: relative;
+  overflow: hidden;
+}
+
+
+.answerGrade-head {
+  height: 280rpx;
+  background: linear-gradient(0deg, #4084E5 0%, #4084E5 100%);
+  display: flex;
+  padding-left: 66rpx;
+}
+
+.headCircle {
+  margin-right: 110rpx;
+}
+
+.headCircle .van-circle__text {
+  color: #ffffff;
+  font-size: 32rpx;
+}
+
+.headTypeNum {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.headTypeNum-item {
+  display: flex;
+  margin-bottom: 52rpx;
+}
+
+.headItem-left {
+  display: flex;
+  align-items: center;
+}
+
+.headTypeNum-type {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #E6E6E6;
+}
+
+.headTypeNum-num {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.circleDot {
+  width: 34rpx;
+  height: 34rpx;
+  background: #48E08E;
+  border-radius: 50%;
+  margin: 0 26rpx 0 16rpx;
+}
+
+.bg-wrong {
+  background: #FF5E5E;
+}
+
+.bg-wei {
+  background: #EBEBEB;
+}
+
+/*用时、等分率、平均分*/
+.threeAnalyse {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 60rpx;
+  padding: 0 30rpx 30rpx;
+  border-bottom: 1px solid #F9F9F9;
+}
+
+.threeAnalyse-one {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.analyseOne-top {
+  margin-bottom: 20rpx;
+}
+
+.analyseOne-time {
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #2595E4;
+}
+
+.analyseOne-unit {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #666666;
+}
+
+.analyseOne-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #999999;
+}
+
+/*错题添加提示、请及时复习*/
+.wrongHint {
+  padding: 36rpx 0 36rpx 40rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #F9F9F9;
+}
+
+.wrongHint-left {
+  display: flex;
+  align-items: center;
+  width: 126rpx;
+  height: 44rpx;
+  background: #F6BCBC;
+  border-radius: 10rpx;
+  margin-right: 20rpx;
+}
+
+.wrongHint-leftIcon {
+  margin: 0 10rpx;
+}
+
+.wrongHint-leftNum {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #F52626;
+}
+
+.wrongHint-right {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+/*点击序号查看解析*/
+.serialNumber {
+  padding: 0 30rpx;
+  margin-top: 30rpx;
+}
+
+.serialNumber-title {
+  padding-left: 10rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #999999;
+  margin-bottom: 50rpx;
+}
+
+.serialNumber-dataList {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 100rpx;
+}
+
+.dataList-item {
+  width: 78rpx;
+  height: 78rpx;
+  background: #EBEBEB;
+  border-radius: 50%;
+  color: #FF671D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 75rpx 50rpx 0;
+}
+
+.dataList-item:nth-child(5n) {
+  margin-right: 0;
+}
+
+.daDui {
+  color: #ffffff;
+  background: #48E08E;
+}
+
+.daCuo{
+  color: #ffffff;
+  background: #FF5E5E;
+}
+
+/*查看错题、全部解析*/
+.bottomTwo {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottomTwo-item {
+  width: 374rpx;
+  height: 98rpx;
+  background: #4384E8;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

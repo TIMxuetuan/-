@@ -11,10 +11,11 @@ Page({
     keyLists: ["A", "B", "C", "D", "E", "F", "G"],
     shijuan_id: "", //试卷id
     cacheKey: "", //用户cacheKey
-    lxmsdtList: {}, //试题内容
+    lxmsdtList: {}, //试题内容 初始化的第一条数据
+    timeList: {}, //临时数据 当前数据
+    questionList: [], //循环用的数组 全局使用的
     xhlist: [], //序号列表
-    type: 2, //试题类型：1-练习; 2-考试
-    timeList: {}, //临时数据
+    type: 1, //试题类型：1-练习; 2-考试
     danXuanid: null, //单选时，存的选择中的下标数据id
     topicXh: "", //题目的序号，用于查询上下题的序号
     nowClickList: {}, //点击答案时获得的当前页的数据
@@ -24,15 +25,15 @@ Page({
     danWhenTiem: 1000, //单选答题的用时
 
     moreValue: [], //多选时，选中的值
-    xhShow:false, //序号弹窗
+    xhShow: false, //序号弹窗
     show: false, //交卷弹窗
     //
-    questionList: [], //循环用的数组
     questionListDuo: [], //多选存的数据
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
     swiperDuration: "250",
-    currentIndex: 0
+    currentIndex: 0,
+    isJieXiShow:1, //判断是否点击 查看解析 1为初始无， 2为查看解析
 
   },
 
@@ -205,16 +206,16 @@ Page({
 
   //打开序号弹窗
   onClickAnswerCard: function (e) {
-    console.log("当前数据",this.data.timeList)
-    console.log("第一条初始数据",this.data.lxmsdtList)
-    console.log("总数据",this.data.questionList)
+    console.log("当前数据", this.data.timeList)
+    console.log("第一条初始数据", this.data.lxmsdtList)
+    console.log("总数据", this.data.questionList)
     this.setData({
       xhShow: true
     })
   },
 
   //点击序号跳转到那一选项
-  goToXuhao(e){
+  goToXuhao(e) {
     let index = e.currentTarget.dataset.index
     console.log(index)
     let xuhao = index + 1
@@ -222,22 +223,24 @@ Page({
     this.selectTopic(xuhao - 1)
     this.selectTopic(xuhao + 1)
     this.setData({
-      current:xuhao - 1,
+      current: xuhao - 1,
       xhShow: false
     })
   },
 
   //坐上交卷，弹出交卷弹窗，并关闭选项弹窗
-  youJiaojuan(){
+  youJiaojuan() {
     this.setData({
       xhShow: false,
-      show:true
+      show: true
     })
   },
 
   //关闭序号弹窗
   onXhshowClose() {
-    this.setData({ xhShow: false });
+    this.setData({
+      xhShow: false
+    });
   },
 
   onClickLast: function (e) {
@@ -301,20 +304,31 @@ Page({
     console.log(this.data.danXuanid)
     let id = e.currentTarget.dataset.id
     // if (this.data.danXuanid != id) {
-      this.setData({
-        questionList: this.data.questionList,
-        danXuanid: id,
-        nowClickList: e.currentTarget.dataset.item
-      })
-      console.log("提交问题")
-      this.data.danAnswerValue = id
-      this.judgeScore(this.data.danAnswerValue)
-      this.saveAnswerMessage()
+    this.setData({
+      questionList: this.data.questionList,
+      danXuanid: id,
+      nowClickList: e.currentTarget.dataset.item
+    })
+    console.log("提交问题")
+    this.data.danAnswerValue = id
+    this.judgeScore(this.data.danAnswerValue)
+    this.saveAnswerMessage()
     // } else {
     //   this.setData({
     //     danXuanid: null
     //   })
     // }
+  },
+
+  //点击解析按钮
+  openJieXi() {
+    console.log(this.data.timeList)
+    this.setData({
+      danDuiOrCuo: "错",
+      danFenZhi: 0,
+      danAnswerValue: '1'
+    })
+    this.saveAnswerMessage()
   },
 
   //多选点击选项
@@ -328,16 +342,16 @@ Page({
     console.log(id)
     this.data.questionList.map(item => {
       if (item.id == itemId) {
-        if (item.uda.indexOf(id) == -1) {
+        if (item.ziuda.indexOf(id) == -1) {
           udaList.push(id)
-          item.uda = Array.from(new Set(item.uda.concat(udaList)))
+          item.ziuda = Array.from(new Set(item.ziuda.concat(udaList)))
         } else {
-          var arr = item.uda;
+          var arr = item.ziuda;
           var key = arr.indexOf(id)
           arr.splice(key, 1)
         }
         this.setData({
-          moreValue: item.uda
+          moreValue: item.ziuda
         })
       }
     })
@@ -356,7 +370,7 @@ Page({
     let item = e.currentTarget.dataset.item
     console.log(item)
     let da = item.da
-    let uda = item.uda
+    let uda = item.ziuda
     for (let u = 0; u < uda.length; u++) {
       if (da.indexOf(uda[u]) != -1) {
         if (uda.length == da.length) {
@@ -364,14 +378,14 @@ Page({
           this.setData({
             danDuiOrCuo: "对",
             danFenZhi: 2,
-            danAnswerValue: item.uda
+            danAnswerValue: uda
           })
         } else {
           console.log("少选的")
           this.setData({
             danDuiOrCuo: "对",
             danFenZhi: uda.length * 0.5,
-            danAnswerValue: item.uda
+            danAnswerValue: uda
           })
         }
       } else {
@@ -379,7 +393,7 @@ Page({
         this.setData({
           danDuiOrCuo: "错",
           danFenZhi: 0,
-          danAnswerValue: item.uda
+          danAnswerValue: uda
         })
         break
         // return
@@ -394,6 +408,7 @@ Page({
   transformShape(item) {
     let stxx = item.stxx;
     let obj = []
+    item['ziuda'] = ''
     for (const key in stxx) {
       var zanli = {}
       zanli['name'] = stxx[key]
@@ -444,9 +459,6 @@ Page({
         console.log(sendList.xh)
         if (sendList.xh < this.data.questionList.length) {
           this.selectTopic(sendList.xh * 1 + 2)
-          this.setData({
-            current: sendList.xh * 1
-          })
         } else {
           this.setData({
             show: true

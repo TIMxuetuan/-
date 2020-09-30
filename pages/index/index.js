@@ -14,7 +14,7 @@ Page({
     active: 0,
     sixActive: "全部",
     sortdtList: [], //试卷列表
-    cacheKey:"", //唯一标识
+    cacheKey: "", //唯一标识
   },
 
   /**
@@ -40,7 +40,7 @@ Page({
       success(res) {
         console.log(res.data)
         that.setData({
-          cacheKey:res.data
+          cacheKey: res.data
         })
       }
     })
@@ -128,9 +128,9 @@ Page({
   },
 
   //去练习页面--进入答题
-  goToExercise(e){
+  goToExercise(e) {
     wx.navigateTo({
-      url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id,
+      url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
     })
     console.log(e.currentTarget.dataset.item)
     // let dataLists = {
@@ -150,6 +150,27 @@ Page({
     //     })
     //   }
     // })
+  },
+
+  //跳转到历史记录页面
+  goToHistory() {
+    wx.navigateTo({
+      url: '/pages/historyList/historyList',
+    })
+  },
+
+  //跳转到错题本页面
+  goToWrongTopic() {
+    wx.navigateTo({
+      url: '/pages/wrongTopic/wrongTopic',
+    })
+  },
+
+  //跳转到错题本页面
+  goToCollect() {
+    wx.navigateTo({
+      url: '/pages/collect/collect',
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
