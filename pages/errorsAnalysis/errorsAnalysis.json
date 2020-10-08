@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-tabbar": "/vant/tabbar/index",
+    "van-tabbar-item": "/vant/tabbar-item/index",
+    "van-button": "/vant/button/index",
+    "van-dialog": "/vant/dialog/index",
+    "van-popup": "/vant/popup/index",
+    "van-icon": "/vant/icon/index"
+  },
+  "navigationBarTitleText": "真题模考"
+}

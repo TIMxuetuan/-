@@ -6,14 +6,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cache_key:"",
+    cache_key: "",
     jjztList: {}, //获得上一页的数据，用来展示交卷内容
-    pageLists:{}, //用于页面展示的数据
+    pageLists: {}, //用于页面展示的数据
   },
 
   //交卷接口
   getJjztList() {
     let sendList = this.data.jjztList
+    console.log(sendList)
     let dataLists = {
       cache_key: this.data.cache_key,
       shijuan_id: sendList.shijuan_id,
@@ -32,15 +33,67 @@ Page({
       console.log(res)
       if (res.event == 100) {
         this.setData({
-          pageLists:res.list
+          pageLists: res.list
         })
       }
     })
   },
 
-  //跳转到练习模式答题页面
-  goToExercise(){
+  //点击序号，跳转到解析页面
+  goToExercise(e) {
+    let sendList = e.currentTarget.dataset.item
+    console.log(sendList)
+    let jjztList = {
+      shijuan_id: sendList.sj_id,
+      xl_id: sendList.id,
+      xh: sendList.xh,
+      ys: 2000,
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.redirectTo({
+      url: '/pages/errorsAnalysis/errorsAnalysis',
+    })
+  },
 
+  //全部解析
+  allExercise() {
+    let sendList = this.data.jjztList
+    console.log(sendList)
+    let jjztList = {
+      shijuan_id: sendList.shijuan_id,
+      xl_id: sendList.xl_id,
+      xh: sendList.xh,
+      ys: 2000,
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.redirectTo({
+      url: '/pages/errorsAnalysis/errorsAnalysis',
+    })
+  },
+
+  //查看错题
+  goToSeeError() {
+    let sendList = this.data.jjztList
+    console.log(sendList)
+    let jjztList = {
+      shijuan_id: sendList.shijuan_id,
+      xl_id: sendList.xl_id,
+      xh: sendList.xh,
+      ys: 2000,
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.redirectTo({
+      url: '/pages/seeError/seeError',
+    })
   },
 
   /**

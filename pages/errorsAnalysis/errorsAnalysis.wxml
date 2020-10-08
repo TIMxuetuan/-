@@ -6,7 +6,7 @@
   <!-- <swiper-item>
     单选封面页
   </swiper-item> -->
-  <swiper-item wx:key="idx" wx:for="{{questionList}}" wx:item="item">
+  <swiper-item wx:key="idx" wx:for="{{questionList}}" wx:item="item" wx:key="id">
     <scroll-view style="height:{{swiperHeight}}px" scroll-y>
       <view class="page-item" wx:if="{{item != null}}">
         <view class="count-box">
@@ -26,11 +26,14 @@
           <view class="contentFath">
             <view>{{item.nr}}</view>
             <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="radioClick">
+              <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
+                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
                 <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
-                <view class="selectItem-left {{stxxItem.id == item.uda ? 'selected' :''}}">{{stxxItem.id}}</view>
+                <view
+                  class="selectItem-left {{item.uda == item.da ? (stxxItem.id == item.da ? 'selected' : '') : (stxxItem.id == item.da? 'selected' : (stxxItem.id == item.uda?'selectedCuo':''))}}">
+                  {{stxxItem.id}}</view>
                 <view class="selectItem-right">{{stxxItem.name}}</view>
+                {{}}
               </view>
             </view>
           </view>
@@ -41,76 +44,70 @@
           <view class="contentFath">
             <view>{{item.nr}}</view>
             <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="moreSelectClick">
-                <!-- <view class="moreSelect-left {{stxxItem.id == item.uda ? 'selectedMore' :''}}">{{stxxItem.id}}</view> -->
+              <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
+                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
                 <view
-                  class="moreSelect-left {{filter.defineIndexOf(item.uda, stxxItem.id) != -1 ? 'selectedMore' :''}}">
-                  {{stxxItem.id}}</view>
+                  class="moreSelect-left {{filter.defineIndexOf(item.da, stxxItem.id) != -1 ? 'selectedMore' :'selectedMoreCuo'}}">
+                  {{stxxItem.id}}
+                </view>
                 <view class="selectItem-right">{{stxxItem.name}}</view>
               </view>
             </view>
           </view>
-          <view class="moreConfirm">
-            <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
+          <!-- <view class="moreConfirm" wx:if="{{item.uda == ''}}">
+            <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.ziuda == '' ? true : false}}"
               bind:click="quRenAnswer">确认答案</van-button>
-          </view>
+          </view> -->
         </view>
 
+        <!--材料题-->
         <view class="content" wx:elif="{{item.tx == 3}}">
           <view class="contentFath marginBot">
             <view>{{item.nr}}</view>
-            <view class="answerText">
+            <!-- <view class="answerText" wx:if="{{item.uda == ''}}">
               <view class="answerText-title">请对问题做出解答</view>
               <view class="answerText-content">
-                <textarea class="answerText-area" value="{{item.uda}}" data-item="{{item}}" maxlength="-1" bindblur="bindTextAreaBlur"
+                <textarea class="answerText-area" data-item="{{item}}" maxlength="-1" bindblur="bindTextAreaBlur"
                   placeholder="输入答案" />
                 </view>
               <view class="moreConfirm topBottom">
-                <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
+                <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.ziuda == '' ? true : false}}"
               bind:click="caiLiaoConfig">确认答案
                </van-button>
               </view>
+            </view> -->
+          </view>
+        </view>
+
+        <!--解析-->
+        <!-- <view class="analysis" wx:if="{{item.uda == ''}}">
+          <text class="analysis-text" data-item="{{item}}" bindtap="openJieXi">查看解析</text>
+          <van-icon name="arrow-down" color="#FF681E" size="13px" />
+        </view> -->
+
+        <!--解析内容-->
+        <view class="analysis-all">
+          <view class="huiXian"></view>
+          <view class="analysis-content">
+            <view class="analysis-title">答案</view>
+            <view class="analysis-shuoMing" wx:if="{{item.uda == '1'}}">正确答案<text
+                class="colorDui">{{item.da}}</text>，本题未作答</view>
+            <view class="analysis-shuoMing" wx:elif="{{item.uda == item.da}}">正确答案<text
+                class="colorDui">{{item.da}}</text>，您的答案<text class="colorDui">{{item.uda}}</text>
             </view>
+            <view class="analysis-shuoMing" wx:else>正确答案<text class="colorDui">{{item.da}}</text>，您的答案<text
+                class="colorCuo">{{item.uda}}</text>
+            </view>
+          </view>
+          <view class="analysis-content">
+            <view class="analysis-title">解析</view>
+            <view class="analysis-jieXi">{{item.jx}}</view>
           </view>
         </view>
 
       </view>
     </scroll-view>
   </swiper-item>
-
-  <!-- <swiper-item>
-    多选封面页
-  </swiper-item> -->
-
-  <!-- <swiper-item wx:key="idx" wx:for="{{questionListDuo}}" wx:item="item">
-    <scroll-view style="height:{{swiperHeight}}px" scroll-y>
-      <view class="page-item" wx:if="{{item != null}}">
-        <view class="count-box">
-          <view class="count-box-title">
-            <text wx:if="{{item.tx == 1}}">单项选择</text>
-            <text wx:elif="{{item.tx == 2}}">多项选择</text>
-            <text wx:elif="{{item.tx == 3}}">材料题</text>
-          </view>
-          <view>
-            <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
-            <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
-          </view>
-        </view>
-        <view class="content">
-          <view class="contentFath">
-            <view>{{item.nr}}</view>
-            <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem">
-                <view class="selectItem-left">{{filter.filtrationAbcd(idx)}}</view>
-                <view class="selectItem-right">{{stxxItem}}</view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </scroll-view>
-  </swiper-item> -->
 
 </swiper>
 
@@ -151,9 +148,6 @@
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
   </view>
-  <view class="fixedBottom-item" bindtap="handInPaper">
-    <image class="fixedBottom-img" src="../../images/my/jiaojuan.png"></image>
-  </view>
 </view>
 
 <!--序号弹出层-->
@@ -161,10 +155,6 @@
   <!--头部内容-->
   <view class="xhShow-head">
     <view class="count-box">
-      <view class="count-box-title xhShow-headLeft" bindtap="youJiaojuan">
-        <image class="xhShow-headLeft-img" src="../../images/my/jiaojuan.png"></image>
-        <text>交卷</text>
-      </view>
       <view>
         <text class="text-current-count">{{timeList.xh}}</text>
         <text class="text-total-count">/{{lxmsdtList.ztnum}}</text>
@@ -184,7 +174,10 @@
   <!--序号列表-->
   <view class="serialNumber">
     <view class="serialNumber-dataList">
-      <view class="dataList-item {{item.id != null ? (timeList.xh == index + 1 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" wx:key="index" wx:for="{{questionList}}" wx:item="item" data-index="{{index}}" bindtap="goToXuhao">{{ index + 1 }}</view>
+      <view
+        class="dataList-item {{item.id != null ? (timeList.xh == index + 1 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}"
+        wx:key="index" wx:for="{{questionList}}" wx:item="item" data-index="{{index}}" bindtap="goToXuhao">
+        {{ index + 1 }}</view>
     </view>
   </view>
 </van-popup>

@@ -29,8 +29,9 @@ let ajax = function (obj) {
   obj.header = header;
 
   obj.complete = function (res) {
-    console.log("res", res)
+    // console.log("res", res)
     if (res.data.event == 105) {
+      console.log("未登录")
       wx.showToast({
         title: res.data.msg,
         icon: 'none',
@@ -39,7 +40,6 @@ let ajax = function (obj) {
       wx.removeStorage({
         key: 'userDataList',
         success(res) {
-          console.log(res)
         }
       })
       wx.switchTab({
@@ -48,13 +48,13 @@ let ajax = function (obj) {
     }
 
     if (typeof res.data == 'string' && res.data.indexOf('Warning') > 0) {
-      if (config.debug) {
-        wx.showToast({
-          title: res.data,
-          icon: 'none',
-          duration: 2000
-        });
-      }
+      // if (config.debug) {
+      //   wx.showToast({
+      //     title: res.data,
+      //     icon: 'none',
+      //     duration: 2000
+      //   });
+      // }
     }
   };
 
@@ -66,7 +66,7 @@ let ajax = function (obj) {
       },
       fail: function (err) {
         reject(err.errMsg, err)
-        console.log('fail', err.errMsg)
+        // console.log('fail', err.errMsg)
       }
     }, obj));
   });
@@ -74,12 +74,13 @@ let ajax = function (obj) {
 
 const getConfig = (isjson, params, jiamiData, level) => {
   const suffix = "zhongjianedu";
-  console.log(isjson, params, level, jiamiData)
+  // console.log(isjson, params, level, jiamiData)
   let config_ = {
     headers: {
       // level
     }
   };
+  // console.log(config_)
   // 时间戳
   if (level === 1) {
     params = {
@@ -89,7 +90,7 @@ const getConfig = (isjson, params, jiamiData, level) => {
     //注意：登陆时用户信息需要加密，所以拼接在签名中；后续接口参数不需要加密，就不需要拼接如签名
     // 签名
     let timestamp = new Date().getTime();
-    console.log("时间戳", timestamp)
+    // console.log("时间戳", timestamp)
     // 获取token
     let token = wx.getStorageSync("communityToken") || "";
     // 签名串
@@ -117,10 +118,10 @@ const getConfig = (isjson, params, jiamiData, level) => {
       .reduce((rst, v) => (rst += `${v}=${obj[v]}&`), "")
       .slice(0, -1) + suffix;
     let sign = MD5.hexMD5(resource_code);
-    console.log("resource_code", resource_code);
+    // console.log("resource_code", resource_code);
 
     // let sign = signClick(token, timestamp, params);
-    console.log("communityToken", token);
+    // console.log("communityToken", token);
     // config_.headers = {
     //   token,
     //   timestamp,
@@ -205,9 +206,9 @@ let _post = function (url, params, jiamiData, level, message = '') {
     dataType: 'json',
     success: function (response) {
       let res = response.data;
-      wx.hideNavigationBarLoading()
+      // wx.hideNavigationBarLoading()
       if (!message && typeof message === "string") {
-        wx.hideLoading()
+        // wx.hideLoading()
       }
     }
   })

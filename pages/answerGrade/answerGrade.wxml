@@ -79,8 +79,8 @@
 
   <!--查看错题、全部解析-->
   <view class="bottomTwo">
-    <view class="bottomTwo-item">查看错题</view>
-    <view class="bottomTwo-item">全部解析</view>
+    <view class="bottomTwo-item" bindtap="goToSeeError">查看错题</view>
+    <view class="bottomTwo-item" bindtap="allExercise">全部解析</view>
   </view>
 
 </view>

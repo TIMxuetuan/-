@@ -5,6 +5,8 @@
     "pages/answerIndex/answerIndex",
     "pages/selectStudyItem/selectStudyItem",
     "pages/exercisePage/exercisePage",
+    "pages/errorsAnalysis/errorsAnalysis",
+    "pages/seeError/seeError",
     "pages/answerPage/answerPage",
     "pages/answerGrade/answerGrade",
     "pages/answer_card/answer_card",

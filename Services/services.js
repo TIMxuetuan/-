@@ -46,6 +46,16 @@ const Services = {
         return util._post(`${config.api}/TkWeChat/jjzt`,data, jiamiData, 2)
     },
 
+    //交卷评分页查看解析
+    jjdtk(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/jj_dtk`,data, jiamiData, 2)
+    },
+
+    //交卷评分页查看错题
+    chakanct(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/chakanct`,data, jiamiData, 2)
+    },
+
 
 
     //试题：收藏，取消收藏接口

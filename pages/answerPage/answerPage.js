@@ -24,7 +24,7 @@ Page({
     danWhenTiem: 1000, //单选答题的用时
 
     moreValue: [], //多选时，选中的值
-    xhShow:false, //序号弹窗
+    xhShow: false, //序号弹窗
     show: false, //交卷弹窗
     //
     questionList: [], //循环用的数组
@@ -32,7 +32,9 @@ Page({
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
     swiperDuration: "250",
-    currentIndex: 0
+    currentIndex: 0,
+
+    answerTextValue: "", //材料题 用户输入答案
 
   },
 
@@ -143,6 +145,7 @@ Page({
         //     questionListDuo: this.data.questionListDuo.concat(listLduo)
         //   })
         // }
+        // this.disposeAllList()
         console.log("滑数据", this.data.questionList)
         console.log("当前页数据", this.data.timeList)
         // console.log(this.data.questionListDuo)
@@ -152,6 +155,7 @@ Page({
 
   //总数据this.data.questionList 进行处理， 当滑动切换时使用
   disposeAllList(detail) {
+    // let detail = this.data.current
     let allList = this.data.questionList
     for (const index in allList) {
       var timeList = allList[detail]
@@ -181,10 +185,12 @@ Page({
       let topicXh = this.data.timeList.xh * 1
       that.selectTopic(topicXh - 1)
     }
-    that.setData({
-      currentIndex: current,
-      current: current
-    })
+    if (e.detail.source === 'touch') {
+      that.setData({
+        currentIndex: current,
+        current: current
+      })
+    }
 
     if (current == -1) {
       wx.showToast({
@@ -205,16 +211,16 @@ Page({
 
   //打开序号弹窗
   onClickAnswerCard: function (e) {
-    console.log("当前数据",this.data.timeList)
-    console.log("第一条初始数据",this.data.lxmsdtList)
-    console.log("总数据",this.data.questionList)
+    console.log("当前数据", this.data.timeList)
+    console.log("第一条初始数据", this.data.lxmsdtList)
+    console.log("总数据", this.data.questionList)
     this.setData({
       xhShow: true
     })
   },
 
   //点击序号跳转到那一选项
-  goToXuhao(e){
+  goToXuhao(e) {
     let index = e.currentTarget.dataset.index
     console.log(index)
     let xuhao = index + 1
@@ -222,22 +228,24 @@ Page({
     this.selectTopic(xuhao - 1)
     this.selectTopic(xuhao + 1)
     this.setData({
-      current:xuhao - 1,
+      current: xuhao - 1,
       xhShow: false
     })
   },
 
   //坐上交卷，弹出交卷弹窗，并关闭选项弹窗
-  youJiaojuan(){
+  youJiaojuan() {
     this.setData({
       xhShow: false,
-      show:true
+      show: true
     })
   },
 
   //关闭序号弹窗
   onXhshowClose() {
-    this.setData({ xhShow: false });
+    this.setData({
+      xhShow: false
+    });
   },
 
   onClickLast: function (e) {
@@ -295,21 +303,22 @@ Page({
   //单选点击事件
   radioClick(e) {
     console.log(e.currentTarget.dataset.item)
+    let item = e.currentTarget.dataset.item
     let itemId = e.currentTarget.dataset.item.id
     console.log(e.currentTarget.dataset.stxxitem)
     console.log(e.currentTarget.dataset.id)
     console.log(this.data.danXuanid)
     let id = e.currentTarget.dataset.id
     // if (this.data.danXuanid != id) {
-      this.setData({
-        questionList: this.data.questionList,
-        danXuanid: id,
-        nowClickList: e.currentTarget.dataset.item
-      })
-      console.log("提交问题")
-      this.data.danAnswerValue = id
-      this.judgeScore(this.data.danAnswerValue)
-      this.saveAnswerMessage()
+    this.setData({
+      questionList: this.data.questionList,
+      danXuanid: id,
+      nowClickList: e.currentTarget.dataset.item
+    })
+    console.log("提交问题")
+    this.data.danAnswerValue = id
+    this.judgeScore(this.data.danAnswerValue)
+    this.saveAnswerMessage(item)
     // } else {
     //   this.setData({
     //     danXuanid: null
@@ -386,7 +395,40 @@ Page({
       }
     }
     console.log(this.data.danDuiOrCuo, this.data.danFenZhi, this.data.danAnswerValue)
-    this.saveAnswerMessage()
+    this.saveAnswerMessage(item)
+  },
+
+  //材料题填写答案输入框
+  bindTextAreaBlur: function (e) {
+    console.log(e.detail.value)
+    console.log(e.currentTarget.dataset.item)
+    let detaValue = e.detail.value
+    let itemId = e.currentTarget.dataset.item.id
+    this.data.questionList.map(item => {
+      if (item.id == itemId) {
+        item.uda = detaValue
+        this.setData({
+          answerTextValue: item.uda
+        })
+      }
+    })
+
+    this.setData({
+      questionList: this.data.questionList,
+      nowClickList: e.currentTarget.dataset.item
+    })
+    console.log("zzz", this.data.questionList)
+  },
+
+  //材料题提交答案
+  caiLiaoConfig(e) {
+    let item = e.currentTarget.dataset.item
+    this.setData({
+      danDuiOrCuo: "待定",
+      danFenZhi: 0,
+      danAnswerValue: item.uda
+    })
+    this.saveAnswerMessage(item)
   },
 
 
@@ -406,11 +448,11 @@ Page({
   },
 
   //保存答题试题信息,点击选项时，进行提交答题信息
-  saveAnswerMessage() {
+  saveAnswerMessage(item) {
     console.log(this.data.nowClickList)
-    console.log(this.data.timeList)
+    console.log(item)
     // let sendList = this.data.nowClickList
-    let sendList = this.data.timeList
+    let sendList = item
     let dataLists = {
       cache_key: this.data.cacheKey,
       shijuan_id: this.data.shijuan_id,
@@ -441,6 +483,7 @@ Page({
       console.log(res)
       if (res.event == 100) {
         this.selectTopic(sendList.xh)
+        console.log(sendList)
         console.log(sendList.xh)
         if (sendList.xh < this.data.questionList.length) {
           this.selectTopic(sendList.xh * 1 + 2)
@@ -467,6 +510,7 @@ Page({
   //点击交卷弹窗确认事件
   getUserInfo(event) {
     let sendList = this.data.timeList
+    console.log(sendList)
     let jjztList = {
       shijuan_id: this.data.shijuan_id,
       xl_id: sendList.xl_id,
