@@ -145,7 +145,7 @@
     <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
   </view>
   <view class="fixedBottom-item">
-    <image class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
+   <view bindtap="pauseTime">{{filter.timeGeshi(second)}}</view>
   </view>
 </view>
 
@@ -183,6 +183,11 @@
 
 
 <!--交卷弹窗-->
-<van-dialog class="jiaoDialog" use-slot title="是否确认交卷" show="{{ show }}" show-cancel-button
+<!-- <van-dialog class="jiaoDialog" use-slot title="是否确认交卷" show="{{ show }}" show-cancel-button
   confirm-button-open-type="getUserInfo" bind:close="onClose" bind:getuserinfo="getUserInfo">
+</van-dialog> -->
+
+<!--暂停计时器弹窗-->
+<van-dialog class="jiaoDialog" use-slot title="休息中" show="{{ timeShow }}" bind:show-cancel-button="true"
+  confirm-button-open-type="getUserInfo" confirm-button-text="继续学习" bind:getuserinfo="getTimeServe">
 </van-dialog>

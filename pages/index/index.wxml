@@ -13,7 +13,7 @@
       <view class="wrongTopic-content">
         <view class="wrongTopic-content-title">错题本</view>
         <view class="wrongTopic-content-nei">错题收集，打破错题</view>
-        <button class="goExercise" bindtap="goToWrongTopic">去练习</button>
+        <button class="goExercise" bindtap="goToWrongTopic">去查看</button>
       </view>
     </view>
     <view class="threeModul-right">

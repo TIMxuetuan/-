@@ -186,6 +186,6 @@
   font-weight: 500;
   color: #FF7549;
   line-height: 56rpx;
-  background-color: #DBDBDB;
-  border: 1px solid #DBDBDB;
+  background-color: #F3F3F3;
+  border: 1px solid #F3F3F3;
 }

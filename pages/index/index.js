@@ -129,48 +129,76 @@ Page({
 
   //去练习页面--进入答题
   goToExercise(e) {
-    wx.navigateTo({
-      url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
-    })
-    console.log(e.currentTarget.dataset.item)
-    // let dataLists = {
-    //   cache_key: this.data.cacheKey,
-    //   shijuan_id: e.currentTarget.dataset.item.id,
-    //   type:1
-    // }
-    // let jiamiData = {
-    //   cache_key: this.data.cacheKey,
-    //   shijuan_id: e.currentTarget.dataset.item.id,
-    //   type:1
-    // }
-    // Service.lxmsdt(dataLists, jiamiData).then(res => {
-    //   console.log(res)
-    //   if (res.event == 100) {
-    //     this.setData({
-    //     })
-    //   }
-    // })
+    console.log(this.data.cacheKey)
+    if (this.data.cacheKey) {
+      wx.navigateTo({
+        url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/my/my'
+      })
+      wx.showToast({
+        title: '请登录',
+        icon: 'none',
+        duration: 2000
+      });
+    }
+
   },
 
   //跳转到历史记录页面
   goToHistory() {
-    wx.navigateTo({
-      url: '/pages/historyList/historyList',
-    })
+    if (this.data.cacheKey) {
+      wx.navigateTo({
+        url: '/pages/historyList/historyList',
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/my/my'
+      })
+      wx.showToast({
+        title: '请登录',
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
 
   //跳转到错题本页面
   goToWrongTopic() {
-    wx.navigateTo({
-      url: '/pages/wrongTopic/wrongTopic',
-    })
+    if (this.data.cacheKey) {
+      wx.navigateTo({
+        url: '/pages/wrongTopic/wrongTopic',
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/my/my'
+      })
+      wx.showToast({
+        title: '请登录',
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
 
   //跳转到错题本页面
   goToCollect() {
-    wx.navigateTo({
-      url: '/pages/collect/collect',
-    })
+    if (this.data.cacheKey) {
+      wx.navigateTo({
+        url: '/pages/collect/collect',
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/my/my'
+      })
+      wx.showToast({
+        title: '请登录',
+        icon: 'none',
+        duration: 2000
+      });
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -66,7 +66,7 @@ Page({
       shijuan_id: sendList.shijuan_id,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: 2000,
+      // ys: 2000,
     }
     wx.setStorage({
       key: "jjztList",
@@ -85,7 +85,7 @@ Page({
       shijuan_id: sendList.shijuan_id,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: 2000,
+      // ys: 2000,
     }
     wx.setStorage({
       key: "jjztList",

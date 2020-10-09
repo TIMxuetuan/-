@@ -10,11 +10,11 @@
     <!--试题模块-->
     <block wx:if="{{sortdtList != ''}}">
       <view class="testModule">
-        <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="idx" wx:for-item="item">
+        <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="idx" wx:for-item="item" data-item="{{item}}" bindtap="goToAnswerGrade">
           <view class="testItem">
-            <view class="testItem-title">{{item.xinxi.sj_name}}</view>
+            <view class="testItem-title">{{item.nr}}</view>
             <view class="testItem-number">
-             {{item.add_sj}}
+             <text class="testItem-yiYou">已有错题</text>{{item.count}}
             </view>
           </view>
           <view class="testItemBtn">

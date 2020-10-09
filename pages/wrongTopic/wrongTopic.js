@@ -17,6 +17,23 @@ Page({
     cacheKey: "", //唯一标识
   },
 
+  //跳到错题页面
+  goToAnswerGrade(e) {
+    let sendList = e.currentTarget.dataset.item
+    console.log(sendList)
+    let jjztList = {
+      shijuan_id: sendList.sj_id,
+      xl_id: sendList.xl_id,
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.navigateTo({
+      url: '/pages/seeError/seeError',
+    })
+  },
+
   //获得首页科目列表
   getkmlbList() {
     console.log("this.data.AllXmId", this.data.AllXmId)

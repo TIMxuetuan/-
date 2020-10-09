@@ -40,6 +40,11 @@ const Services = {
     csbcdt(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/csbcdt`,data, jiamiData, 2)
     },
+
+    //退出保存试卷信息
+    tcbc(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/tcbc`,data, jiamiData, 2)
+    },
     
     //交卷
     jjzt(data, jiamiData){

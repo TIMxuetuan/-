@@ -34,8 +34,19 @@ function compare(arr1, arr2) {
   // return arr1.some(item => arr2.includes(item))
 }
 
+//格式化时间
+function timeGeshi(value){
+  var time = getDate(value * 1000)
+  var minute = time.getMinutes()
+  var second = time.getSeconds()
+  minute = minute < 10 ? '0' + minute : minute
+  second = second < 10 ? '0' + second : second
+  return minute + ':' + second
+}
+
 module.exports = {
   filtrationAbcd: filtrationAbcd,
   defineIndexOf: defineIndexOf,
-  compare:compare
+  compare:compare,
+  timeGeshi:timeGeshi
 }

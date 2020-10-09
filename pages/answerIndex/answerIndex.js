@@ -33,6 +33,7 @@ Page({
         that.getSjztsyList();
       }
     })
+    console.log(this.data.cacheKey)
   },
 
   //获得试卷答题首页内容

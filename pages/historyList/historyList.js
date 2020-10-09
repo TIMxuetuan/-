@@ -83,15 +83,18 @@ Page({
       shijuan_id: sendList.sj_id,
       xl_id: sendList.id,
       xh: sendList.dyxh,
-      ys: 2000,
+      // ys: 2000,
     }
     wx.setStorage({
       key: "jjztList",
       data: jjztList
     })
     wx.navigateTo({
-      url: '/pages/answerGrade/answerGrade',
+      url: '/pages/errorsAnalysis/errorsAnalysis',
     })
+    // wx.navigateTo({
+    //   url: '/pages/answerGrade/answerGrade',
+    // })
   },
 
 

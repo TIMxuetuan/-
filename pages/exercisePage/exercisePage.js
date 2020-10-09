@@ -22,7 +22,7 @@ Page({
     danAnswerValue: '', //单选时的答案 需要转换为 A B C 
     danDuiOrCuo: "", //单选时 确定答案的对与错
     danFenZhi: "", // 单选时 答案的得分
-    danWhenTiem: 1000, //单选答题的用时
+    danWhenTiem: 0, //上一题的时间
 
     moreValue: [], //多选时，选中的值
     xhShow: false, //序号弹窗
@@ -36,6 +36,9 @@ Page({
     isJieXiShow: 1, //判断是否点击 查看解析 1为初始无， 2为查看解析
 
     answerTextValue: "", //材料题 用户输入答案
+    setInterTimes: null, //定时器赋值
+    second: 0, // 秒
+    timeShow: false, //定时器弹窗
 
   },
 
@@ -315,7 +318,13 @@ Page({
   //点击解析按钮
   openJieXi(e) {
     let item = e.currentTarget.dataset.item
-    if (item.tx == 2) {
+    if (item.tx == 1) {
+      this.setData({
+        danDuiOrCuo: "错",
+        danFenZhi: 0,
+        danAnswerValue: '未做'
+      })
+    } else if (item.tx == 2) {
       this.setData({
         danDuiOrCuo: "错",
         danFenZhi: 0,
@@ -449,6 +458,10 @@ Page({
     // console.log(this.data.nowClickList)
     // console.log(this.data.timeList)
     let sendList = item
+    let nowTime = this.data.second - this.data.danWhenTiem
+    console.log("现在的时间", this.data.second)
+    console.log("上一题的时间", this.data.danWhenTiem)
+    console.log("现在的用时", nowTime)
     let dataLists = {
       cache_key: this.data.cacheKey,
       shijuan_id: this.data.shijuan_id,
@@ -459,7 +472,7 @@ Page({
       da: this.data.danAnswerValue,
       dc: this.data.danDuiOrCuo,
       df: this.data.danFenZhi,
-      ys: this.data.danWhenTiem,
+      ys: nowTime,
       tzt: 1,
     }
     let jiamiData = {
@@ -472,18 +485,21 @@ Page({
       da: this.data.danAnswerValue,
       dc: this.data.danDuiOrCuo,
       df: this.data.danFenZhi,
-      ys: this.data.danWhenTiem,
+      ys: nowTime,
       tzt: 1,
     }
     Service.csbcdt(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
         this.selectTopic(sendList.xh)
+        this.setData({
+          danWhenTiem:this.data.second
+        })
         if (sendList.xh < this.data.questionList.length) {
           this.selectTopic(sendList.xh * 1 + 2)
         } else {
-          this.setData({
-            show: true
-          })
+          // this.setData({
+          //   show: true
+          // })
         }
 
       }
@@ -560,6 +576,7 @@ Page({
     }
     Service.lxmsdt(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
+        this.setInterval()
         this.transformShape(res.list)
         let linshiList = []
         for (let i = 0; i < res.list.ztnum; i++) {
@@ -598,6 +615,58 @@ Page({
     })
   },
 
+  //退出时交卷子
+  quitSubmit() {
+    console.log(this.data.timeList)
+    let sendList = this.data.timeList
+    let dataLists = {
+      cache_key: this.data.cacheKey,
+      xl_id: sendList.xl_id,
+      xh: sendList.xh,
+      ys: this.data.second
+    }
+    let jiamiData = {
+      cache_key: this.data.cacheKey,
+      xl_id: sendList.xl_id,
+      xh: sendList.xh,
+      ys: this.data.second
+    }
+    Service.tcbc(dataLists, jiamiData).then(res => {
+      console.log(res)
+      if (res.event == 100) {}
+    })
+  },
+
+  // 计时器
+  setInterval: function () {
+    const that = this
+    var second = that.data.second
+    var minute = that.data.minute
+    var hours = that.data.hours
+    that.data.setInterTimes = setInterval(function () { // 设置定时器
+      second++
+      that.setData({
+        second: second
+      })
+    }, 1000)
+  },
+
+  //暂停计时器
+  pauseTime() {
+    console.log('暂停')
+    this.setData({
+      timeShow: true
+    })
+    clearInterval(this.data.setInterTimes)
+  },
+
+  getTimeServe() {
+    this.setInterval()
+    this.setData({
+      timeShow: false
+    });
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -623,7 +692,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log("退出了")
+    this.quitSubmit()
+    clearInterval(this.data.setInterTimes)
   },
 
   /**

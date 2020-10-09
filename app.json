@@ -1,9 +1,9 @@
 {
   "pages":[
+    "pages/selectStudyItem/selectStudyItem",
     "pages/index/index",
     "pages/my/my",
     "pages/answerIndex/answerIndex",
-    "pages/selectStudyItem/selectStudyItem",
     "pages/exercisePage/exercisePage",
     "pages/errorsAnalysis/errorsAnalysis",
     "pages/seeError/seeError",

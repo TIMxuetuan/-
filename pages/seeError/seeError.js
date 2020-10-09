@@ -76,7 +76,6 @@ Page({
       }
     })
   },
-
   //选题接口
   selectTopic(topicXh) {
     let sendList = this.data.jjztList
@@ -92,15 +91,16 @@ Page({
       xl_id: sendList.xl_id,
       xh: topicXh
     }
-    Service.jjdtk(dataLists, jiamiData).then(res => {
+    Service.cxxt(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
         this.transformShape(res.list)
         let listL = []
         listL.push(res.list)
-        let array = this.data.questionList
+        // let array = this.data.questionList
+        let array = this.data.errorSerialNum
         for (let index = 0; index < array.length; index++) {
-          if (index + 1 == res.list.xh) {
+          if (array[index] == res.list.xh) {
             //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
             var deletedtodo = 'questionList[' + index + ']';
             this.setData({
@@ -140,17 +140,32 @@ Page({
     that.disposeAllList(e.detail.current)
     // console.log(that.data.current)
     let current = e.detail.current
-    console.log(this.data.timeList)
+    let nextSeriaNum = that.getSerialNum(current)
+    let topSeriaNum = that.getSerialNumTop(current)
+    console.log('下一个序号', nextSeriaNum)
+    console.log(that.data.timeList)
     if (current > that.data.current && current > 0) {
-      console.log(this.data.currentIndex)
+      console.log(that.data.currentIndex)
       console.log("大于")
-      let topicXh = this.data.timeList.xh * 1 + 1
+      let topicXh = nextSeriaNum
       that.selectTopic(topicXh)
+      // if (e.detail.source === 'touch') {
+      //   that.setData({
+      //     currentIndex: topicXh,
+      //     current: topicXh
+      //   })
+      // }
     }
     if (current < that.data.current) {
       console.log("小于")
-      let topicXh = this.data.timeList.xh * 1
-      that.selectTopic(topicXh - 1)
+      let topicXh = topSeriaNum
+      that.selectTopic(topicXh)
+      // if (e.detail.source === 'touch') {
+      //   that.setData({
+      //     currentIndex: topicXh - 1,
+      //     current: topicXh - 1
+      //   })
+      // }
     }
     if (e.detail.source === 'touch') {
       that.setData({
@@ -158,6 +173,8 @@ Page({
         current: current
       })
     }
+
+
     if (current == -1) {
       wx.showToast({
         title: "已经是第一题了",
@@ -187,16 +204,23 @@ Page({
 
   //点击序号跳转到那一选项
   goToXuhao(e) {
-    let index = e.currentTarget.dataset.index
-    console.log(index)
-    let xuhao = index + 1
-    this.selectTopic(xuhao)
-    this.selectTopic(xuhao - 1)
-    this.selectTopic(xuhao + 1)
-    this.setData({
-      current: xuhao - 1,
-      xhShow: false
-    })
+    let item = e.currentTarget.dataset.item
+    let array = this.data.errorSerialNum
+    console.log(item)
+    if (item.dct == '错') {
+      for (let index = 0; index < array.length; index++) {
+        if (item.xh == array[index]) {
+          console.log(index, array[index])
+          this.selectTopic(item.xh)
+          this.selectTopic(array[index - 1])
+          this.selectTopic(array[index + 1])
+          this.setData({
+            current: index,
+            xhShow: false
+          })
+        }
+      }
+    } 
   },
 
   //关闭序号弹窗
@@ -208,7 +232,7 @@ Page({
 
   //将选项0：选项一 ，序号转为 A：选项一形式
   transformShape(item) {
-    let stxx = item.options;
+    let stxx = item.stxx;
     let obj = []
     item['ziuda'] = ''
     for (const key in stxx) {
@@ -286,7 +310,7 @@ Page({
       if (res.event == 100) {
         this.transformShape(res.list.stxinxi)
         let linshiList = []
-        for (let i = 0; i < res.list.datika.znum; i++) {
+        for (let i = 0; i < res.list.datika.cuonum; i++) {
           let item = {}
           linshiList.push(item)
         }
@@ -311,14 +335,34 @@ Page({
           timeList: res.list.stxinxi,
           xhlist: res.list.datika.qbxhlist,
           questionList: this.data.questionList,
-          current: res.list.xh * 1 - 1
+          errorSerialNum: res.list.datika.ctxhlist,
+          current: res.list.stxinxi.xh * 1 - 1
         })
-        console.log('总数据',this.data.questionList)
+        let nextSeriaNum = this.getSerialNum(0)
+        console.log('总数据', this.data.questionList)
+        console.log('下一个序号', nextSeriaNum)
         app.globalData.questionList = this.data.xhlist
-        this.selectTopic(res.list.xh * 1 + 1)
-        this.selectTopic(res.list.xh * 1 - 1)
+        this.selectTopic(nextSeriaNum)
       }
     })
+  },
+
+  //序号取值，从错题序号列表里取下一个
+  getSerialNum(value) {
+    console.log("错题序号数组", this.data.errorSerialNum)
+    console.log("错题小标", value)
+    let current = value + 1
+    console.log("下一个", this.data.errorSerialNum[current])
+    return this.data.errorSerialNum[current]
+  },
+
+  //序号取值，从错题序号列表里取上一个
+  getSerialNumTop(value) {
+    console.log("错题序号数组", this.data.errorSerialNum)
+    console.log("错题小标", value)
+    let current = value - 1
+    console.log("下一个", this.data.errorSerialNum[current])
+    return this.data.errorSerialNum[current]
   },
 
   /**

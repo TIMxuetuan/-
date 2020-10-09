@@ -176,7 +176,7 @@
     <view class="serialNumber-dataList">
       <view
         class="dataList-item {{item.id != null ? (timeList.xh == item.xh ? 'bgDang': (item.dct == '' ? '' :(item.dct == '错' ? 'daCuo' : (item.dct == '对'?'daDui':'')))) : ''}}"
-        wx:key="index" wx:for="{{lxmsdtList.datika.quanbupx}}" wx:item="item" data-index="{{index}}" bindtap="goToXuhao">
+        wx:key="index" wx:for="{{lxmsdtList.datika.quanbupx}}" wx:item="item" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
         {{ item.xh }}</view>
     </view>
   </view>
