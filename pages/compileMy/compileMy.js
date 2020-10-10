@@ -1,56 +1,136 @@
 // pages/compileMy/compileMy.js
 const Service = require("../../Services/services")
-
+const MD5 = require('../../utils/md5');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    cacheKey: ""
+    cacheKey: "",
+    avatar:'',
+    nickname:'',
+    avatar:'',
+    show:false,
+    value:'',
   },
 
   afterRead(event) {
-    console.log(event)
+    let that = this
     const file = event.detail.file;
-    console.log(file)
+
+    let jiamiData = {
+      cache_key: that.data.cacheKey,
+    }
+
+    const suffix = "zhongjianedu";
+    let timestamp = new Date().getTime();
+    // 签名串
+    var obj = {};
+    obj["timestamp"] = timestamp;
+
+    for (var key in jiamiData) {
+      var reg = /\[(.+?)\]/;
+      if (key.match(reg)) {
+        obj[RegExp.$1] = jiamiData[key];
+      } else {
+        obj[key] = jiamiData[key];
+      }
+    }
+    const reverse_key = Object.keys(obj).sort();
+    let resource_code =
+      reverse_key
+      .reduce((rst, v) => (rst += `${v}=${obj[v]}&`), "")
+      .slice(0, -1) + suffix;
+    let sign = MD5.hexMD5(resource_code);
+    console.log(resource_code)
+    console.log(sign)
+
+    wx.uploadFile({
+      url: 'https://caigua.zhongjianedu.com/ztk.php/TkWeChatLogin/UpHeardImage', // 仅为示例，非真实的接口地址
+      filePath: file.path,
+      name: 'uploadfile',
+      formData: {
+        'cache_key': that.data.cacheKey,
+        'timestamp': timestamp,
+        'sign': sign,
+      },
+      success(res) {
+        // 上传完成需要更新 fileList
+        console.log(res)
+        let data = JSON.parse(res.data)
+        console.log(data)
+        that.setData({
+          avatar:data.user_pic
+        })
+        that.xiuUpUserInfo()
+      },
+      fail(error) {
+        console.log(error)
+      }
+    });
+
+  },
+
+  //修改昵称头像
+  xiuUpUserInfo() {
     let dataLists = {
       cache_key: this.data.cacheKey,
-      uploadfile: file
+      nickname: this.data.nickname,
+      avatar: this.data.avatar,
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
-      uploadfile: file
+      nickname: this.data.nickname,
+      avatar: this.data.avatar,
     }
-    Service.UpHeardImage(dataLists, jiamiData).then(res => {
+    Service.upUserInfo(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
-
+        wx.showToast({
+          title: res.msg,
+          icon: 'none',
+          duration: 2000
+        });
+        wx.setStorage({
+          key: "userDataList",
+          data: res.data
+        })
+        this.setData({
+          userDataList: res.data
+        })
       }
     })
-    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-    // wx.uploadFile({
-    //   url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
-    //   filePath: file.path,
-    //   name: 'file',
-    //   formData: {
-    //     user: 'test'
-    //   },
-    //   success(res) {
-    //     console.log(res)
-    //     // 上传完成需要更新 fileList
-    //     const {
-    //       fileList = []
-    //     } = this.data;
-    //     fileList.push({
-    //       ...file,
-    //       url: res.data
-    //     });
-    //     this.setData({
-    //       fileList
-    //     });
-    //   },
-    // });
+  },
+
+  //跳转修改名字页面
+  goToAlterName() {
+    this.setData({
+      show:true
+    })
+  },
+
+  //输入框的值
+  onChange(event) {
+    console.log(event.detail);
+    this.setData({
+      alterNameValue:event.detail
+    })
+  },
+
+  //确认按钮事件
+  getUserInfo(event) {
+    console.log(event.detail);
+    this.setData({
+      nickname:this.data.alterNameValue
+    })
+    this.xiuUpUserInfo()
+    this.onClose()
+  },
+
+  //关闭弹窗
+  onClose() {
+    this.setData({ show: false });
   },
 
   //退出登录
@@ -94,16 +174,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    wx.getStorage({
-      key: 'cache_key',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          cacheKey: res.data
-        })
-      }
-    })
+
   },
 
   /**
@@ -117,7 +188,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          cacheKey: res.data
+        })
+      }
+    })
+    wx.getStorage({
+      key: 'userDataList',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          userDataList: res.data
+        })
+      }
+    })
   },
 
   /**

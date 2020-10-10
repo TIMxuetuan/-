@@ -107,14 +107,14 @@ Page({
       xmlb_id: this.data.AllXmId,
       cache_key: "",
       sj_lx: this.data.sixActive,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     let jiamiData = {
       xmlb_id: this.data.AllXmId,
       cache_key: "",
       sj_lx: this.data.sixActive,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     Service.sortdt(dataLists, jiamiData).then(res => {

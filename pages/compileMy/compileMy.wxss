@@ -29,6 +29,7 @@
   width: 90rpx;
   height: 90rpx;
   margin-right: 22rpx;
+  border-radius: 50%;
 }
 .topRight-icon{
   color: #BCBCBC;

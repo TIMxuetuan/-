@@ -2,6 +2,8 @@
   "usingComponents": {
     "van-icon": "/vant/icon/index",
     "van-button": "/vant/button/index",
-    "van-uploader": "/vant/uploader/index"
+    "van-uploader": "/vant/uploader/index",
+    "van-field": "/vant/field/index",
+    "van-dialog": "/vant/dialog/index"
   }
 }

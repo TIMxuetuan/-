@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/selectStudyItem/selectStudyItem",
     "pages/index/index",
+    "pages/selectStudyItem/selectStudyItem",
     "pages/my/my",
     "pages/answerIndex/answerIndex",
     "pages/exercisePage/exercisePage",
@@ -12,6 +12,7 @@
     "pages/answer_card/answer_card",
     "pages/historyList/historyList",
     "pages/wrongTopic/wrongTopic",
+    "pages/wrongDetails/wrongDetails",
     "pages/collect/collect",
     "pages/compileMy/compileMy",
     "pages/logs/logs"

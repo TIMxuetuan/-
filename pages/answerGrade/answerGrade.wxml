@@ -1,4 +1,6 @@
 <!--pages/answerGrade/answerGrade.wxml-->
+<wxs module="filter" src="../../utils/filter.wxs"></wxs>
+
 <view class="answerGrade">
   <!--头部对错分析-->
   <view class="answerGrade-head">
@@ -35,8 +37,8 @@
   <view class="threeAnalyse">
     <view class="threeAnalyse-one">
       <view class="analyseOne-top">
-        <text class="analyseOne-time">{{pageLists.ys}}</text>
-        <text class="analyseOne-unit">分钟</text>
+        <text class="analyseOne-time">{{filter.pingFenTimeGeshi(pageLists.ys * 1)}}</text>
+        <!-- <text class="analyseOne-unit">分钟</text> -->
       </view>
       <view class="analyseOne-title">用时</view>
     </view>

@@ -26,10 +26,6 @@ Page({
   },
 
   onShow: function () {
-    console.log(333)
-  },
-
-  onLoad: function () {
     console.log(111)
     var that = this
     wx.getStorage({
@@ -79,6 +75,10 @@ Page({
         }
       })
     }
+  },
+
+  onLoad: function () {
+    
   },
   getUserInfo: function (e) {
     console.log(e)
@@ -131,9 +131,9 @@ Page({
     }
     Service.mySjTotal(dataLists, jiamiData).then(res => {
       console.log(res)
-      if (res.event == 100) {
-        
-      }
+      this.setData({
+        leijiNum: res
+      })
     })
   },
 

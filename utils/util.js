@@ -203,6 +203,7 @@ let _post = function (url, params, jiamiData, level, message = '') {
     },
     url: url,
     data: dataParams,
+    // processData: false,//不去处理发送的数据
     dataType: 'json',
     success: function (response) {
       let res = response.data;

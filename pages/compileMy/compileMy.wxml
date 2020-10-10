@@ -4,14 +4,15 @@
     <view class="compileMy-top-text">头像</view>
     <view class="compileMy-top-right">
       <van-uploader bind:after-read="afterRead">
-        <image class="topRight-img" src="../../images/my/morentouxing.png"></image>
+        <image class="topRight-img" src="{{userDataList.avatar}}"></image>
       </van-uploader>
       <van-icon class="topRight-icon centerIcon" name="arrow" />
     </view>
   </view>
   <view class="compileMy-two">
     <view class="compileMy-top-text">昵称</view>
-    <view class="compileMy-top-right">
+    <view class="compileMy-top-right" bindtap="goToAlterName">
+      <view style="margin-right:22rpx">{{userDataList.nickname}}</view>
       <van-icon class="topRight-icon" name="arrow" />
     </view>
   </view>
@@ -19,3 +20,9 @@
     <van-button round color="#FF5519" bind:click="logOut">退出登录</van-button>
   </view>
 </view>
+
+<!--修改昵称弹窗-->
+<van-dialog class="jiaoDialog" use-slot title="是否修改昵称" show="{{ show }}" show-cancel-button
+  confirm-button-open-type="getUserInfo" bind:close="onClose" bind:getuserinfo="getUserInfo">
+  <van-field value="{{ userDataList.nickname }}" placeholder="请输入用户名" border="{{ false }}" bind:change="onChange" />
+</van-dialog>

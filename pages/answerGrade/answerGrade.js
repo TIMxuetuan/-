@@ -72,7 +72,7 @@ Page({
       key: "jjztList",
       data: jjztList
     })
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/errorsAnalysis/errorsAnalysis',
     })
   },
@@ -91,7 +91,7 @@ Page({
       key: "jjztList",
       data: jjztList
     })
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/seeError/seeError',
     })
   },

@@ -35,7 +35,7 @@ function compare(arr1, arr2) {
 }
 
 //格式化时间
-function timeGeshi(value){
+function timeGeshi(value) {
   var time = getDate(value * 1000)
   var minute = time.getMinutes()
   var second = time.getSeconds()
@@ -44,9 +44,29 @@ function timeGeshi(value){
   return minute + ':' + second
 }
 
+//格式化时间--评分页面单独使用
+function pingFenTimeGeshi(value) {
+  console.log("value",value)
+  var t = value * 1000
+  var HOUR = 1000 * 60 * 60;
+  var h = parseInt((t % (HOUR * 24)) / (HOUR));
+  var m = parseInt((t % (HOUR)) / (1000 * 60));
+  var s = parseInt((t % (1000 * 60)) / 1000);
+  console.log("time",t)
+  console.log("hours",h)
+  console.log("minute",m)
+  console.log("second",s)
+
+  h = h < 10 ? '0' + h : h
+  m = m < 10 ? '0' + m : m
+  s = s < 10 ? '0' + s : s
+  return h + ':' + m + ':' + s
+}
+
 module.exports = {
   filtrationAbcd: filtrationAbcd,
   defineIndexOf: defineIndexOf,
-  compare:compare,
-  timeGeshi:timeGeshi
+  compare: compare,
+  timeGeshi: timeGeshi,
+  pingFenTimeGeshi: pingFenTimeGeshi
 }

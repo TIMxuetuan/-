@@ -40,7 +40,13 @@ App({
               }
             }
           })
-        } 
+        } else {
+          //跳选择项目
+          console.log("跳选择项目")
+          wx.redirectTo({
+            url: '/pages/selectStudyItem/selectStudyItem'
+          })
+        }
       }
     })
   },

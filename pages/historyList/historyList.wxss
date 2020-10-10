@@ -24,6 +24,7 @@
 /*试题模块*/
 .testModule {
   margin-top: 30rpx;
+  padding: 0 40rpx;
 }
 
 .testModule-item {
@@ -36,6 +37,7 @@
   justify-content: space-between;
   border: 1px solid #F6F6F6;
   border-radius: 10rpx;
+  box-shadow: 1rpx 3rpx 35rpx 0px rgba(128, 128, 128, 0.13);
 }
 
 .testItem {
@@ -61,7 +63,7 @@
   font-size: 24rpx;
   font-weight: 500;
   color: #656565;
-  line-height: 13rpx;
+  line-height: 32rpx;
 }
 
 .testItemBtn-btn {
@@ -100,4 +102,9 @@
   font-size: 26rpx;
   font-weight: bold;
   color: #CCCCCC;
+}
+
+.yiZuoNum{
+  color: #FF561A;
+  margin: 0 6rpx;
 }

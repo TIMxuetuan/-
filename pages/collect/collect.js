@@ -52,13 +52,13 @@ Page({
     let dataLists = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     Service.sczxsj(dataLists, jiamiData).then(res => {
@@ -68,6 +68,24 @@ Page({
           sortdtList: res.list
         })
       }
+    })
+  },
+
+  //跳到全部解析页面
+  goToAnswerGrade(e) {
+    let sendList = e.currentTarget.dataset.item
+    console.log(sendList)
+    let jjztList = {
+      shijuan_id: sendList.id,
+      xl_id: sendList.lb_id,
+      type:2
+    }
+    wx.setStorage({
+      key: "jjztList",
+      data: jjztList
+    })
+    wx.navigateTo({
+      url: '/pages/wrongDetails/wrongDetails',
     })
   },
 

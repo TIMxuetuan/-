@@ -69,7 +69,7 @@ const Services = {
     },
 
 
-    //收藏试卷列表
+    //收藏试卷里的试题列表
     sczxsj(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/sczxsj`,data, jiamiData, 2)
     },
@@ -82,6 +82,16 @@ const Services = {
     //错题本
     ctbst(data, jiamiData){
         return util._post(`${config.api}/TkWeChat/ctbst`,data, jiamiData, 2)
+    },
+
+    //错题本查看详情
+    queryCtInfo(data, jiamiData){
+        return util._post(`${config.api}/TkWeChat/queryCtInfo`,data, jiamiData, 2)
+    },
+
+    //我的-修改昵称头像
+    upUserInfo(data, jiamiData){
+        return util._post(`${config.api}/TkWeChatLogin/upUserInfo`,data, jiamiData, 2)
     },
 
     //我的-头像上传地址

@@ -30,9 +30,9 @@
 
         <!--累计做题-->
         <view class="addUpExercise">
-          <view class="addUpExercise-text">累积做题 <text class="exercise-num">20</text> 套</view>
+          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.sj}}</text> 套</view>
           <view class="addUpExercise-wire"></view>
-          <view class="addUpExercise-text">累积做题 <text class="exercise-num">200</text> 道</view>
+          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.st}}</text> 道</view>
         </view>
 
         <!--三个模块 历史记录、错题本、收藏中心-->

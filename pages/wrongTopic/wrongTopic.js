@@ -24,13 +24,14 @@ Page({
     let jjztList = {
       shijuan_id: sendList.sj_id,
       xl_id: sendList.xl_id,
+      type:1
     }
     wx.setStorage({
       key: "jjztList",
       data: jjztList
     })
     wx.navigateTo({
-      url: '/pages/seeError/seeError',
+      url: '/pages/wrongDetails/wrongDetails',
     })
   },
 
@@ -69,13 +70,13 @@ Page({
     let dataLists = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     Service.ctbst(dataLists, jiamiData).then(res => {

@@ -40,10 +40,6 @@ Page({
   //tabs切换
   onChangeSubject(event) {
     console.log(event.detail)
-    wx.showToast({
-      title: `点击标签 ${event.detail.name}`,
-      icon: 'none',
-    });
     this.setData({
       active: event.detail.name
     })
@@ -56,13 +52,13 @@ Page({
     let dataLists = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active,
+      kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
     Service.zt_lsjl(dataLists, jiamiData).then(res => {
@@ -75,7 +71,7 @@ Page({
     })
   },
 
-  //跳到评分报告页面
+  //跳到全部解析页面
   goToAnswerGrade(e) {
     let sendList = e.currentTarget.dataset.item
     console.log(sendList)
