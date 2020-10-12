@@ -9,13 +9,14 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    userDataList: null //后台返的用户数据
+    userDataList: null, //后台返的用户数据
+    cache_key:null
   },
   //事件处理函数
   bindViewTap: function () {
-    wx.navigateTo({
-      url: '/pages/my/my'
-    })
+    // wx.navigateTo({
+    //   url: '/pages/my/my'
+    // })
   },
 
   //跳转到 我的编辑资料页面
@@ -44,6 +45,12 @@ Page({
         console.log(res)
         that.setData({
           userDataList: res.data
+        })
+      },
+      fail(res) {
+        console.log(res)
+        that.setData({
+          userDataList: null
         })
       }
     })
@@ -78,7 +85,7 @@ Page({
   },
 
   onLoad: function () {
-    
+
   },
   getUserInfo: function (e) {
     console.log(e)

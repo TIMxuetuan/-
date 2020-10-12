@@ -94,7 +94,6 @@ Page({
       xh: topicXh
     }
     Service.jjdtk(dataLists, jiamiData).then(res => {
-      console.log(res)
       if (res.event == 100) {
         this.transformShape(res.list)
         let listL = []
@@ -110,13 +109,12 @@ Page({
             listL = []
           }
         }
-        console.log("listl", listL)
         this.setData({
           // timeList: res.list,
           questionList: this.data.questionList.concat(listL)
         })
-        console.log("滑数据", this.data.questionList)
-        console.log("当前页数据", this.data.timeList)
+        // console.log("滑数据", this.data.questionList)
+        // console.log("当前页数据", this.data.timeList)
       }
     })
   },
@@ -131,25 +129,19 @@ Page({
         timeList: timeList
       })
     }
-    console.log(this.data.timeList)
   },
 
 
   swiperChange(e) {
     let that = this
-    console.log(e.detail)
     that.disposeAllList(e.detail.current)
     // console.log(that.data.current)
     let current = e.detail.current
-    console.log(this.data.timeList)
     if (current > that.data.current && current > 0) {
-      console.log(this.data.currentIndex)
-      console.log("大于")
       let topicXh = this.data.timeList.xh * 1 + 1
       that.selectTopic(topicXh)
     }
     if (current < that.data.current) {
-      console.log("小于")
       let topicXh = this.data.timeList.xh * 1
       that.selectTopic(topicXh - 1)
     }
@@ -178,9 +170,9 @@ Page({
 
   //打开序号弹窗
   onClickAnswerCard: function (e) {
-    console.log("当前数据", this.data.timeList)
-    console.log("第一条初始数据", this.data.lxmsdtList)
-    console.log("总数据", this.data.questionList)
+    // console.log("当前数据", this.data.timeList)
+    // console.log("第一条初始数据", this.data.lxmsdtList)
+    // console.log("总数据", this.data.questionList)
     this.setData({
       xhShow: true
     })
@@ -189,7 +181,6 @@ Page({
   //点击序号跳转到那一选项
   goToXuhao(e) {
     let index = e.currentTarget.dataset.index
-    console.log(index)
     let xuhao = index + 1
     this.selectTopic(xuhao)
     this.selectTopic(xuhao - 1)
@@ -309,13 +300,17 @@ Page({
             listL = []
           }
         }
+        let xdtkXuuhao = res.list.dtk.xuhao
+        var xuHaoList = xdtkXuuhao.danxuan.concat(xdtkXuuhao.duoxuan, xdtkXuuhao.cailiao)
         this.setData({
           lxmsdtList: res.list,
           timeList: res.list,
           xhlist: res.list.xhlist,
           questionList: this.data.questionList,
-          current: res.list.xh * 1 - 1
+          current: res.list.xh * 1 - 1,
+          xuHaoList:xuHaoList
         })
+        console.log("序号集合",this.data.xuHaoList)
         app.globalData.questionList = this.data.xhlist
         this.selectTopic(res.list.xh * 1 + 1)
         this.selectTopic(res.list.xh * 1 - 1)
@@ -323,7 +318,7 @@ Page({
     })
   },
 
-  
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

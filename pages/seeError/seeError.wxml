@@ -145,9 +145,9 @@
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
   </view>
-  <view class="fixedBottom-item">
+  <!-- <view class="fixedBottom-item">
     <image class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
-  </view>
+  </view> -->
 </view>
 
 <!--序号弹出层-->

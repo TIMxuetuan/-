@@ -45,7 +45,7 @@ Page({
     console.log(sendList)
     let jjztList = {
       shijuan_id: sendList.sj_id,
-      xl_id: sendList.id,
+      xl_id: this.data.jjztList.xl_id,
       xh: sendList.xh,
       ys: 2000,
     }
@@ -53,7 +53,7 @@ Page({
       key: "jjztList",
       data: jjztList
     })
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/errorsAnalysis/errorsAnalysis',
     })
   },
@@ -65,7 +65,7 @@ Page({
     let jjztList = {
       shijuan_id: sendList.shijuan_id,
       xl_id: sendList.xl_id,
-      xh: sendList.xh,
+      xh: 1,
       // ys: 2000,
     }
     wx.setStorage({

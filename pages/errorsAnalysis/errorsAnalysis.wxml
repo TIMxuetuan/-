@@ -145,9 +145,9 @@
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
   </view>
-  <view class="fixedBottom-item">
+  <!-- <view class="fixedBottom-item">
     <image class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
-  </view>
+  </view> -->
 </view>
 
 <!--序号弹出层-->
@@ -175,8 +175,8 @@
   <view class="serialNumber">
     <view class="serialNumber-dataList">
       <view
-        class="dataList-item {{item.id != null ? (timeList.xh == index + 1 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}"
-        wx:key="index" wx:for="{{questionList}}" wx:item="item" data-index="{{index}}" bindtap="goToXuhao">
+        class="dataList-item {{item.id != null ? (timeList.xh == index + 1 ? 'bgDang': (item.dct=='对'?'daDui':(item.dct=='错'?'daCuo':''))) : ''}}"
+        wx:key="index" wx:for="{{xuHaoList}}" wx:item="item" data-index="{{index}}" bindtap="goToXuhao">
         {{ index + 1 }}</view>
     </view>
   </view>

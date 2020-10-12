@@ -3,9 +3,9 @@
 
 <!--第一版-->
 <swiper style="height:{{swiperHeight}}px" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
-  <!-- <swiper-item>
+  <swiper-item>
     单选封面页
-  </swiper-item> -->
+  </swiper-item>
   <swiper-item wx:key="idx" wx:for="{{questionList}}" wx:item="item">
     <scroll-view style="height:{{swiperHeight}}px" scroll-y>
       <view class="page-item" wx:if="{{item != null}}">

@@ -5,7 +5,7 @@
       <view class="userinfo-content">
         <!--头部--未登录-->
         <!-- <view class="contentHead" wx:if="{{!hasUserInfo && canIUse}}"> -->
-        <view class="contentHead" wx:if="{{!userDataList}}">
+        <view class="contentHead" wx:if="{{userDataList == null}}">
           <view class="contentHead-left">
             <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/my/morentouxing.png" mode="cover"></image>
             <view class="noLogin">

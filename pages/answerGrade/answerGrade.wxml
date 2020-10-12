@@ -54,7 +54,7 @@
         <text class="analyseOne-time">{{pageLists.userpjf}}</text>
         <text class="analyseOne-unit">分</text>
       </view>
-      <view class="analyseOne-title">平均分</view>
+      <view class="analyseOne-title">全站平均分</view>
     </view>
   </view>
 

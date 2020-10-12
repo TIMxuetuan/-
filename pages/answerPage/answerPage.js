@@ -39,6 +39,7 @@ Page({
     setInterTimes: null, //定时器赋值
     second: 0, // 秒
     timeShow: false, //定时器弹窗
+    dtyysj:0, //答题已用时间
 
   },
 
@@ -521,7 +522,7 @@ Page({
       shijuan_id: this.data.shijuan_id,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: this.data.second,
+      ys: this.data.second * 1  + this.data.dtyysj * 1,
     }
     wx.setStorage({
       key: "jjztList",
@@ -612,7 +613,8 @@ Page({
           timeList: res.list,
           xhlist: res.list.xhlist,
           questionList: this.data.questionList,
-          current: res.list.xh * 1 - 1
+          current: res.list.xh * 1 - 1,
+          dtyysj:res.list.dtyysj
         })
         console.log(this.data.questionList)
         console.log(this.data.xhlist)
@@ -631,13 +633,13 @@ Page({
       cache_key: this.data.cacheKey,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: this.data.second
+      ys: this.data.second * 1  + this.data.dtyysj * 1,
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: this.data.second
+      ys: this.data.second * 1  + this.data.dtyysj * 1,
     }
     Service.tcbc(dataLists, jiamiData).then(res => {
       console.log(res)

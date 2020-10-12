@@ -346,3 +346,13 @@
 .marginBot{
   margin-bottom: 40rpx;
 }
+
+.daDui {
+  color: #ffffff;
+  background: #48E08E;
+}
+
+.daCuo{
+  color: #ffffff;
+  background: #FF5E5E;
+}
