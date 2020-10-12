@@ -28,7 +28,8 @@ Page({
     show: false, //交卷弹窗
     //
     questionList: [], //循环用的数组
-    questionListDuo: [], //多选存的数据
+    danXuanLists: [], //单选存的数据
+    duoXuanLists: [], //多选加材料存的数据
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
     swiperDuration: "250",
@@ -39,7 +40,7 @@ Page({
     setInterTimes: null, //定时器赋值
     second: 0, // 秒
     timeShow: false, //定时器弹窗
-    dtyysj:0, //答题已用时间
+    dtyysj: 0, //答题已用时间
 
   },
 
@@ -48,41 +49,46 @@ Page({
     let type = e.currentTarget.dataset.type
     console.log(type)
     console.log(this.data.timeList)
-    let sendList = this.data.timeList
-    let dataLists = {
-      cache_key: this.data.cacheKey,
-      shijuan_id: this.data.shijuan_id,
-      st_id: sendList.id,
-      lb_id: sendList.lb_id,
-      kmlb: sendList.kmlb,
-      tx: sendList.tx,
-      sczt: type,
-    }
-    let jiamiData = {
-      cache_key: this.data.cacheKey,
-      shijuan_id: this.data.shijuan_id,
-      st_id: sendList.id,
-      lb_id: sendList.lb_id,
-      kmlb: sendList.kmlb,
-      tx: sendList.tx,
-      sczt: type
-    }
-    Service.scst(dataLists, jiamiData).then(res => {
-      console.log(res)
-      if (res.event == 100) {
-        this.selectTopic(sendList.xh)
-        var sczt = 'timeList.sczt';
-        if (res.msg == "取消收藏") {
-          this.setData({
-            [sczt]: 0
-          })
-        } else if (res.msg == "收藏成功") {
-          this.setData({
-            [sczt]: 1
-          })
-        }
+    if (this.data.timeList.tx == 5 || this.data.timeList.tx == 0) {
+
+    } else {
+      let sendList = this.data.timeList
+      let dataLists = {
+        cache_key: this.data.cacheKey,
+        shijuan_id: this.data.shijuan_id,
+        st_id: sendList.id,
+        lb_id: sendList.lb_id,
+        kmlb: sendList.kmlb,
+        tx: sendList.tx,
+        sczt: type,
       }
-    })
+      let jiamiData = {
+        cache_key: this.data.cacheKey,
+        shijuan_id: this.data.shijuan_id,
+        st_id: sendList.id,
+        lb_id: sendList.lb_id,
+        kmlb: sendList.kmlb,
+        tx: sendList.tx,
+        sczt: type
+      }
+      Service.scst(dataLists, jiamiData).then(res => {
+        console.log(res)
+        if (res.event == 100) {
+          this.selectTopic(sendList.xh)
+          var sczt = 'timeList.sczt';
+          if (res.msg == "取消收藏") {
+            this.setData({
+              [sczt]: 0
+            })
+          } else if (res.msg == "收藏成功") {
+            this.setData({
+              [sczt]: 1
+            })
+          }
+        }
+      })
+    }
+
   },
 
   requestQuestionInfo: function () {
@@ -121,21 +127,38 @@ Page({
         let listL = []
         listL.push(res.list)
         let array = this.data.questionList
-        for (let index = 0; index < array.length; index++) {
-          if (index + 1 == res.list.xh) {
-            //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
-            var deletedtodo = 'questionList[' + index + ']';
-            this.setData({
-              [deletedtodo]: res.list,
-            })
-            listL = []
+        if (res.list.tx == 1) {
+          for (let index = 0; index < array.length; index++) {
+            if (index == res.list.xh) {
+              //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
+              var deletedtodo = 'questionList[' + index + ']';
+              this.setData({
+                [deletedtodo]: res.list,
+              })
+              listL = []
+            }
           }
+          console.log("listl", listL)
+        } else if (res.list.tx == 2 || res.list.tx == 3) {
+          for (let index = 0; index < array.length; index++) {
+            if (index - 1 == res.list.xh) {
+              //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
+              let inXuhao = index
+              var deletedtodo = 'questionList[' + inXuhao + ']';
+              this.setData({
+                [deletedtodo]: res.list,
+              })
+              listL = []
+            }
+          }
+          console.log("listl", listL)
         }
-        console.log("listl", listL)
         this.setData({
           // timeList: res.list,
           questionList: this.data.questionList.concat(listL)
         })
+        // this.fenLiData()
+
         // if (res.list.tx == 1) {
         //   let listL = []
         //   listL.push(res.list)
@@ -158,6 +181,33 @@ Page({
     })
   },
 
+  //总数据分流，分为单选数据、多选数据加材料题
+  fenLiData(list) {
+    let fenQuestionList = this.data.questionList
+    let lxmsdtListLength = list.dtk.xuhao.danxuan.length
+    let topItem = {
+      tx: 0
+    }
+    let duoItem = {
+      tx: 5
+    }
+    for (let index = 0; index < fenQuestionList.length; index++) {
+      if (fenQuestionList[0].tx != 0) {
+        fenQuestionList.unshift(topItem)
+        this.setData({
+          questionList: fenQuestionList
+        })
+      } else if (fenQuestionList[lxmsdtListLength + 1].tx != 5) {
+        fenQuestionList.splice(lxmsdtListLength + 1, 0, duoItem)
+        this.setData({
+          questionList: fenQuestionList
+        })
+      }
+    }
+    console.log("添加单封页", this.data.questionList)
+  },
+
+
   //总数据this.data.questionList 进行处理， 当滑动切换时使用
   disposeAllList(detail) {
     // let detail = this.data.current
@@ -179,16 +229,22 @@ Page({
     // console.log(that.data.current)
     let current = e.detail.current
     console.log(this.data.timeList)
-    if (current > that.data.current && current > 0) {
-      console.log(this.data.currentIndex)
-      console.log("大于")
-      let topicXh = this.data.timeList.xh * 1 + 1
-      that.selectTopic(topicXh)
-    }
-    if (current < that.data.current) {
-      console.log("小于")
-      let topicXh = this.data.timeList.xh * 1
-      that.selectTopic(topicXh - 1)
+    if (current == 0) {
+
+    } else if (current == that.data.lxmsdtList.dtk.xuhao.danxuan.length + 1) {
+
+    } else {
+      if (current > that.data.current && current > 0) {
+        console.log(this.data.currentIndex)
+        console.log("大于")
+        let topicXh = this.data.timeList.xh * 1 + 1
+        that.selectTopic(topicXh)
+      }
+      if (current < that.data.current) {
+        console.log("小于")
+        let topicXh = this.data.timeList.xh * 1
+        that.selectTopic(topicXh - 1)
+      }
     }
     if (e.detail.source === 'touch') {
       that.setData({
@@ -219,23 +275,43 @@ Page({
     console.log("当前数据", this.data.timeList)
     console.log("第一条初始数据", this.data.lxmsdtList)
     console.log("总数据", this.data.questionList)
-    this.setData({
-      xhShow: true
-    })
+    if (this.data.timeList.tx == 5 || this.data.timeList.tx == 0) {
+
+    } else {
+      this.setData({
+        xhShow: true
+      })
+    }
   },
 
   //点击序号跳转到那一选项
   goToXuhao(e) {
     let index = e.currentTarget.dataset.index
+    let item = e.currentTarget.dataset.item
+    let danXuanXu = this.data.lxmsdtList.dtk.xuhao.danxuan.length
     console.log(index)
-    let xuhao = index + 1
-    this.selectTopic(xuhao)
-    this.selectTopic(xuhao - 1)
-    this.selectTopic(xuhao + 1)
-    this.setData({
-      current: xuhao - 1,
-      xhShow: false
-    })
+    console.log(item)
+
+    if (index + 1 <= danXuanXu) {
+      let xuhao = index + 1
+      this.selectTopic(xuhao)
+      this.selectTopic(xuhao - 1)
+      this.selectTopic(xuhao + 1)
+      this.setData({
+        current: xuhao,
+        xhShow: false
+      })
+    }else{
+      let xuhao = index + 1
+      this.selectTopic(xuhao)
+      this.selectTopic(xuhao - 1)
+      this.selectTopic(xuhao + 1)
+      this.setData({
+        current: xuhao + 1,
+        xhShow: false
+      })
+    }
+
   },
 
   //坐上交卷，弹出交卷弹窗，并关闭选项弹窗
@@ -509,9 +585,14 @@ Page({
 
   //点击右下角 交卷图标，打开弹窗
   handInPaper() {
-    this.setData({
-      show: true
-    })
+    console.log("当前数据", this.data.timeList)
+    if (this.data.timeList.tx == 5 || this.data.timeList.tx == 0) {
+
+    } else {
+      this.setData({
+        show: true
+      })
+    }
   },
 
   //点击交卷弹窗确认事件
@@ -522,7 +603,7 @@ Page({
       shijuan_id: this.data.shijuan_id,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: this.data.second * 1  + this.data.dtyysj * 1,
+      ys: this.data.second * 1 + this.data.dtyysj * 1,
     }
     wx.setStorage({
       key: "jjztList",
@@ -592,35 +673,63 @@ Page({
         this.setData({
           questionList: linshiList
         })
+        this.fenLiData(res.list)
         let listL = []
         listL.push(res.list)
         let array = this.data.questionList
-        for (let index = 0; index < array.length; index++) {
-          if (index + 1 == res.list.xh) {
-            //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
-            var deletedtodo = 'questionList[' + index + ']';
-            this.setData({
-              [deletedtodo]: res.list,
-            })
-            listL = []
+        if (res.list.tx == 1) {
+          for (let index = 0; index < array.length; index++) {
+            if (index == res.list.xh) {
+              //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
+              var deletedtodo = 'questionList[' + index + ']';
+              this.setData({
+                [deletedtodo]: res.list,
+              })
+              listL = []
+            }
+
           }
+          console.log("listl", listL)
+        } else if (res.list.tx == 2 || res.list.tx == 3) {
+          for (let index = 0; index < array.length; index++) {
+            if (index - 1 == res.list.xh) {
+              //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
+              let inXuhao = index
+              var deletedtodo = 'questionList[' + inXuhao + ']';
+              this.setData({
+                [deletedtodo]: res.list,
+              })
+              listL = []
+            }
+          }
+          console.log("listl", listL)
+          this.setData({
+            current: res.list.xh * 1 + 1,
+          })
         }
-        console.log("listl", listL)
-        // let listOne = []
-        // listOne.push(res.list)
+
         this.setData({
           lxmsdtList: res.list,
-          timeList: res.list,
+          timeList: res.list.xh == 1 ? this.data.questionList[0] : res.list,
           xhlist: res.list.xhlist,
           questionList: this.data.questionList,
-          current: res.list.xh * 1 - 1,
-          dtyysj:res.list.dtyysj
+          dtyysj: res.list.dtyysj
         })
+        if (res.list.tx == 1) {
+          this.setData({
+            current: res.list.xh == 1 ? 0 : res.list.xh * 1,
+          })
+        } else if (res.list.tx == 2 || res.list.tx == 3) {
+          this.setData({
+            current: res.list.xh * 1 + 1,
+          })
+        }
         console.log(this.data.questionList)
         console.log(this.data.xhlist)
         app.globalData.questionList = this.data.xhlist
         this.selectTopic(res.list.xh * 1 + 1)
         this.selectTopic(res.list.xh * 1 - 1)
+
       }
     })
   },
@@ -633,13 +742,13 @@ Page({
       cache_key: this.data.cacheKey,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: this.data.second * 1  + this.data.dtyysj * 1,
+      ys: this.data.second * 1 + this.data.dtyysj * 1,
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xl_id: sendList.xl_id,
       xh: sendList.xh,
-      ys: this.data.second * 1  + this.data.dtyysj * 1,
+      ys: this.data.second * 1 + this.data.dtyysj * 1,
     }
     Service.tcbc(dataLists, jiamiData).then(res => {
       console.log(res)
