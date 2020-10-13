@@ -15,6 +15,9 @@ Page({
     sixActive: "全部",
     sortdtList: [], //试卷列表
     cacheKey: "", //唯一标识
+    oldlists: [], //老数据
+    isInit: false,
+    total: 0,
   },
 
   /**
@@ -77,12 +80,10 @@ Page({
   //tabs切换
   onChangeSubject(event) {
     console.log(event.detail)
-    // wx.showToast({
-    //   title: `点击标签 ${event.detail.name}`,
-    //   icon: 'none',
-    // });
     this.setData({
-      active: event.detail.name
+      active: event.detail.name,
+      page: 1,
+      oldlists: []
     })
     this.getSortdtList();
   },
@@ -90,12 +91,10 @@ Page({
   //六个模块选择
   onChangeSjlx(event) {
     console.log(event)
-    // wx.showToast({
-    //   title: `点击标签 ${event.detail + 1}`,
-    //   icon: 'none',
-    // });
     this.setData({
-      sixActive: event.detail
+      sixActive: event.detail,
+      page: 1,
+      oldlists: []
     })
     this.getSortdtList();
   },
@@ -120,9 +119,16 @@ Page({
     Service.sortdt(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
+        //获取上次加载的数据
+        var oldlists = this.data.oldlists;
+        console.log(oldlists)
+        var newlists = oldlists.concat(res.list) //合并数据 res.data 你的数组数据
         this.setData({
-          sortdtList: res.list
+          sortdtList: newlists,
+          total: res.total,
+          isInit: true
         })
+        
       }
     })
   },
@@ -239,6 +245,23 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    console.log("加载更多")
+    if (this.data.sortdtList.length < this.data.total) {
+      var page = this.data.page
+      page++
+      this.setData({
+        oldlists: this.data.sortdtList,
+        page: page
+      })
+      this.getSortdtList()
+    } else {
+      wx.showToast({
+        title: '到底了',
+        icon: 'none',
+        duration: 2000
+      });
+
+    }
 
   },
 

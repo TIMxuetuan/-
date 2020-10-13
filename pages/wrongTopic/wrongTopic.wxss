@@ -107,3 +107,12 @@
   font-weight: bold;
   color: #CCCCCC;
 }
+
+.zanWu {
+  display: flex;
+  justify-content: center;
+  margin-top: 60rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #CCCCCC;
+}

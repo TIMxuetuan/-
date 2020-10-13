@@ -169,16 +169,17 @@
   font-weight: 500;
   color: #656565;
 }
-.number-right{
+
+.number-right {
   margin-right: 30rpx;
 }
 
-.testItemBtn-btn{
+.testItemBtn-btn {
   height: 56rpx;
   display: flex;
 }
 
-.testItemBtn-btn .van-button{
+.testItemBtn-btn .van-button {
   width: 136rpx;
   height: 56rpx;
   padding: 0;
@@ -188,4 +189,13 @@
   line-height: 56rpx;
   background-color: #F3F3F3;
   border: 1px solid #F3F3F3;
+}
+
+.zanWu {
+  display: flex;
+  justify-content: center;
+  margin-top: 60rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #CCCCCC;
 }

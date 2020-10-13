@@ -32,10 +32,23 @@ Page({
     questionListDuo: [], //多选存的数据
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
-    swiperDuration: "250",
+    swiperDuration: 600,
     currentIndex: 0,
     isJieXiShow: 1, //判断是否点击 查看解析 1为初始无， 2为查看解析
 
+  },
+
+  //查看大图
+  clickImg(e) {
+    let item = e.currentTarget.dataset.item
+    console.log("图片", item)
+    wx.previewImage({
+      urls: item.pic, //需要预览的图片http链接列表，注意是数组
+      current: '', // 当前显示图片的http链接，默认是第一个
+      success: function (res) {},
+      fail: function (res) {},
+      complete: function (res) {},
+    })
   },
 
   //收藏事件
@@ -220,7 +233,7 @@ Page({
           })
         }
       }
-    } 
+    }
   },
 
   //关闭序号弹窗

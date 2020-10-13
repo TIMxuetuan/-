@@ -6,72 +6,125 @@
   <swiper-item wx:key="idx" wx:for="{{questionList}}" wx:item="item">
     <scroll-view style="height:{{swiperHeight}}px" scroll-y>
       <view class="page-item" wx:if="{{item != null}}">
-        <view class="count-box">
-          <view class="count-box-title">
-            <text wx:if="{{item.tx == 1}}">单项选择</text>
-            <text wx:elif="{{item.tx == 2}}">多项选择</text>
-            <text wx:elif="{{item.tx == 3}}">材料题</text>
-          </view>
-          <view>
-            <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
-            <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
-          </view>
-        </view>
 
         <view wx:if="{{item.tx == 0}}">
-          单选封面页
+          <view class="danXuanCover">
+            <view class="danXuanCover-top">
+              <view class="leftColorChunk"></view>
+              <view class="leftColorTitle">单项选择题</view>
+            </view>
+            <view class="danXuanCover-content">共{{lxmsdtList.dtk.xuhao.danxuan.length}}题，每题1分，每题的备选项中，只有一个 符合题意。</view>
+            <view class="danXuanCover-img">
+              <image src="../../images/index/shoushi.png"></image>
+            </view>
+          </view>
         </view>
 
         <!--单项选择 内容-->
-        <view class="content" wx:elif="{{item.tx == 1}}">
-          单
-          <view class="contentFath">
-            <view>{{item.nr}}</view>
-            <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="radioClick">
-                <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
-                <view class="selectItem-left {{stxxItem.id == item.uda ? 'selected' :''}}">{{stxxItem.id}}</view>
-                <view class="selectItem-right">{{stxxItem.name}}</view>
+        <view class="vessel" wx:elif="{{item.tx == 1}}">
+          <view class="count-box">
+            <view class="count-box-title">
+              <text wx:if="{{item.tx == 1}}">单项选择</text>
+              <text wx:elif="{{item.tx == 2}}">多项选择</text>
+              <text wx:elif="{{item.tx == 3}}">材料题</text>
+            </view>
+            <view>
+              <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+              <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
+            </view>
+          </view>
+          <view class="content">
+            <view class="contentFath">
+              <view>{{item.nr}}</view>
+              <view class="contentFath-select">
+                <view wx:if="{{item.pic != ''}}">
+                  <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+                </view>
+                <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
+                  data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="radioClick">
+                  <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
+                  <view class="selectItem-left {{stxxItem.id == item.uda ? 'selected' :''}}">{{stxxItem.id}}</view>
+                  <view class="selectItem-right">{{stxxItem.name}}</view>
+                </view>
               </view>
             </view>
           </view>
         </view>
 
         <view wx:elif="{{item.tx == 5}}">
-          多选封面页
-        </view>
-
-        <view class="content" wx:elif="{{item.tx == 2}}">
-          多
-          <view class="contentFath">
-            <view>{{item.nr}}</view>
-            <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="moreSelectClick">
-                <view
-                  class="moreSelect-left {{filter.defineIndexOf(item.uda, stxxItem.id) != -1 ? 'selectedMore' :''}}">
-                  {{stxxItem.id}}</view>
-                <view class="selectItem-right">{{stxxItem.name}}</view>
-              </view>
+          <view class="danXuanCover">
+            <view class="danXuanCover-top">
+              <view class="leftColorChunk"></view>
+              <view class="leftColorTitle">多项选择题</view>
+            </view>
+            <view class="danXuanCover-content">共{{lxmsdtList.dtk.xuhao.duoxuan.length}}道题，每题两分。每题的备选项中，有2个 或2个以上符合题意，至少有1个错项，错选，本 题不得分；少选，所选的每个选项得0。</view>
+            <view class="danXuanCover-img">
+              <image src="../../images/index/shoushi.png"></image>
             </view>
           </view>
-          <view class="moreConfirm">
-            <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
-              bind:click="quRenAnswer">确认答案</van-button>
+        </view>
+
+        <!--多选内容-->
+        <view class="vessel" wx:elif="{{item.tx == 2}}">
+          <view class="count-box">
+            <view class="count-box-title">
+              <text wx:if="{{item.tx == 1}}">单项选择</text>
+              <text wx:elif="{{item.tx == 2}}">多项选择</text>
+              <text wx:elif="{{item.tx == 3}}">材料题</text>
+            </view>
+            <view>
+              <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+              <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
+            </view>
+          </view>
+          <view class="content">
+            <view class="contentFath">
+              <view>{{item.nr}}</view>
+              <view class="contentFath-select">
+                <view wx:if="{{item.pic != ''}}">
+                  <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+                </view>
+                <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
+                  data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="moreSelectClick">
+                  <view
+                    class="moreSelect-left {{filter.defineIndexOf(item.uda, stxxItem.id) != -1 ? 'selectedMore' :''}}">
+                    {{stxxItem.id}}</view>
+                  <view class="selectItem-right">{{stxxItem.name}}</view>
+                </view>
+              </view>
+            </view>
+            <view class="moreConfirm">
+              <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
+                bind:click="quRenAnswer">确认答案</van-button>
+            </view>
           </view>
         </view>
 
-        <view class="content" wx:elif="{{item.tx == 3}}">
-          材料
-          <view class="contentFath marginBot">
-            <view>{{item.nr}}</view>
-            <view class="answerText">
-              <view class="answerText-title">请对问题做出解答</view>
-              <view class="answerText-content">
-                <textarea class="answerText-area" value="{{item.uda}}" data-item="{{item}}" maxlength="-1"
-                  bindblur="bindTextAreaBlur" placeholder="输入答案" />
+        <!--材料内容-->
+        <View class="vessel" wx:elif="{{item.tx == 3}}">
+          <view class="count-box">
+            <view class="count-box-title">
+              <text wx:if="{{item.tx == 1}}">单项选择</text>
+              <text wx:elif="{{item.tx == 2}}">多项选择</text>
+              <text wx:elif="{{item.tx == 3}}">材料题</text>
+            </view>
+            <view>
+              <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+              <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
+            </view>
+          </view>
+          <view class="content">
+            <view class="contentFath marginBot">
+              <view>{{item.nr}}</view>
+              <view class="answerText">
+                <view wx:if="{{item.pic != ''}}">
+                  <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
                 </view>
+                <view class="answerText-title">请对问题做出解答</view>
+                <view class="answerText-content">
+                  <textarea class="answerText-area" value="{{item.uda}}" data-item="{{item}}" maxlength="-1"
+                    bindblur="bindTextAreaBlur" placeholder="输入答案" />
+                  </view>
               <view class="moreConfirm topBottom">
                 <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
               bind:click="caiLiaoConfig">确认答案
@@ -80,73 +133,11 @@
             </view>
           </view>
         </view>
+        </View>
 
       </view>
     </scroll-view>
   </swiper-item>
-
-  <!-- <swiper-item>
-    多选封面页
-  </swiper-item>
-
-  <swiper-item wx:key="idx" wx:for="{{duoXuanLists}}" wx:item="item">
-    <scroll-view style="height:{{swiperHeight}}px" scroll-y>
-      <view class="page-item" wx:if="{{item != null}}">
-        <view class="count-box">
-          <view class="count-box-title">
-            <text wx:if="{{item.tx == 1}}">单项选择</text>
-            <text wx:elif="{{item.tx == 2}}">多项选择</text>
-            <text wx:elif="{{item.tx == 3}}">材料题</text>
-          </view>
-          <view>
-            <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
-            <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.ztnum}}</text>
-          </view>
-        </view>
-
-        <view class="content" wx:if="{{item.tx == 2}}">
-          多
-          <view class="contentFath">
-            <view>{{item.nr}}</view>
-            <view class="contentFath-select">
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="moreSelectClick">
-                <view
-                  class="moreSelect-left {{filter.defineIndexOf(item.uda, stxxItem.id) != -1 ? 'selectedMore' :''}}">
-                  {{stxxItem.id}}</view>
-                <view class="selectItem-right">{{stxxItem.name}}</view>
-              </view>
-            </view>
-          </view>
-          <view class="moreConfirm">
-            <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
-              bind:click="quRenAnswer">确认答案</van-button>
-          </view>
-        </view>
-
-        <view class="content" wx:elif="{{item.tx == 3}}">
-          材料
-          <view class="contentFath marginBot">
-            <view>{{item.nr}}</view>
-            <view class="answerText">
-              <view class="answerText-title">请对问题做出解答</view>
-              <view class="answerText-content">
-                <textarea class="answerText-area" value="{{item.uda}}" data-item="{{item}}" maxlength="-1"
-                  bindblur="bindTextAreaBlur" placeholder="输入答案" />
-                </view>
-              <view class="moreConfirm topBottom">
-                <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
-              bind:click="caiLiaoConfig">确认答案
-               </van-button>
-              </view>
-            </view>
-          </view>
-        </view>
-
-      </view>
-    </scroll-view>
-  </swiper-item> -->
-
 
 </swiper>
 
@@ -154,10 +145,11 @@
 <view class="fixedBottom">
   <!--试题收藏-->
   <view class="fixedBottom-item">
-    <image bindtap="collectClick" data-type="1" wx:if="{{timeList.sczt == 0}}" class="fixedBottom-img"
-      src="../../images/my/no_shoucang.png"></image>
-    <image bindtap="collectClick" data-type="0" wx:else class="fixedBottom-img" src="../../images/my/shoucang.png">
+    <image bindtap="collectClick" data-type="0" wx:if="{{timeList.sczt == 1}}" class="fixedBottom-img" src="../../images/my/shoucang.png">
     </image>
+    <image bindtap="collectClick" data-type="1" wx:else class="fixedBottom-img"
+      src="../../images/my/no_shoucang.png"></image>
+    
   </view>
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
@@ -199,11 +191,18 @@
   <view class="serialNumber">
     <view class="serialNumber-dataList">
       <view wx:key="index" wx:for="{{questionList}}" wx:item="item">
-        <view wx:if="item.tx == 0 || item.tx == 5"></view>
-        <view wx:else class="dataList-item {{item.id != null ? (timeList.xh == index + 1 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
-          1
-          {{index + 1}}
-        </view>
+        <block wx:if="{{index == 0 || index == lxmsdtList.dtk.xuhao.danxuan.length + 1}}"></block>
+        <block wx:elif="{{index <= lxmsdtList.dtk.xuhao.danxuan.length}}">
+          <view class="dataList-item {{index%5==0 ? 'quMargin' : ''}} {{item.id != null ? (timeList.xh == index ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
+            {{index}}
+          </view>
+        </block>
+        <block wx:else>
+          <view class="dataList-item {{(index - 1) % 5==0 ? 'quMargin' : ''}} {{item.id != null ? (timeList.xh == index - 1 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
+            {{index - 1}}
+          </view>
+        </block>
+
       </view>
     </view>
   </view>

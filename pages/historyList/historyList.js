@@ -15,6 +15,9 @@ Page({
     sixActive: "全部",
     sortdtList: [], //试卷列表
     cacheKey: "", //唯一标识
+    oldlists: [], //老数据
+    isInit: false,
+    total: 0,
   },
 
   //获得首页科目列表
@@ -41,7 +44,9 @@ Page({
   onChangeSubject(event) {
     console.log(event.detail)
     this.setData({
-      active: event.detail.name
+      active: event.detail.name,
+      page: 1,
+      oldlists: []
     })
     this.getSortdtList();
   },
@@ -61,12 +66,22 @@ Page({
       kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
+    wx.showLoading({
+      title: '数据加载中...',
+    })
     Service.zt_lsjl(dataLists, jiamiData).then(res => {
       console.log(res)
       if (res.event == 100) {
+        //获取上次加载的数据
+        var oldlists = this.data.oldlists;
+        console.log(oldlists)
+        var newlists = oldlists.concat(res.list) //合并数据 res.data 你的数组数据
         this.setData({
-          sortdtList: res.list
+          sortdtList: newlists,
+          total: res.total,
+          isInit: true
         })
+        wx.hideLoading();
       }
     })
   },
@@ -163,7 +178,23 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    console.log("加载更多")
+    if (this.data.sortdtList.length < this.data.total) {
+      var page = this.data.page
+      page++
+      this.setData({
+        oldlists: this.data.sortdtList,
+        page: page
+      })
+      this.getSortdtList()
+    } else {
+      wx.showToast({
+        title: '到底了',
+        icon: 'none',
+        duration: 2000
+      });
 
+    }
   },
 
   /**

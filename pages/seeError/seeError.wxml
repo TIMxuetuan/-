@@ -26,6 +26,9 @@
           <view class="contentFath">
             <view>{{item.nr}}</view>
             <view class="contentFath-select">
+              <view wx:if="{{item.pic != ''}}">
+                <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+              </view>
               <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
                 data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
                 <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
@@ -44,6 +47,9 @@
           <view class="contentFath">
             <view>{{item.nr}}</view>
             <view class="contentFath-select">
+              <view wx:if="{{item.pic != ''}}">
+                <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+              </view>
               <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
                 data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
                 <view
@@ -64,6 +70,9 @@
         <view class="content" wx:elif="{{item.tx == 3}}">
           <view class="contentFath marginBot">
             <view>{{item.nr}}</view>
+            <view wx:if="{{item.pic != ''}}">
+              <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+            </view>
             <!-- <view class="answerText" wx:if="{{item.uda == ''}}">
               <view class="answerText-title">请对问题做出解答</view>
               <view class="answerText-content">
@@ -176,7 +185,8 @@
     <view class="serialNumber-dataList">
       <view
         class="dataList-item {{item.id != null ? (timeList.xh == item.xh ? 'bgDang': (item.dct == '' ? '' :(item.dct == '错' ? 'daCuo' : (item.dct == '对'?'daDui':'')))) : ''}}"
-        wx:key="index" wx:for="{{lxmsdtList.datika.quanbupx}}" wx:item="item" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
+        wx:key="index" wx:for="{{lxmsdtList.datika.quanbupx}}" wx:item="item" data-item="{{item}}"
+        data-index="{{index}}" bindtap="goToXuhao">
         {{ item.xh }}</view>
     </view>
   </view>

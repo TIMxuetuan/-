@@ -26,6 +26,9 @@
           <view class="contentFath">
             <view>{{item.nr}}</view>
             <view class="contentFath-select">
+              <view wx:if="{{item.pic != ''}}">
+                <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+              </view>
               <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
                 data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}" bindtap="radioClick">
                 <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
@@ -67,8 +70,9 @@
             <view class="answerText" wx:if="{{item.uda == ''}}">
               <view class="answerText-title">请对问题做出解答</view>
               <view class="answerText-content">
-                <textarea class="answerText-area" data-item="{{item}}" maxlength="-1" bindblur="bindTextAreaBlur" placeholder="输入答案" />
-              </view>
+                <textarea class="answerText-area" data-item="{{item}}" maxlength="-1" bindblur="bindTextAreaBlur"
+                  placeholder="输入答案" />
+                </view>
               <view class="moreConfirm topBottom">
                 <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.ziuda == '' ? true : false}}"
               bind:click="caiLiaoConfig">确认答案

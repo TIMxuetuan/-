@@ -8,28 +8,32 @@
     </van-tabs>
 
     <!--试题模块-->
-    <block wx:if="{{sortdtList != ''}}">
-      <view class="testModule">
-        <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="idx" wx:for-item="item" data-item="{{item}}" bindtap="goToAnswerGrade">
-          <view class="testItem">
-            <view class="testItem-title">{{item.nr}}</view>
-            <view class="testItem-number">
-             <text class="testItem-yiYou">已有错题</text>{{item.count}}
+    <block wx:if="{{isInit}}">
+      <block wx:if="{{isInit}}">
+        <view class="testModule">
+          <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="idx" wx:for-item="item"
+            data-item="{{item}}" bindtap="goToAnswerGrade">
+            <view class="testItem">
+              <view class="testItem-title">{{item.nr}}</view>
+              <view class="testItem-number">
+                <text class="testItem-yiYou">已有错题</text>{{item.count}}
+              </view>
+            </view>
+            <view class="testItemBtn">
+              <van-icon style="color:#BCBCBC" name="arrow" />
+              <!-- <van-button class="testItemBtn-btn" round type="info" data-item="{{item}}" bindtap="goToExercise">去练习
+            </van-button> -->
             </view>
           </view>
-          <view class="testItemBtn">
-            <van-icon style="color:#BCBCBC" name="arrow" />
-            <!-- <van-button class="testItemBtn-btn" round type="info" data-item="{{item}}" bindtap="goToExercise">去练习
-            </van-button> -->
-          </view>
         </view>
-      </view>
+      </block>
+      <block wx:else>
+        <view class="noMore">
+          <image class="noMoreImg" src="../../images/my/zanwuneirong.png"></image>
+          <view class="noMoreText">暂时没有内容</view>
+        </view>
+      </block>
     </block>
-    <block wx:else>
-      <view class="noMore">
-        <image class="noMoreImg" src="../../images/my/zanwuneirong.png"></image>
-        <view class="noMoreText">暂时没有内容</view>
-      </view>
-    </block>
+
   </view>
 </view>

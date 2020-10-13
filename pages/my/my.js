@@ -10,7 +10,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userDataList: null, //后台返的用户数据
-    cache_key:null
+    cache_key: null
   },
   //事件处理函数
   bindViewTap: function () {
@@ -107,8 +107,8 @@ Page({
     }
     Service.getUserInfoLogin(dataLists, jiamiData).then(res => {
       console.log(res)
-      this.getMySjTotal(res.data.cache_key)
       if (res.event == 100) {
+        this.getMySjTotal(res.data.cache_key)
         this.setData({
           userDataList: res.data.userInfo
         })
