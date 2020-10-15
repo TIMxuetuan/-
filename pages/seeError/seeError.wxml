@@ -2,11 +2,11 @@
 <wxs module="filter" src="../../utils/filter.wxs"></wxs>
 
 <!--第一版-->
-<swiper style="height:{{swiperHeight}}px" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
+<swiper style="height:{{swiperHeight}}px" easing-functio="linear" circular duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
   <!-- <swiper-item>
     单选封面页
   </swiper-item> -->
-  <swiper-item wx:key="idx" wx:for="{{questionList}}" wx:item="item" wx:key="id">
+  <swiper-item wx:key="idx" wx:for="{{threeItemList}}" wx:item="item" wx:key="id">
     <scroll-view style="height:{{swiperHeight}}px" scroll-y>
       <view class="page-item" wx:if="{{item != null}}">
         <view class="count-box">

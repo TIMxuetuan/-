@@ -23,7 +23,7 @@ Page({
     danAnswerValue: '', //单选时的答案 需要转换为 A B C 
     danDuiOrCuo: "", //单选时 确定答案的对与错
     danFenZhi: "", // 单选时 答案的得分
-    danWhenTiem: 1000, //单选答题的用时
+    danWhenTiem: 0, //单选答题的用时
 
     moreValue: [], //多选时，选中的值
     xhShow: false, //序号弹窗
@@ -32,15 +32,15 @@ Page({
     questionListDuo: [], //多选存的数据
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
-    swiperDuration: 600,
+    swiperDuration: 100,
     currentIndex: 0,
     isJieXiShow: 1, //判断是否点击 查看解析 1为初始无， 2为查看解析
     answerTextValue: "", //材料题 用户输入答案
 
   },
 
-   //查看大图
-   clickImg(e) {
+  //查看大图
+  clickImg(e) {
     let item = e.currentTarget.dataset.item
     console.log("图片", item)
     wx.previewImage({
@@ -91,53 +91,94 @@ Page({
     })
   },
 
-  //选题接口
-  selectTopic(topicXh) {
-    let sendList = this.data.jjztList
-    let dataLists = {
-      cache_key: this.data.cacheKey,
-      shijuan_id: sendList.shijuan_id,
-      xl_id: sendList.xl_id,
-      xh: topicXh
-    }
-    let jiamiData = {
-      cache_key: this.data.cacheKey,
-      shijuan_id: sendList.shijuan_id,
-      xl_id: sendList.xl_id,
-      xh: topicXh
-    }
-    Service.jjdtk(dataLists, jiamiData).then(res => {
-      console.log(res)
-      if (res.event == 100) {
-        this.transformShape(res.list)
-        let listL = []
-        listL.push(res.list)
-        let array = this.data.questionList
-        for (let index = 0; index < array.length; index++) {
-          if (index + 1 == res.list.xh) {
-            //这个是 请求到相同数据时，进行数据替换， 以后如有不需要，可以遮掉
-            var deletedtodo = 'questionList[' + index + ']';
-            this.setData({
-              [deletedtodo]: res.list,
-            })
-            listL = []
-          }
-        }
-        console.log("listl", listL)
-        this.setData({
-          // timeList: res.list,
-          questionList: this.data.questionList.concat(listL)
-        })
-        console.log("滑数据", this.data.questionList)
-        console.log("当前页数据", this.data.timeList)
-      }
-    })
+  /**
+   * 获取swiperList中current上一个的index
+   */
+  getLastSwiperChangeIndex: function (current) {
+    const START = 0
+    const END = 2
+    console.log("上一个index", current)
+    return current > START ? current - 1 : END
   },
+  /**
+   * 获取swiperLit中current下一个的index
+   */
+  getNextSwiperChangeIndex: function (current) {
+    const START = 0
+    const END = 2
+    console.log("下一个index", current)
+    return current < END ? current + 1 : START
+  },
+  /**
+   * 获取上一个要替换的list中的item
+   */
+  getLastSwiperNeedItem: function (currentItem, list) {
+    console.log("上一个", currentItem)
+    let zongList = this.data.questionList
+    let defaultIndex = zongList.indexOf(currentItem)
+    console.log(defaultIndex)
+    let listNeedIndex = defaultIndex - 1
+    let item = listNeedIndex == -1 ? {
+      isFirstPlaceholder: true
+    } : zongList[listNeedIndex]
+    return item
+  },
+  /**
+   * 获取下一个要替换的list中的item
+   */
+  getNextSwiperNeedItem: function (currentItem, list) {
+    console.log("下一个", currentItem)
+    let zongList = this.data.questionList
+    let defaultIndex = zongList.indexOf(currentItem)
+    console.log(defaultIndex)
+    let listNeedIndex = defaultIndex + 1
+    let item = listNeedIndex == zongList.length ? {
+      isLastPlaceholder: true
+    } : zongList[listNeedIndex]
+    return item
+  },
+
+  //总数据分为 封面加三个页面的数组
+  getThreeItemList(newList) {
+    var that = this
+    var zongList = that.data.questionList
+    var defaultIndex = ''
+    console.log("总数", zongList)
+    console.log("当前", newList)
+    for (let index = 0; index < zongList.length; index++) {
+      if (zongList[index].id == newList.id) {
+        defaultIndex = index
+      }
+    }
+
+    console.log("defaultIndex", defaultIndex)
+
+    let swiperList = []
+    for (let i = 0; i < 3; i++) {
+      swiperList.push({})
+    }
+    let current = defaultIndex % 3
+    console.log(current)
+    that.setData({
+      currentIndex: current,
+      // current: current
+    })
+    let currentItem = zongList[defaultIndex]
+    swiperList[current] = currentItem
+    swiperList[that.getLastSwiperChangeIndex(current)] = that.getLastSwiperNeedItem(currentItem, zongList)
+    swiperList[that.getNextSwiperChangeIndex(current)] = that.getNextSwiperNeedItem(currentItem, zongList)
+
+    that.setData({
+      threeItemList: swiperList,
+    })
+    console.log("三个页面", that.data.threeItemList)
+  },
+
 
   //总数据this.data.questionList 进行处理， 当滑动切换时使用
   disposeAllList(detail) {
     // let detail = this.data.current
-    let allList = this.data.questionList
+    let allList = this.data.threeItemList
     for (const index in allList) {
       var timeList = allList[detail]
       this.setData({
@@ -154,20 +195,69 @@ Page({
     that.disposeAllList(e.detail.current)
     // console.log(that.data.current)
     let current = e.detail.current
-    console.log(this.data.timeList)
-    if (current > that.data.current && current > 0) {
-      console.log(this.data.currentIndex)
-      console.log("大于")
+    let currentIndex = that.data.currentIndex
+    let currentItem = that.data.questionList[current]
+    console.log("下一个", currentItem)
+    console.log("滑动时", current)
+    console.log("滑动时当前", that.data.timeList)
+
+    // 如果是滑到了左边界，弹回去
+    if (that.data.timeList.isFirstPlaceholder) {
+      that.setData({
+        current: currentIndex
+      })
+      wx.showToast({
+        title: "已经是第一题了",
+        icon: "none"
+      })
+      return
     }
-    if (current < that.data.current) {
-      console.log("小于")
+
+    // 如果滑到了右边界，弹回去
+    if (that.data.timeList.isLastPlaceholder) {
+      that.setData({
+        current: currentIndex,
+      })
+      wx.showToast({
+        title: "已经是最后一题了",
+        icon: "none"
+      })
+      return
     }
+
     if (e.detail.source === 'touch') {
       that.setData({
         currentIndex: current,
         current: current
       })
     }
+    console.log(that.data.timeList)
+    const START = 0
+    const END = 2
+    // 正向滑动，到下一个的时候
+    let isLoopPositive = current == START && currentIndex == END
+    console.log(isLoopPositive)
+    if (current - currentIndex == 1 || isLoopPositive) {
+      let swiperChangeItem = "threeItemList[" + that.getNextSwiperChangeIndex(current) + "]"
+      that.setData({
+        [swiperChangeItem]: that.getNextSwiperNeedItem(that.data.timeList)
+      })
+    }
+    // 反向滑动，到上一个的时候
+    var isLoopNegative = current == END && currentIndex == START
+    if (currentIndex - current == 1 || isLoopNegative) {
+      let swiperChangeItem = "threeItemList[" + that.getLastSwiperChangeIndex(current) + "]"
+      that.setData({
+        [swiperChangeItem]: that.getLastSwiperNeedItem(that.data.timeList)
+      })
+    }
+
+    that.setData({
+      threeItemList: that.data.threeItemList,
+    })
+    that.getPageItemIndex()
+    console.log("三个页面", that.data.threeItemList)
+
     if (current == -1) {
       wx.showToast({
         title: "已经是第一题了",
@@ -185,15 +275,32 @@ Page({
     }
   },
 
+  //获取当前值得index，用于页面展示
+  getPageItemIndex() {
+    let allLists = this.data.questionList
+    let newList = this.data.timeList
+    console.log(newList)
+    let pageIndex = ''
+    for (let index = 0; index < allLists.length; index++) {
+      if (allLists[index].id == newList.id) {
+        pageIndex = index
+      }
+    }
+    console.log(pageIndex)
+    this.setData({
+      pageItemIndex: pageIndex
+    })
+  },
+
   //打开序号弹窗
   onClickAnswerCard: function (e) {
     console.log("当前数据", this.data.timeList)
     console.log("第一条初始数据", this.data.lxmsdtList)
     console.log("总数据", this.data.questionList)
     for (let index = 0; index < this.data.questionList.length; index++) {
-      if(this.data.timeList.id == this.data.questionList[index].id){
+      if (this.data.timeList.id == this.data.questionList[index].id) {
         this.setData({
-          nowIndexNum:index
+          nowIndexNum: index
         })
       }
     }
@@ -206,10 +313,15 @@ Page({
   goToXuhao(e) {
     let index = e.currentTarget.dataset.index
     console.log(index)
+    let newList = this.data.questionList[index]
+    console.log(newList)
+    this.getThreeItemList(newList)
     this.setData({
-      current: index,
-      xhShow: false
+      current: index % 3,
+      xhShow: false,
+      timeList: newList
     })
+    this.getPageItemIndex()
   },
 
   //关闭序号弹窗
@@ -288,12 +400,12 @@ Page({
     let dataLists = {
       cache_key: this.data.cacheKey,
       sj_id: sendList.shijuan_id,
-      type:sendList.type
+      type: sendList.type
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       sj_id: sendList.shijuan_id,
-      type:sendList.type
+      type: sendList.type
     }
     Service.queryCtInfo(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
@@ -305,10 +417,13 @@ Page({
           timeList: res.list[0],
           // xhlist: res.list.xhlist,
           questionList: res.list,
-          current: 0
+          current: 0,
         })
         app.globalData.questionList = this.data.xhlist
         console.log(this.data.questionList)
+        this.getThreeItemList(res.list[0])
+        this.getPageItemIndex()
+
         // this.selectTopic(res.list.xh * 1 + 1)
         // this.selectTopic(res.list.xh * 1 - 1)
       }

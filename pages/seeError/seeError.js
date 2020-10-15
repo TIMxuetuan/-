@@ -23,7 +23,7 @@ Page({
     danAnswerValue: '', //单选时的答案 需要转换为 A B C 
     danDuiOrCuo: "", //单选时 确定答案的对与错
     danFenZhi: "", // 单选时 答案的得分
-    danWhenTiem: 1000, //单选答题的用时
+    danWhenTiem: 0, //单选答题的用时
 
     moreValue: [], //多选时，选中的值
     xhShow: false, //序号弹窗
@@ -32,7 +32,7 @@ Page({
     questionListDuo: [], //多选存的数据
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
-    swiperDuration: 600,
+    swiperDuration: 100,
     currentIndex: 0,
     isJieXiShow: 1, //判断是否点击 查看解析 1为初始无， 2为查看解析
 
@@ -89,6 +89,91 @@ Page({
       }
     })
   },
+
+  /**
+   * 获取swiperList中current上一个的index
+   */
+  getLastSwiperChangeIndex: function (current) {
+    const START = 0
+    const END = 2
+    console.log("上一个index", current)
+    return current > START ? current - 1 : END
+  },
+  /**
+   * 获取swiperLit中current下一个的index
+   */
+  getNextSwiperChangeIndex: function (current) {
+    const START = 0
+    const END = 2
+    console.log("下一个index", current)
+    return current < END ? current + 1 : START
+  },
+  /**
+   * 获取上一个要替换的list中的item
+   */
+  getLastSwiperNeedItem: function (currentItem, list) {
+    console.log("上一个", currentItem)
+    let zongList = this.data.questionList
+    let defaultIndex = zongList.indexOf(currentItem)
+    console.log(defaultIndex)
+    let listNeedIndex = defaultIndex - 1
+    let item = listNeedIndex == -1 ? {
+      isFirstPlaceholder: true
+    } : zongList[listNeedIndex]
+    return item
+  },
+  /**
+   * 获取下一个要替换的list中的item
+   */
+  getNextSwiperNeedItem: function (currentItem, list) {
+    console.log("下一个", currentItem)
+    let zongList = this.data.questionList
+    let defaultIndex = zongList.indexOf(currentItem)
+    console.log(defaultIndex)
+    let listNeedIndex = defaultIndex + 1
+    let item = listNeedIndex == zongList.length ? {
+      isLastPlaceholder: true
+    } : zongList[listNeedIndex]
+    return item
+  },
+
+  //总数据分为 封面加三个页面的数组
+  getThreeItemList(newList) {
+    var that = this
+    var zongList = that.data.questionList
+    // var newList = that.data.timeList
+    var defaultIndex = ''
+    console.log("总数", zongList)
+    console.log("当前", newList)
+    for (let index = 0; index < zongList.length; index++) {
+      if (zongList[index].id == newList.id) {
+        defaultIndex = index
+      }
+    }
+
+    console.log("defaultIndex", defaultIndex)
+
+    let swiperList = []
+    for (let i = 0; i < 3; i++) {
+      swiperList.push({})
+    }
+    let current = defaultIndex % 3
+    console.log(current)
+    that.setData({
+      currentIndex: current,
+      // current: current
+    })
+    let currentItem = zongList[defaultIndex]
+    swiperList[current] = currentItem
+    swiperList[that.getLastSwiperChangeIndex(current)] = that.getLastSwiperNeedItem(currentItem, zongList)
+    swiperList[that.getNextSwiperChangeIndex(current)] = that.getNextSwiperNeedItem(currentItem, zongList)
+
+    that.setData({
+      threeItemList: swiperList
+    })
+    console.log("三个页面", that.data.threeItemList)
+  },
+
   //选题接口
   selectTopic(topicXh) {
     let sendList = this.data.jjztList
@@ -127,6 +212,14 @@ Page({
           // timeList: res.list,
           questionList: this.data.questionList.concat(listL)
         })
+        if (this.data.timeListIndex == res.list.xh) {
+          console.log("等于", this.data.timeListIndex, res.list)
+          this.setData({
+            timeList: res.list,
+            timeListIndex: ''
+          })
+        }
+        this.getThreeItemList(this.data.timeList)
         console.log("滑数据", this.data.questionList)
         console.log("当前页数据", this.data.timeList)
       }
@@ -136,7 +229,7 @@ Page({
   //总数据this.data.questionList 进行处理， 当滑动切换时使用
   disposeAllList(detail) {
     // let detail = this.data.current
-    let allList = this.data.questionList
+    let allList = this.data.threeItemList
     for (const index in allList) {
       var timeList = allList[detail]
       this.setData({
@@ -149,46 +242,25 @@ Page({
 
   swiperChange(e) {
     let that = this
-    console.log(e.detail)
-    that.disposeAllList(e.detail.current)
-    // console.log(that.data.current)
-    let current = e.detail.current
-    let nextSeriaNum = that.getSerialNum(current)
-    let topSeriaNum = that.getSerialNumTop(current)
-    console.log('下一个序号', nextSeriaNum)
     console.log(that.data.timeList)
-    if (current > that.data.current && current > 0) {
-      console.log(that.data.currentIndex)
-      console.log("大于")
-      let topicXh = nextSeriaNum
-      that.selectTopic(topicXh)
-      // if (e.detail.source === 'touch') {
-      //   that.setData({
-      //     currentIndex: topicXh,
-      //     current: topicXh
-      //   })
-      // }
+    that.disposeAllList(e.detail.current)
+    let current = e.detail.current
+    let currentIndex = that.data.currentIndex
+    let zongList = that.data.questionList
+
+    let nextCurrent = ''
+    for (let index = 0; index < zongList.length; index++) {
+      if (zongList[index].id == that.data.timeList.id) {
+        nextCurrent = index
+      }
     }
-    if (current < that.data.current) {
-      console.log("小于")
-      let topicXh = topSeriaNum
-      that.selectTopic(topicXh)
-      // if (e.detail.source === 'touch') {
-      //   that.setData({
-      //     currentIndex: topicXh - 1,
-      //     current: topicXh - 1
-      //   })
-      // }
-    }
-    if (e.detail.source === 'touch') {
+
+    // 如果是滑到了左边界，弹回去
+    console.log("currentItem.isFirstPlaceholder", that.data.timeList)
+    if (that.data.timeList.isFirstPlaceholder) {
       that.setData({
-        currentIndex: current,
-        current: current
+        current: currentIndex
       })
-    }
-
-
-    if (current == -1) {
       wx.showToast({
         title: "已经是第一题了",
         icon: "none"
@@ -196,12 +268,48 @@ Page({
       return
     }
 
-    if (current == -2) {
-      wx.showModal({
-        title: "提示",
-        content: "您已经答完所有题，是否退出？",
+    // 如果滑到了右边界，弹回去
+    if (that.data.timeList.isLastPlaceholder) {
+      that.setData({
+        current: currentIndex,
+      })
+      wx.showToast({
+        title: "已经是最后一题了",
+        icon: "none"
       })
       return
+    }
+    console.log(current)
+    if (e.detail.source === 'touch') {
+      that.setData({
+        currentIndex: current,
+        // current: current
+      })
+    }
+
+
+    console.log(nextCurrent)
+    let nextSeriaNum = that.getSerialNum(nextCurrent)
+    let topSeriaNum = that.getSerialNumTop(nextCurrent)
+    console.log('下一个序号', nextSeriaNum)
+    console.log(that.data.timeList)
+
+    const START = 0
+    const END = 2
+    // 正向滑动，到下一个的时候
+    let isLoopPositive = current == START && currentIndex == END
+    console.log(isLoopPositive)
+    if (current - currentIndex == 1 || isLoopPositive) {
+      let topicXh = nextSeriaNum
+      that.getThreeItemList(that.data.timeList)
+      that.selectTopic(topicXh)
+    }
+    // 反向滑动，到上一个的时候
+    var isLoopNegative = current == END && currentIndex == START
+    if (currentIndex - current == 1 || isLoopNegative) {
+      let topicXh = topSeriaNum
+      that.getThreeItemList(that.data.timeList)
+      that.selectTopic(topicXh)
     }
   },
 
@@ -217,20 +325,26 @@ Page({
 
   //点击序号跳转到那一选项
   goToXuhao(e) {
+    var that = this
     let item = e.currentTarget.dataset.item
-    let array = this.data.errorSerialNum
+    let array = that.data.errorSerialNum
     console.log(item)
     if (item.dct == '错') {
       for (let index = 0; index < array.length; index++) {
         if (item.xh == array[index]) {
           console.log(index, array[index])
-          this.selectTopic(item.xh)
-          this.selectTopic(array[index - 1])
-          this.selectTopic(array[index + 1])
-          this.setData({
-            current: index,
-            xhShow: false
+          that.selectTopic(item.xh)
+          that.setData({
+            timeListIndex: item.xh,
           })
+          that.selectTopic(array[index - 1])
+          that.selectTopic(array[index + 1])
+          setTimeout(function () {
+            that.setData({
+              current: index % 3,
+              xhShow: false,
+            })
+          }, 100)
         }
       }
     }
@@ -349,12 +463,13 @@ Page({
           xhlist: res.list.datika.qbxhlist,
           questionList: this.data.questionList,
           errorSerialNum: res.list.datika.ctxhlist,
-          current: res.list.stxinxi.xh * 1 - 1
+          // current:0
         })
         let nextSeriaNum = this.getSerialNum(0)
         console.log('总数据', this.data.questionList)
         console.log('下一个序号', nextSeriaNum)
         app.globalData.questionList = this.data.xhlist
+        this.getThreeItemList(res.list.stxinxi)
         this.selectTopic(nextSeriaNum)
       }
     })
