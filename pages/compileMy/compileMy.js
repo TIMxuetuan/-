@@ -43,8 +43,6 @@ Page({
       .reduce((rst, v) => (rst += `${v}=${obj[v]}&`), "")
       .slice(0, -1) + suffix;
     let sign = MD5.hexMD5(resource_code);
-    console.log(resource_code)
-    console.log(sign)
 
     wx.uploadFile({
       url: 'https://caigua.zhongjianedu.com/ztk.php/TkWeChatLogin/UpHeardImage', // 仅为示例，非真实的接口地址
@@ -57,16 +55,13 @@ Page({
       },
       success(res) {
         // 上传完成需要更新 fileList
-        console.log(res)
         let data = JSON.parse(res.data)
-        console.log(data)
         that.setData({
           avatar:data.user_pic
         })
         that.xiuUpUserInfo()
       },
       fail(error) {
-        console.log(error)
       }
     });
 
@@ -85,7 +80,6 @@ Page({
       avatar: this.data.avatar,
     }
     Service.upUserInfo(dataLists, jiamiData).then(res => {
-      console.log(res)
       if (res.event == 100) {
         wx.showToast({
           title: res.msg,
@@ -112,7 +106,6 @@ Page({
 
   //输入框的值
   onChange(event) {
-    console.log(event.detail);
     this.setData({
       alterNameValue:event.detail
     })
@@ -120,7 +113,6 @@ Page({
 
   //确认按钮事件
   getUserInfo(event) {
-    console.log(event.detail);
     this.setData({
       nickname:this.data.alterNameValue
     })
@@ -142,24 +134,21 @@ Page({
       cache_key: this.data.cacheKey,
     }
     Service.logOut(dataLists, jiamiData).then(res => {
-      console.log(res)
       if (res.event == 100) {
         wx.removeStorage({
           key: 'userDataList',
           success(res) {
-            console.log(res)
           }
         })
-        wx.removeStorage({
-          key: 'AllXmItem',
-          success(res) {
-            console.log(res)
-          }
-        })
+        // wx.removeStorage({
+        //   key: 'AllXmItem',
+        //   success(res) {
+        //     console.log(res)
+        //   }
+        // })
         wx.removeStorage({
           key: 'cache_key',
           success(res) {
-            console.log(res)
           }
         })
         wx.switchTab({
@@ -192,7 +181,6 @@ Page({
     wx.getStorage({
       key: 'cache_key',
       success(res) {
-        console.log(res.data)
         that.setData({
           cacheKey: res.data
         })
@@ -201,7 +189,6 @@ Page({
     wx.getStorage({
       key: 'userDataList',
       success(res) {
-        console.log(res.data)
         that.setData({
           userDataList: res.data
         })

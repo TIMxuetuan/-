@@ -93,15 +93,12 @@ Component({
 
     swiperChange: function (e) {
       let that = this
-      console.log(that.data.swiperList)
       let current = e.detail.current
       let lastIndex = that.data.swiperIndex
       let currentItem = that.data.swiperList[current]
-      console.log(current, lastIndex, currentItem)
 
       let info = {}
       info.source = e.detail.source
-      console.log("info.source", info)
       // 如果是滑到了左边界，弹回去
       if (currentItem.isFirstPlaceholder) {
         info.current = -1

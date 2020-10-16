@@ -2,7 +2,7 @@
 <wxs module="filter" src="../../utils/filter.wxs"></wxs>
 
 <!--第一版-->
-<swiper style="height:{{swiperHeight}}px" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
+<swiper style="height:{{swiperHeight}}px" easing-functio="linear" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
   <!-- <swiper-item>
     单选封面页
   </swiper-item> -->

@@ -7,7 +7,7 @@
 
 .answerGrade-head {
   height: 280rpx;
-  background: linear-gradient(0deg, #4084E5 0%, #4084E5 100%);
+  background-color: #61A1FB;
   display: flex;
   padding-left: 66rpx;
 }
@@ -190,6 +190,7 @@
   bottom: 0;
   display: flex;
   justify-content: space-between;
+  background-color: #FFFFFF;
 }
 
 .bottomTwo-item {

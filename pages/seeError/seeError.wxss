@@ -363,3 +363,24 @@
   display: block;
   margin-bottom: 20rpx;
 }
+
+.noMore {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150rpx;
+}
+
+.noMoreImg {
+  width: 524rpx;
+  height: 312rpx;
+}
+
+.noMoreText {
+  margin-top: 50rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #CCCCCC;
+}

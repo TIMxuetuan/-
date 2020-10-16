@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isListHave:false,
     keyLists: ["A", "B", "C", "D", "E", "F", "G"],
     shijuan_id: "", //试卷id
     cacheKey: "", //用户cacheKey
@@ -42,7 +43,7 @@ Page({
   //查看大图
   clickImg(e) {
     let item = e.currentTarget.dataset.item
-    console.log("图片", item)
+    //console.log("图片", item)
     wx.previewImage({
       urls: item.pic, //需要预览的图片http链接列表，注意是数组
       current: '', // 当前显示图片的http链接，默认是第一个
@@ -97,7 +98,7 @@ Page({
   getLastSwiperChangeIndex: function (current) {
     const START = 0
     const END = 2
-    console.log("上一个index", current)
+    //console.log("上一个index", current)
     return current > START ? current - 1 : END
   },
   /**
@@ -106,17 +107,17 @@ Page({
   getNextSwiperChangeIndex: function (current) {
     const START = 0
     const END = 2
-    console.log("下一个index", current)
+    //console.log("下一个index", current)
     return current < END ? current + 1 : START
   },
   /**
    * 获取上一个要替换的list中的item
    */
   getLastSwiperNeedItem: function (currentItem, list) {
-    console.log("上一个", currentItem)
+    //console.log("上一个", currentItem)
     let zongList = this.data.questionList
     let defaultIndex = zongList.indexOf(currentItem)
-    console.log(defaultIndex)
+    //console.log(defaultIndex)
     let listNeedIndex = defaultIndex - 1
     let item = listNeedIndex == -1 ? {
       isFirstPlaceholder: true
@@ -127,10 +128,10 @@ Page({
    * 获取下一个要替换的list中的item
    */
   getNextSwiperNeedItem: function (currentItem, list) {
-    console.log("下一个", currentItem)
+    //console.log("下一个", currentItem)
     let zongList = this.data.questionList
     let defaultIndex = zongList.indexOf(currentItem)
-    console.log(defaultIndex)
+    //console.log(defaultIndex)
     let listNeedIndex = defaultIndex + 1
     let item = listNeedIndex == zongList.length ? {
       isLastPlaceholder: true
@@ -174,15 +175,15 @@ Page({
           questionList: this.data.questionList.concat(listL)
         })
         if (this.data.timeListIndex == res.list.xh) {
-          console.log("等于", this.data.timeListIndex, res.list)
+          //console.log("等于", this.data.timeListIndex, res.list)
           this.setData({
             timeList: res.list,
             timeListIndex: ''
           })
         }
         this.getThreeItemList(this.data.timeList)
-        console.log("滑数据", this.data.questionList)
-        console.log("当前页数据", this.data.timeList)
+        //console.log("滑数据", this.data.questionList)
+        //console.log("当前页数据", this.data.timeList)
       }
     })
   },
@@ -193,25 +194,25 @@ Page({
     var zongList = that.data.questionList
     // var newList = that.data.timeList
     var defaultIndex = ''
-    console.log("总数", zongList)
-    console.log("当前", newList)
+    //console.log("总数", zongList)
+    //console.log("当前", newList)
     for (let index = 0; index < zongList.length; index++) {
       if (zongList[index].id == newList.id) {
         defaultIndex = index
       }
     }
 
-    console.log("defaultIndex", defaultIndex)
+    //console.log("defaultIndex", defaultIndex)
 
     let swiperList = []
     for (let i = 0; i < 3; i++) {
       swiperList.push({})
     }
     let current = defaultIndex % 3
-    console.log(current)
+    //console.log(current)
     that.setData({
       currentIndex: current,
-      // current: current
+      current: current
     })
     let currentItem = zongList[defaultIndex]
     swiperList[current] = currentItem
@@ -221,7 +222,7 @@ Page({
     that.setData({
       threeItemList: swiperList
     })
-    console.log("三个页面", that.data.threeItemList)
+    //console.log("三个页面", that.data.threeItemList)
   },
 
   //总数据this.data.questionList 进行处理， 当滑动切换时使用
@@ -240,14 +241,14 @@ Page({
   swiperChange(e) {
     let that = this
     that.disposeAllList(e.detail.current)
-    // console.log(that.data.current)
+    // //console.log(that.data.current)
     let current = e.detail.current
     let currentIndex = that.data.currentIndex
     let zongList = that.data.questionList
     let currentItem = zongList[current]
 
     // 如果是滑到了左边界，弹回去
-    console.log("currentItem.isFirstPlaceholder", that.data.timeList)
+    //console.log("currentItem.isFirstPlaceholder", that.data.timeList)
     if (that.data.timeList.isFirstPlaceholder) {
       that.setData({
         current: currentIndex
@@ -270,7 +271,7 @@ Page({
       })
       return
     }
-    console.log(current)
+    //console.log(current)
     if (e.detail.source === 'touch') {
       that.setData({
         currentIndex: current,
@@ -281,7 +282,7 @@ Page({
     const END = 2
     // 正向滑动，到下一个的时候
     let isLoopPositive = current == START && currentIndex == END
-    console.log(isLoopPositive)
+    //console.log(isLoopPositive)
     if (current - currentIndex == 1 || isLoopPositive) {
       let topicXh = that.data.timeList.xh * 1 + 1
       that.getThreeItemList(that.data.timeList)
@@ -300,9 +301,9 @@ Page({
 
   //打开序号弹窗
   onClickAnswerCard: function (e) {
-    console.log("当前数据", this.data.timeList)
-    console.log("第一条初始数据", this.data.lxmsdtList)
-    console.log("总数据", this.data.questionList)
+    //console.log("当前数据", this.data.timeList)
+    //console.log("第一条初始数据", this.data.lxmsdtList)
+    //console.log("总数据", this.data.questionList)
     this.setData({
       xhShow: true
     })
@@ -311,8 +312,11 @@ Page({
   //点击序号跳转到那一选项
   goToXuhao(e) {
     var that = this
+    that.setData({
+      threeItemList: []
+    })
     let index = e.currentTarget.dataset.index
-    console.log(index)
+    //console.log(index)
     let xuhao = index + 1
     that.selectTopic(xuhao)
     that.setData({
@@ -320,12 +324,12 @@ Page({
     })
     that.selectTopic(xuhao - 1)
     that.selectTopic(xuhao + 1)
-    setTimeout(function () {
-      that.setData({
-        current: index % 3,
-        xhShow: false,
-      })
-    }, 100)
+    // setTimeout(function () {
+    that.setData({
+      // current: index % 3,
+      xhShow: false,
+    })
+    // }, 100)
   },
 
   //关闭序号弹窗
@@ -371,7 +375,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    // console.log(options.shijuan_id);
+    // //console.log(options.shijuan_id);
     that.setData({
       swiperHeight: wx.getSystemInfoSync().windowHeight,
     })
@@ -413,6 +417,9 @@ Page({
       xl_id: sendList.xl_id,
       xh: sendList.xh
     }
+    wx.showLoading({
+      title: '加载中...',
+    })
     Service.jjdtk(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
         this.transformShape(res.list)
@@ -445,13 +452,15 @@ Page({
           xhlist: res.list.xhlist,
           questionList: this.data.questionList,
           current: res.list.xh * 1 - 1,
-          xuHaoList: xuHaoList
+          xuHaoList: xuHaoList,
+          isListHave:true
         })
-        console.log("序号集合", this.data.xuHaoList)
+        //console.log("序号集合", this.data.xuHaoList)
         this.getThreeItemList(res.list)
         app.globalData.questionList = this.data.xhlist
         this.selectTopic(res.list.xh * 1 + 1)
         this.selectTopic(res.list.xh * 1 - 1)
+        wx.hideLoading();
       }
     })
   },

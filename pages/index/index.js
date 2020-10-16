@@ -24,42 +24,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-    var that = this;
-    wx.getStorage({
-      key: 'AllXmItem',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          AllXmId: res.data.id,
-          AllXmName: res.data.lb,
-        })
-        that.getkmlbList();
-        that.getSortdtList();
-      }
-    });
-    wx.getStorage({
-      key: 'cache_key',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          cacheKey: res.data
-        })
-      }
-    })
+
   },
 
   //返回项目列表页，并传入id值
   goToSelectStudy() {
-    console.log(this.data.AllXmId)
-    wx.redirectTo({
+    //console.log(this.data.AllXmId)
+    wx.reLaunch({
       url: '/pages/selectStudyItem/selectStudyItem?id=' + this.data.AllXmId
     })
   },
 
   //获得首页科目列表
   getkmlbList() {
-    console.log("this.data.AllXmId", this.data.AllXmId)
+    //console.log("this.data.AllXmId", this.data.AllXmId)
     let dataLists = {
       xmlb_id: this.data.AllXmId
     }
@@ -67,7 +45,7 @@ Page({
       xmlb_id: this.data.AllXmId
     }
     Service.getkmlb(dataLists, jiamiData).then(res => {
-      console.log(res)
+      //console.log(res)
       if (res.event == 100) {
         this.setData({
           kmlbList: res.list,
@@ -79,7 +57,7 @@ Page({
 
   //tabs切换
   onChangeSubject(event) {
-    console.log(event.detail)
+    //console.log(event.detail)
     this.setData({
       active: event.detail.name,
       page: 1,
@@ -90,7 +68,7 @@ Page({
 
   //六个模块选择
   onChangeSjlx(event) {
-    console.log(event)
+    //console.log(event)
     this.setData({
       sixActive: event.detail,
       page: 1,
@@ -101,7 +79,7 @@ Page({
 
   //获得试卷列表数据
   getSortdtList() {
-    console.log(this.data.active)
+    //console.log(this.data.active)
     let dataLists = {
       xmlb_id: this.data.AllXmId,
       cache_key: "",
@@ -116,26 +94,29 @@ Page({
       kmlb: this.data.active == 0 ? '' : this.data.active,
       page: this.data.page
     }
+    wx.showLoading({
+      title: '加载中...',
+    })
     Service.sortdt(dataLists, jiamiData).then(res => {
-      console.log(res)
+      //console.log(res)
       if (res.event == 100) {
         //获取上次加载的数据
         var oldlists = this.data.oldlists;
-        console.log(oldlists)
+        //console.log(oldlists)
         var newlists = oldlists.concat(res.list) //合并数据 res.data 你的数组数据
         this.setData({
           sortdtList: newlists,
           total: res.total,
           isInit: true
         })
-        
+        wx.hideLoading();
       }
     })
   },
 
   //去练习页面--进入答题
   goToExercise(e) {
-    console.log(this.data.cacheKey)
+    //console.log(this.data.cacheKey)
     if (this.data.cacheKey) {
       wx.navigateTo({
         url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
@@ -217,7 +198,29 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    //console.log(options)
+    var that = this;
+    wx.getStorage({
+      key: 'AllXmItem',
+      success(res) {
+        //console.log(res.data)
+        that.setData({
+          AllXmId: res.data.id,
+          AllXmName: res.data.lb,
+        })
+        that.getkmlbList();
+        that.getSortdtList();
+      }
+    });
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        //console.log(res.data)
+        that.setData({
+          cacheKey: res.data
+        })
+      }
+    })
   },
 
   /**
@@ -245,7 +248,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log("加载更多")
+    //console.log("加载更多")
     if (this.data.sortdtList.length < this.data.total) {
       var page = this.data.page
       page++

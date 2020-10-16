@@ -3,15 +3,15 @@
   <!--科目列表滑动-->
   <view class="subjectListSlide">
     <van-tabs active="{{ active }}" bind:change="onChangeSubject">
-      <van-tab wx:for="{{kmlbList}}" wx:for-index="idx" wx:for-item="item" title="{{item.lb}}" name="{{item.id}}">
+      <van-tab wx:for="{{kmlbList}}" wx:key="index" wx:for-index="idx" wx:for-item="item" title="{{item.lb}}" name="{{item.id}}">
       </van-tab>
     </van-tabs>
 
     <!--试题模块-->
     <block wx:if="{{isInit}}">
-      <block wx:if="{{isInit}}">
+      <block wx:if="{{isInitList}}">
         <view class="testModule">
-          <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="idx" wx:for-item="item"
+          <view class="testModule-item" wx:for="{{sortdtList}}" wx:key="index" wx:for-index="idx" wx:for-item="item"
             data-item="{{item}}" bindtap="goToAnswerGrade">
             <view class="testItem">
               <view class="testItem-title">{{item.nr}}</view>

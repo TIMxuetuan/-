@@ -17,8 +17,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    console.log(options.shijuan_id);
-    console.log(options.shiType);
     that.setData({
       shijuan_id: options.shijuan_id,
       shiType: options.shiType
@@ -26,14 +24,12 @@ Page({
     wx.getStorage({
       key: 'cache_key',
       success(res) {
-        console.log(res.data)
         that.setData({
           cacheKey: res.data
         })
         that.getSjztsyList();
       }
     })
-    console.log(this.data.cacheKey)
   },
 
   //获得试卷答题首页内容
@@ -47,7 +43,6 @@ Page({
       shijuan_id: this.data.shijuan_id
     }
     Service.sjztsy(dataLists, jiamiData).then(res => {
-      console.log(res)
       if (res.event == 100) {
         this.setData({
           sjztsyLists: res.list

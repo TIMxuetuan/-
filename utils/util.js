@@ -31,7 +31,7 @@ let ajax = function (obj) {
   obj.complete = function (res) {
     // console.log("res", res)
     if (res.data.event == 105) {
-      console.log("未登录")
+      // console.log("未登录")
       wx.showToast({
         title: res.data.msg,
         icon: 'none',
@@ -194,7 +194,7 @@ let _post = function (url, params, jiamiData, level, message = '') {
   }
   // let dataParams = getConfig(params, jiamiData)
   let dataParams = getConfig("false", params, jiamiData, level)
-  console.log(jiamiData)
+  // console.log(jiamiData)
   return ajax({
     method: 'POST',
     header: {

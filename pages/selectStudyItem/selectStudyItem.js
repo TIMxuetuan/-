@@ -14,7 +14,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.id)
+    //console.log(options.id)
     this.setData({
       selectNowId:options.id
     })
@@ -26,7 +26,7 @@ Page({
     let dataLists = {}
     let jiamiData = {}
     Service.getAllXmList(dataLists, jiamiData).then(res => {
-      console.log(res)
+      //console.log(res)
       if (res.event == 100) {
         this.setData({
           getAllXmList: res.data
@@ -37,16 +37,16 @@ Page({
 
   //获得当前选中框的id
   getSelectId(data){
-    console.log(data)
+    //console.log(data)
     this.setData({
       selectNowId:data[0].id
     })
-    console.log(this.data.selectNowId)
+    //console.log(this.data.selectNowId)
   },
 
   //跳转首页，并传参id
   goToindex(e){
-    console.log(e.currentTarget.dataset.item)
+    //console.log(e.currentTarget.dataset.item)
     wx.setStorage({
       key:"AllXmItem",
       data:e.currentTarget.dataset.item
@@ -67,7 +67,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.hideHomeButton()
   },
 
   /**

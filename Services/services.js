@@ -114,6 +114,11 @@ const Services = {
         return util._post(`${config.api}/TkWeChat/userXlInfo`,data, jiamiData, 2)
     },
 
+    //绑定用户手机号
+    bindMobile(data, jiamiData){
+        return util._post(`${config.api}/TkWeChatLogin/bindMobile`,data, jiamiData, 2)
+    },
+
 
 }
 module.exports = Services;

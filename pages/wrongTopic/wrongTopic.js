@@ -17,13 +17,14 @@ Page({
     cacheKey: "", //唯一标识
     oldlists: [], //老数据
     isInit: false,
+    isInitList:false,
     total: 0,
   },
 
   //跳到错题页面
   goToAnswerGrade(e) {
     let sendList = e.currentTarget.dataset.item
-    console.log(sendList)
+    //console.log(sendList)
     let jjztList = {
       shijuan_id: sendList.sj_id,
       xl_id: sendList.xl_id,
@@ -40,7 +41,7 @@ Page({
 
   //获得首页科目列表
   getkmlbList() {
-    console.log("this.data.AllXmId", this.data.AllXmId)
+    //console.log("this.data.AllXmId", this.data.AllXmId)
     let dataLists = {
       xmlb_id: this.data.AllXmId
     }
@@ -48,7 +49,7 @@ Page({
       xmlb_id: this.data.AllXmId
     }
     Service.getkmlb(dataLists, jiamiData).then(res => {
-      console.log(res)
+      //console.log(res)
       if (res.event == 100) {
         this.setData({
           kmlbList: res.list,
@@ -60,7 +61,7 @@ Page({
 
   //tabs切换
   onChangeSubject(event) {
-    console.log(event.detail)
+    //console.log(event.detail)
     this.setData({
       active: event.detail.name,
       page: 1,
@@ -71,7 +72,7 @@ Page({
 
   //获得试卷列表数据
   getSortdtList() {
-    console.log(this.data.active)
+    //console.log(this.data.active)
     let dataLists = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
@@ -88,17 +89,28 @@ Page({
       title: '数据加载中...',
     })
     Service.ctbst(dataLists, jiamiData).then(res => {
-      console.log(res)
+      //console.log(res)
       if (res.event == 100) {
         //获取上次加载的数据
         var oldlists = this.data.oldlists;
-        console.log(oldlists)
+        //console.log(oldlists)
         var newlists = oldlists.concat(res.list) //合并数据 res.data 你的数组数据
         this.setData({
           sortdtList: newlists,
           total: res.total,
-          isInit: true
+          isInit:true
         })
+        //console.log(res.list != '')
+        //console.log(res.list != null)
+        if (res.list != '') {
+          this.setData({
+            isInitList: true
+          })
+        }else{
+          this.setData({
+            isInitList: false
+          })
+        }
         wx.hideLoading();
       }
     })
@@ -109,12 +121,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    //console.log(options)
     var that = this;
     wx.getStorage({
       key: 'cache_key',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           cacheKey: res.data
         })
@@ -123,7 +135,7 @@ Page({
     wx.getStorage({
       key: 'AllXmItem',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           AllXmId: res.data.id,
           AllXmName: res.data.lb,
@@ -174,7 +186,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log("加载更多")
+    //console.log("加载更多")
     if (this.data.sortdtList.length < this.data.total) {
       var page = this.data.page
       page++

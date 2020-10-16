@@ -31,7 +31,7 @@ Page({
     questionListDuo: [], //多选存的数据
     current: 0, //初始显示页下标
     // 值为0禁止切换动画
-    swiperDuration: 600,
+    swiperDuration: 250,
     currentIndex: 0,
     isJieXiShow: 1, //判断是否点击 查看解析 1为初始无， 2为查看解析
 
@@ -45,7 +45,7 @@ Page({
     //查看大图
     clickImg(e) {
       let item = e.currentTarget.dataset.item
-      console.log("图片", item)
+      //console.log("图片", item)
       wx.previewImage({
         urls: item.pic, //需要预览的图片http链接列表，注意是数组
         current: '', // 当前显示图片的http链接，默认是第一个
@@ -157,9 +157,9 @@ Page({
         //     questionListDuo: this.data.questionListDuo.concat(listLduo)
         //   })
         // }
-        console.log("滑数据", this.data.questionList)
-        console.log("当前页数据", this.data.timeList)
-        // console.log(this.data.questionListDuo)
+        //console.log("滑数据", this.data.questionList)
+        //console.log("当前页数据", this.data.timeList)
+        // //console.log(this.data.questionListDuo)
       }
     })
   },
@@ -171,13 +171,13 @@ Page({
     for (const index in allList) {
       if (detail == index) {
         var timeList = allList[detail]
-        console.log("timeList", timeList)
+        //console.log("timeList", timeList)
         this.setData({
           timeList: timeList
         })
       }
     }
-    console.log(this.data.timeList)
+    //console.log(this.data.timeList)
   },
 
 
@@ -219,9 +219,9 @@ Page({
 
   //打开序号弹窗
   onClickAnswerCard: function (e) {
-    console.log("当前数据", this.data.timeList)
-    console.log("第一条初始数据", this.data.lxmsdtList)
-    console.log("总数据", this.data.questionList)
+    //console.log("当前数据", this.data.timeList)
+    //console.log("第一条初始数据", this.data.lxmsdtList)
+    //console.log("总数据", this.data.questionList)
     this.setData({
       xhShow: true
     })
@@ -412,14 +412,14 @@ Page({
         // return
       }
     }
-    // console.log(this.data.danDuiOrCuo, this.data.danFenZhi, this.data.danAnswerValue)
+    // //console.log(this.data.danDuiOrCuo, this.data.danFenZhi, this.data.danAnswerValue)
     this.saveAnswerMessage(item)
   },
 
   //材料题填写答案输入框
   bindTextAreaBlur: function (e) {
-    console.log(e.detail.value)
-    console.log(e.currentTarget.dataset.item)
+    //console.log(e.detail.value)
+    //console.log(e.currentTarget.dataset.item)
     let detaValue = e.detail.value
     let itemId = e.currentTarget.dataset.item.id
     this.data.questionList.map(item => {
@@ -435,7 +435,7 @@ Page({
       questionList: this.data.questionList,
       nowClickList: e.currentTarget.dataset.item
     })
-    console.log("zzz", this.data.questionList)
+    //console.log("zzz", this.data.questionList)
   },
 
   //材料题提交答案
@@ -468,13 +468,13 @@ Page({
 
   //保存答题试题信息,点击选项时，进行提交答题信息
   saveAnswerMessage(item) {
-    // console.log(this.data.nowClickList)
-    // console.log(this.data.timeList)
+    // //console.log(this.data.nowClickList)
+    // //console.log(this.data.timeList)
     let sendList = item
     let nowTime = this.data.second - this.data.danWhenTiem
-    console.log("现在的时间", this.data.second)
-    console.log("上一题的时间", this.data.danWhenTiem)
-    console.log("现在的用时", nowTime)
+    //console.log("现在的时间", this.data.second)
+    //console.log("上一题的时间", this.data.danWhenTiem)
+    //console.log("现在的用时", nowTime)
     let dataLists = {
       cache_key: this.data.cacheKey,
       shijuan_id: this.data.shijuan_id,
@@ -630,7 +630,7 @@ Page({
 
   //退出时交卷子
   quitSubmit() {
-    console.log(this.data.timeList)
+    //console.log(this.data.timeList)
     let sendList = this.data.timeList
     let dataLists = {
       cache_key: this.data.cacheKey,
@@ -645,7 +645,7 @@ Page({
       ys: this.data.second
     }
     Service.tcbc(dataLists, jiamiData).then(res => {
-      console.log(res)
+      //console.log(res)
       if (res.event == 100) {}
     })
   },
@@ -666,7 +666,7 @@ Page({
 
   //暂停计时器
   pauseTime() {
-    console.log('暂停')
+    //console.log('暂停')
     this.setData({
       timeShow: true
     })
@@ -705,7 +705,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log("退出了")
+    //console.log("退出了")
     this.quitSubmit()
     clearInterval(this.data.setInterTimes)
   },

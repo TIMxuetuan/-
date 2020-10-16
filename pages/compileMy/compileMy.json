@@ -5,5 +5,6 @@
     "van-uploader": "/vant/uploader/index",
     "van-field": "/vant/field/index",
     "van-dialog": "/vant/dialog/index"
-  }
+  },
+  "navigationBarTitleText": "中题库"
 }

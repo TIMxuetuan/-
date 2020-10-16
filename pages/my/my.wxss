@@ -72,8 +72,8 @@
   margin-top: 56rpx;
   width: 670rpx;
   height: 128rpx;
-  background: #4A68F3;
-  box-shadow: 1rpx 7rpx 9rpx 0rpx rgba(24, 57, 216, 0.25);
+  background: #FFFFFF;
+  box-shadow: 1rpx 3rpx 35rpx 0px rgba(128, 128, 128, 0.13);
   border-radius: 8rpx;
   display: flex;
   justify-content: space-around;
@@ -83,19 +83,19 @@
 .addUpExercise-text {
   font-size: 24rpx;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #9A9A9A;
 }
 
 .exercise-num {
   font-size: 40rpx;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #FF561A;
 }
 
 .addUpExercise-wire {
-  width: 1rpx;
-  height: 93rpx;
-  background: #FFFFFF;
+  width: 2rpx;
+  height: 90rpx;
+  background: #DFDFDF;
 }
 
 /*三个模块*/
@@ -127,12 +127,25 @@
   line-height: 62rpx;
 }
 
-.threebg-one{
+.threebg-one {
   background: #E7F5FE;
 }
-.threebg-two{
+
+.threebg-two {
   background: #FFF5EC;
 }
-.threebg-three{
+
+.threebg-three {
   background: #F4F7FF;
+}
+
+.noLoginBtn {
+  width: 150rpx;
+  height: 68rpx;
+  background: #FF5519;
+  border-radius: 5rpx;
+  padding: 0;
+  color: #ffffff;
+  font-size: 28rpx;
+  line-height: 68rpx;
 }

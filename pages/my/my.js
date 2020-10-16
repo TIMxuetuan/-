@@ -10,7 +10,9 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userDataList: null, //后台返的用户数据
-    cache_key: null
+    cache_key: null,
+    isLogin: false,
+    isTypeThree:1, //1：代表用户进行手机号授权， 2：代表用户信息授权， 0：代表已登录
   },
   //事件处理函数
   bindViewTap: function () {
@@ -27,12 +29,10 @@ Page({
   },
 
   onShow: function () {
-    console.log(111)
     var that = this
     wx.getStorage({
       key: 'cache_key',
       success(res) {
-        console.log(res)
         that.setData({
           cache_key: res.data
         })
@@ -42,19 +42,19 @@ Page({
     wx.getStorage({
       key: 'userDataList',
       success(res) {
-        console.log(res)
         that.setData({
-          userDataList: res.data
+          userDataList: res.data,
+          isLogin: true,
+          isTypeThree:0
         })
       },
       fail(res) {
-        console.log(res)
         that.setData({
-          userDataList: null
+          userDataList: null,
+          isTypeThree:1
         })
       }
     })
-    console.log(222)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -73,7 +73,6 @@ Page({
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
-          console.log(res)
           app.globalData.userInfo = res.userInfo
           this.setData({
             userInfo: res.userInfo,
@@ -87,43 +86,91 @@ Page({
   onLoad: function () {
 
   },
+
+  //进行手机号绑定授权
+  getPhoneNumber(e) {
+    console.log(e)
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+    wx.login({
+      success: res => {
+        console.log(res)
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        let code = res.code
+        let dataLists = {
+          code: code,
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv,
+        }
+        let jiamiData = {
+          code: code,
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv,
+        }
+        Service.bindMobile(dataLists, jiamiData).then(res => {
+          if (res.event == 100) {
+            this.setData({
+              user_phone:res.data,
+              isTypeThree:2
+            })
+            wx.setStorage({
+              key: "user_phone",
+              data: res.data
+            })
+          }
+        })
+      }
+    })
+  },
+
+  //进行登录，获取用户信息
   getUserInfo: function (e) {
     console.log(e)
-    console.log(app.globalData.code)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-    let dataLists = {
-      code: app.globalData.code,
-      encryptedData: e.detail.encryptedData,
-      iv: e.detail.iv,
-    }
-    let jiamiData = {
-      code: app.globalData.code,
-      encryptedData: e.detail.encryptedData,
-      iv: e.detail.iv,
-    }
-    Service.getUserInfoLogin(dataLists, jiamiData).then(res => {
-      console.log(res)
-      if (res.event == 100) {
-        this.getMySjTotal(res.data.cache_key)
+    wx.login({
+      success: res => {
+        console.log(res)
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        let code = res.code
+        app.globalData.userInfo = e.detail.userInfo
         this.setData({
-          userDataList: res.data.userInfo
+          userInfo: e.detail.userInfo,
+          hasUserInfo: true
         })
-        wx.setStorage({
-          key: "cache_key",
-          data: res.data.cache_key
+        let dataLists = {
+          code: code,
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv,
+          user_phone:this.data.user_phone
+        }
+        let jiamiData = {
+          code: code,
+          encryptedData: e.detail.encryptedData,
+          iv: e.detail.iv,
+          user_phone:this.data.user_phone
+        }
+        Service.getUserInfoLogin(dataLists, jiamiData).then(res => {
+          if (res.event == 100) {
+            this.getMySjTotal(res.data.cache_key)
+            this.setData({
+              userDataList: res.data.userInfo,
+              isLogin: true,
+              isTypeThree:0
+            })
+            wx.setStorage({
+              key: "cache_key",
+              data: res.data.cache_key
+            })
+            wx.setStorage({
+              key: "userDataList",
+              data: res.data.userInfo
+            })
+            // wx.redirectTo({
+            //   url: '/pages/selectStudyItem/selectStudyItem'
+            // })
+            // Toast[res.Flag?'success':'fail'](res.Content);
+          }
         })
-        wx.setStorage({
-          key: "userDataList",
-          data: res.data.userInfo
-        })
-        // wx.redirectTo({
-        //   url: '/pages/selectStudyItem/selectStudyItem'
-        // })
-        // Toast[res.Flag?'success':'fail'](res.Content);
       }
     })
   },
@@ -137,7 +184,6 @@ Page({
       cache_key: cacheKey,
     }
     Service.mySjTotal(dataLists, jiamiData).then(res => {
-      console.log(res)
       this.setData({
         leijiNum: res
       })

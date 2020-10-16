@@ -35,6 +35,7 @@
 
   <!--开始答题按钮-->
   <view class="startingWork">
-    <van-button class="startingWork-btn" round type="info" bindtap="goToAnswerPage">开始答题</van-button>
+    <van-button class="startingWork-btn" round type="info" bindtap="goToAnswerPage">{{shiType==1?'开始练习':'开始考试'}}
+    </van-button>
   </view>
 </view>

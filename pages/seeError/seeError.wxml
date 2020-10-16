@@ -1,79 +1,83 @@
 <!-- <item-view item="{{item}}" index="{{index}}" lxmsdtList="{{lxmsdtList}}" swiperHeight="{{swiperHeight}}"></item-view> -->
 <wxs module="filter" src="../../utils/filter.wxs"></wxs>
 
-<!--第一版-->
-<swiper style="height:{{swiperHeight}}px" easing-functio="linear" circular duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
-  <!-- <swiper-item>
+
+<block wx:if="{{isInit}}">
+  <!--第一版-->
+  <block wx:if="{{isListHave}}">
+    <swiper style="height:{{swiperHeight}}px" easing-functio="linear" circular duration="{{swiperDuration}}"
+      current="{{current}}" bindchange="swiperChange">
+      <!-- <swiper-item>
     单选封面页
   </swiper-item> -->
-  <swiper-item wx:key="idx" wx:for="{{threeItemList}}" wx:item="item" wx:key="id">
-    <scroll-view style="height:{{swiperHeight}}px" scroll-y>
-      <view class="page-item" wx:if="{{item != null}}">
-        <view class="count-box">
-          <view class="count-box-title">
-            <text wx:if="{{item.tx == 1}}">单项选择</text>
-            <text wx:elif="{{item.tx == 2}}">多项选择</text>
-            <text wx:elif="{{item.tx == 3}}">材料题</text>
-          </view>
-          <view>
-            <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
-            <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.datika.znum}}</text>
-          </view>
-        </view>
-
-        <!--单项选择 内容-->
-        <view class="content" wx:if="{{item.tx == 1}}">
-          <view class="contentFath">
-            <view>{{item.nr}}</view>
-            <view class="contentFath-select">
-              <view wx:if="{{item.pic != ''}}">
-                <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+      <swiper-item wx:key="idx" wx:for="{{threeItemList}}" wx:item="item" wx:key="id">
+        <scroll-view style="height:{{swiperHeight}}px" scroll-y>
+          <view class="page-item" wx:if="{{item != null}}">
+            <view class="count-box">
+              <view class="count-box-title">
+                <text wx:if="{{item.tx == 1}}">单项选择</text>
+                <text wx:elif="{{item.tx == 2}}">多项选择</text>
+                <text wx:elif="{{item.tx == 3}}">材料题</text>
               </view>
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
-                <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
-                <view
-                  class="selectItem-left {{item.uda == item.da ? (stxxItem.id == item.da ? 'selected' : '') : (stxxItem.id == item.da? 'selected' : (stxxItem.id == item.uda?'selectedCuo':''))}}">
-                  {{stxxItem.id}}</view>
-                <view class="selectItem-right">{{stxxItem.name}}</view>
-                {{}}
+              <view>
+                <text class="text-current-count" wx:if="{{item != null}}">{{item.xh}}</text>
+                <text class="text-total-count" wx:if="{{item != null}}">/{{lxmsdtList.datika.znum}}</text>
               </view>
             </view>
-          </view>
-        </view>
 
-        <!--多项选择内容-->
-        <view class="content" wx:elif="{{item.tx == 2}}">
-          <view class="contentFath">
-            <view>{{item.nr}}</view>
-            <view class="contentFath-select">
-              <view wx:if="{{item.pic != ''}}">
-                <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
-              </view>
-              <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
-                data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
-                <view
-                  class="moreSelect-left {{filter.defineIndexOf(item.da, stxxItem.id) != -1 ? 'selectedMore' :'selectedMoreCuo'}}">
-                  {{stxxItem.id}}
+            <!--单项选择 内容-->
+            <view class="content" wx:if="{{item.tx == 1}}">
+              <view class="contentFath">
+                <view>{{item.nr}}</view>
+                <view class="contentFath-select">
+                  <view wx:if="{{item.pic != ''}}">
+                    <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+                  </view>
+                  <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
+                    data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
+                    <!-- <view class="selectItem-left {{danXuanidx == idx?'selected':''}}">{{filter.filtrationAbcd(idx)}}</view> -->
+                    <view
+                      class="selectItem-left {{item.uda == item.da ? (stxxItem.id == item.da ? 'selected' : '') : (stxxItem.id == item.da? 'selected' : (stxxItem.id == item.uda?'selectedCuo':''))}}">
+                      {{stxxItem.id}}</view>
+                    <view class="selectItem-right">{{stxxItem.name}}</view>
+                    {{}}
+                  </view>
                 </view>
-                <view class="selectItem-right">{{stxxItem.name}}</view>
               </view>
             </view>
-          </view>
-          <!-- <view class="moreConfirm" wx:if="{{item.uda == ''}}">
+
+            <!--多项选择内容-->
+            <view class="content" wx:elif="{{item.tx == 2}}">
+              <view class="contentFath">
+                <view>{{item.nr}}</view>
+                <view class="contentFath-select">
+                  <view wx:if="{{item.pic != ''}}">
+                    <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+                  </view>
+                  <view class="selectItem" wx:for="{{item.stxx}}" wx:key="id" wx:for-index="idx" wx:for-item="stxxItem"
+                    data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}">
+                    <view
+                      class="moreSelect-left {{filter.defineIndexOf(item.da, stxxItem.id) != -1 ? 'selectedMore' :'selectedMoreCuo'}}">
+                      {{stxxItem.id}}
+                    </view>
+                    <view class="selectItem-right">{{stxxItem.name}}</view>
+                  </view>
+                </view>
+              </view>
+              <!-- <view class="moreConfirm" wx:if="{{item.uda == ''}}">
             <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.ziuda == '' ? true : false}}"
               bind:click="quRenAnswer">确认答案</van-button>
           </view> -->
-        </view>
-
-        <!--材料题-->
-        <view class="content" wx:elif="{{item.tx == 3}}">
-          <view class="contentFath marginBot">
-            <view>{{item.nr}}</view>
-            <view wx:if="{{item.pic != ''}}">
-              <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
             </view>
-            <!-- <view class="answerText" wx:if="{{item.uda == ''}}">
+
+            <!--材料题-->
+            <view class="content" wx:elif="{{item.tx == 3}}">
+              <view class="contentFath marginBot">
+                <view>{{item.nr}}</view>
+                <view wx:if="{{item.pic != ''}}">
+                  <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
+                </view>
+                <!-- <view class="answerText" wx:if="{{item.uda == ''}}">
               <view class="answerText-title">请对问题做出解答</view>
               <view class="answerText-content">
                 <textarea class="answerText-area" data-item="{{item}}" maxlength="-1" bindblur="bindTextAreaBlur"
@@ -85,79 +89,64 @@
                </van-button>
               </view>
             </view> -->
-          </view>
-        </view>
+              </view>
+            </view>
 
-        <!--解析-->
-        <!-- <view class="analysis" wx:if="{{item.uda == ''}}">
+            <!--解析-->
+            <!-- <view class="analysis" wx:if="{{item.uda == ''}}">
           <text class="analysis-text" data-item="{{item}}" bindtap="openJieXi">查看解析</text>
           <van-icon name="arrow-down" color="#FF681E" size="13px" />
         </view> -->
 
-        <!--解析内容-->
-        <view class="analysis-all">
-          <view class="huiXian"></view>
-          <view class="analysis-content">
-            <view class="analysis-title">答案</view>
-            <view class="analysis-shuoMing" wx:if="{{item.uda == '1'}}">正确答案<text
-                class="colorDui">{{item.da}}</text>，本题未作答</view>
-            <view class="analysis-shuoMing" wx:elif="{{item.uda == item.da}}">正确答案<text
-                class="colorDui">{{item.da}}</text>，您的答案<text class="colorDui">{{item.uda}}</text>
+            <!--解析内容-->
+            <view class="analysis-all">
+              <view class="huiXian"></view>
+              <view class="analysis-content">
+                <view class="analysis-title">答案</view>
+                <view class="analysis-shuoMing" wx:if="{{item.uda == '1'}}">正确答案<text
+                    class="colorDui">{{item.da}}</text>，本题未作答</view>
+                <view class="analysis-shuoMing" wx:elif="{{item.uda == item.da}}">正确答案<text
+                    class="colorDui">{{item.da}}</text>，您的答案<text class="colorDui">{{item.uda}}</text>
+                </view>
+                <view class="analysis-shuoMing" wx:else>正确答案<text class="colorDui">{{item.da}}</text>，您的答案<text
+                    class="colorCuo">{{item.uda}}</text>
+                </view>
+              </view>
+              <view class="analysis-content">
+                <view class="analysis-title">解析</view>
+                <view class="analysis-jieXi">{{item.jx}}</view>
+              </view>
             </view>
-            <view class="analysis-shuoMing" wx:else>正确答案<text class="colorDui">{{item.da}}</text>，您的答案<text
-                class="colorCuo">{{item.uda}}</text>
-            </view>
-          </view>
-          <view class="analysis-content">
-            <view class="analysis-title">解析</view>
-            <view class="analysis-jieXi">{{item.jx}}</view>
-          </view>
-        </view>
 
+          </view>
+        </scroll-view>
+      </swiper-item>
+
+    </swiper>
+
+    <!--固定底部 功能栏-->
+    <view class="fixedBottom">
+      <!--试题收藏-->
+      <view class="fixedBottom-item">
+        <image bindtap="collectClick" data-type="1" wx:if="{{timeList.sczt == 0}}" class="fixedBottom-img"
+          src="../../images/my/no_shoucang.png"></image>
+        <image bindtap="collectClick" data-type="0" wx:else class="fixedBottom-img" src="../../images/my/shoucang.png">
+        </image>
       </view>
-    </scroll-view>
-  </swiper-item>
+      <view class="fixedBottom-item">
+        <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
+      </view>
+    </view>
+  </block>
+</block>
 
-</swiper>
 
-
-<!--第二版-->
-<!-- <swiper-limited-load 
-    id="swiper"
-    generic:item-view="item-view"
-    swiperHeight="{{swiperHeight}}"
-    swiperDuration="{{swiperDuration}}"
-    list="{{questionList}}"
-    lxmsdtList="{{lxmsdtList}}"
-    current="{{current}}"
-    bindchange="swiperChange">
-  </swiper-limited-load> -->
-
-<!-- <view class="change-question">
-  <button catchtap="onClickLast">上一题</button>
-  <button catchtap="onClickNext">下一题</button>
-</view>
-
-<view class="answer-card">
-  <button class="btn-answer-card" catchtap="onClickAnswerCard">答题卡</button>
-</view> -->
-
-<!--固定底部 功能栏-->
-<view class="fixedBottom">
-  <!--试题收藏-->
-  <view class="fixedBottom-item">
-    <image bindtap="collectClick" data-type="1" wx:if="{{timeList.sczt == 0}}" class="fixedBottom-img"
-      src="../../images/my/no_shoucang.png"></image>
-    <image bindtap="collectClick" data-type="0" wx:else class="fixedBottom-img" src="../../images/my/shoucang.png">
-    </image>
+<block wx:else>
+  <view class="noMore">
+    <image class="noMoreImg" src="../../images/my/zanwuneirong.png"></image>
+    <view class="noMoreText">暂时没有内容</view>
   </view>
-  <view class="fixedBottom-item">
-    <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
-  </view>
-  <!-- <view class="fixedBottom-item">
-    <image class="fixedBottom-img" src="../../images/my/no_shoucang.png"></image>
-  </view> -->
-</view>
+</block>
 
 <!--序号弹出层-->
 <van-popup show="{{ xhShow }}" position="bottom" custom-style="height: 80%;" bind:close="onXhshowClose">

@@ -3,36 +3,53 @@
   <view class="userinfo">
     <block>
       <view class="userinfo-content">
-        <!--头部--未登录-->
-        <!-- <view class="contentHead" wx:if="{{!hasUserInfo && canIUse}}"> -->
-        <view class="contentHead" wx:if="{{userDataList == null}}">
-          <view class="contentHead-left">
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/my/morentouxing.png" mode="cover"></image>
-            <view class="noLogin">
-              <button style="border:none;background-color:#fff;font-size:30rpx;color: #343434;" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击获取微信授权 </button>
+        <block>
+          <!--头部--未登录获得用户手机号-->
+          <view class="contentHead" wx:if="{{isTypeThree==1}}">
+            <view class="contentHead-left">
+              <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/my/morentouxing.png" mode="cover">
+              </image>
+              <view class="noLogin">
+                <button class="noLoginBtn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 点击注册
+                </button>
+              </view>
             </view>
           </view>
-        </view>
 
-        <!--头部--登陆过-->
-        <view class="contentHead" wx:else>
-          <view class="contentHead-left">
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userDataList.avatar}}" mode="cover"></image>
-            <view class="contentHead-text">
-              <text class="userinfo-nickname">{{userDataList.nickname}}</text>
-              <text class="userinfo-fubiao">中题库</text>
+          <!--头部--未登录获得用户信息-->
+          <view class="contentHead" wx:elif="{{isTypeThree==2}}">
+            <view class="contentHead-left">
+              <image bindtap="bindViewTap" class="userinfo-avatar" src="../../images/my/morentouxing.png" mode="cover">
+              </image>
+              <view class="noLogin">
+                <button class="noLoginBtn" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击登录 </button>
+              </view>
             </view>
           </view>
-          <view class="contentHead-compile">
-            <van-button round type="info" bindtap="goToCompileMy">编辑资料</van-button>
+
+
+          <!--头部--登陆过-->
+          <view class="contentHead" wx:elif="{{isTypeThree==0}}">
+            <view class="contentHead-left">
+              <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userDataList.avatar}}" mode="cover"></image>
+              <view class="contentHead-text">
+                <text class="userinfo-nickname">{{userDataList.nickname}}</text>
+                <text class="userinfo-fubiao">中题库</text>
+              </view>
+            </view>
+            <view class="contentHead-compile">
+              <van-button round type="info" bindtap="goToCompileMy">编辑资料</van-button>
+            </view>
           </view>
-        </view>
+        </block>
 
         <!--累计做题-->
         <view class="addUpExercise">
-          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.sj}}</text> 套</view>
+          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.sj != null ? leijiNum.sj:'?'}}</text>
+            套</view>
           <view class="addUpExercise-wire"></view>
-          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.st}}</text> 道</view>
+          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.st != null ?leijiNum.st:'?'}}</text>
+            道</view>
         </view>
 
         <!--三个模块 历史记录、错题本、收藏中心-->

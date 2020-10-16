@@ -23,13 +23,13 @@
 
 /*试题模块*/
 .testModule {
-  margin-top: 30rpx;
+  margin: 30rpx 0 80rpx 0;
   padding: 0 40rpx;
 }
 
 .testModule-item {
   width: auto;
-  height: 140rpx;
+  height: 190rpx;
   margin-bottom: 30rpx;
   padding: 36rpx 18rpx 26rpx 40rpx;
   box-sizing: border-box;
@@ -69,6 +69,11 @@
 .testItemBtn-btn {
   height: 56rpx;
   display: flex;
+}
+
+.testItemBtn{
+  display: flex;
+  align-items: center;
 }
 
 .testItemBtn-btn .van-button {
