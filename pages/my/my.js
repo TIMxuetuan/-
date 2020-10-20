@@ -47,7 +47,9 @@ Page({
         that.getMySjTotal(res.data)
       },
       fail(res) {
-        console.log("大时代")
+        that.setData({
+          cache_key: null
+        })
         that.userInfoGetOpen()
       }
     })
@@ -178,7 +180,8 @@ Page({
             this.setData({
               userDataList: res.data.userInfo,
               isLogin: true,
-              isTypeThree: 0
+              isTypeThree: 0,
+              cache_key:res.data.cache_key
             })
             wx.setStorage({
               key: "cache_key",
@@ -248,7 +251,8 @@ Page({
 
   //跳转到历史记录页面
   goToHistory() {
-    if (this.data.cacheKey) {
+    console.log(this.data.cache_key)
+    if (this.data.cache_key) {
       wx.navigateTo({
         url: '/pages/historyList/historyList',
       })
@@ -263,7 +267,7 @@ Page({
 
   //跳转到错题本页面
   goToWrongTopic() {
-    if (this.data.cacheKey) {
+    if (this.data.cache_key) {
       wx.navigateTo({
         url: '/pages/wrongTopic/wrongTopic',
       })
@@ -278,7 +282,7 @@ Page({
 
   //跳转到错题本页面
   goToCollect() {
-    if (this.data.cacheKey) {
+    if (this.data.cache_key) {
       wx.navigateTo({
         url: '/pages/collect/collect',
       })
