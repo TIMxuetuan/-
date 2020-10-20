@@ -1,6 +1,13 @@
 <!-- <item-view item="{{item}}" index="{{index}}" lxmsdtList="{{lxmsdtList}}" swiperHeight="{{swiperHeight}}"></item-view> -->
 <wxs module="filter" src="../../utils/filter.wxs"></wxs>
 
+<!-- <van-icon name="arrow-left" bindtap="onClickLeft" slot="left" size="20px" color="#1A1A1A" /> -->
+
+<view class="left-jian">
+  <van-nav-bar title="真题模考" fixed placeholder custom-style="{{leftIconStyle}}" left-arrow bind:click-left="onClickLeft"/>
+</view>
+
+
 <!--第一版-->
 <block wx:if="{{isListHave}}">
   <swiper style="height:{{swiperHeight}}px" easing-functio="linear" duration="{{swiperDuration}}" current="{{current}}"
@@ -89,8 +96,8 @@
                   <view wx:if="{{item.pic != ''}}">
                     <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
                   </view>
-                  <view class="selectItem" wx:for="{{item.stxx}}" wx:for-index="idx" wx:for-item="stxxItem"
-                    data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}"
+                  <view class="selectItem" wx:for="{{item.stxx}}" wx:key="index" wx:for-index="index"
+                    wx:for-item="stxxItem" data-id="{{stxxItem.id}}" data-item="{{item}}" data-stxxitem="{{stxxItem}}"
                     bindtap="moreSelectClick">
                     <view
                       class="moreSelect-left {{filter.defineIndexOf(item.uda, stxxItem.id) != -1 ? 'selectedMore' :''}}">
@@ -102,6 +109,19 @@
               <view class="moreConfirm">
                 <van-button round color="#FF5519" data-item="{{item}}" disabled="{{item.uda == '' ? true : false}}"
                   bind:click="quRenAnswer">确认答案</van-button>
+              </view>
+            </view>
+          </view>
+
+          <view wx:elif="{{item.tx == 6}}">
+            <view class="danXuanCover">
+              <view class="danXuanCover-top">
+                <view class="leftColorChunk"></view>
+                <view class="leftColorTitle">材料题</view>
+              </view>
+              <view class="danXuanCover-content">共2题，根据材料完成下列问题（材料题不做得分计算，不计入总分值）。</view>
+              <view class="danXuanCover-img">
+                <image src="../../images/index/shoushi.png"></image>
               </view>
             </view>
           </view>
@@ -198,15 +218,21 @@
   <view class="serialNumber">
     <view class="serialNumber-dataList">
       <view wx:key="index" wx:for="{{questionList}}" wx:item="item">
-        <block wx:if="{{index == 0 || index == lxmsdtList.dtk.xuhao.danxuan.length + 1}}"></block>
+        <block wx:if="{{index == 0 || index == lxmsdtList.dtk.xuhao.danxuan.length + 1 || index == (lxmsdtList.dtk.xuhao.danxuan.length + lxmsdtList.dtk.xuhao.duoxuan.length + 2)}}"></block>
         <block wx:elif="{{index <= lxmsdtList.dtk.xuhao.danxuan.length}}">
           <view class="dataList-item {{index%5==0 ? 'quMargin' : ''}} {{item.id != null ? (timeList.xh == index ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
             {{index}}
           </view>
         </block>
-        <block wx:else>
+        <block wx:elif="{{index <= (lxmsdtList.dtk.xuhao.duoxuan.length + lxmsdtList.dtk.xuhao.danxuan.length + 1) }}">
           <view class="dataList-item {{(index - 1) % 5==0 ? 'quMargin' : ''}} {{item.id != null ? (timeList.xh == index - 1 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
             {{index - 1}}
+          </view>
+        </block>
+
+        <block wx:elif="{{ index <= (lxmsdtList.dtk.xuhao.duoxuan.length + lxmsdtList.dtk.xuhao.danxuan.length + lxmsdtList.dtk.xuhao.cailiao.length + 2)}}">
+          <view class="dataList-item {{(index - 2) % 5==0 ? 'quMargin' : ''}} {{item.id != null ? (timeList.xh == index - 2 ? 'bgDang': (item.uda != '' ? 'baYida' : '')) : ''}}" data-item="{{item}}" data-index="{{index}}" bindtap="goToXuhao">
+            {{index - 2}}
           </view>
         </block>
 
@@ -224,4 +250,9 @@
 <!--暂停计时器弹窗-->
 <van-dialog class="jiaoDialog" use-slot title="休息中" show="{{ timeShow }}" bind:show-cancel-button="true"
   confirm-button-open-type="getUserInfo" confirm-button-text="继续学习" bind:getuserinfo="getTimeServe">
+</van-dialog>
+
+<!--退出提示弹窗-->
+<van-dialog class="jiaoDialog" use-slot title="确定要退出，并保存本次考试？" show="{{ tuichuShow }}" show-cancel-button
+  confirm-button-open-type="getUserInfo" bind:close="tuiOnClose" bind:getuserinfo="tuiOut">
 </van-dialog>

@@ -11,7 +11,7 @@ Page({
     page: 1,
     kmlbList: [], //科目列表
     sjlxList: [], //试卷类型
-    active: 0,
+    active: null,
     sixActive: "全部",
     sortdtList: [], //试卷列表
     cacheKey: "", //唯一标识
@@ -35,17 +35,21 @@ Page({
       if (res.event == 100) {
         this.setData({
           kmlbList: res.list,
+          kmlbListFirst:res.list[0].id,
+          active:res.list[0].id == '' ? 0 : res.list[0].id,
           sjlxList: res.sjlx
         })
       }
+      console.log(this.data.kmlbListFirst)
+      this.getSortdtList();
     })
   },
 
   //tabs切换
   onChangeSubject(event) {
-    //console.log(event.detail)
+    console.log(event.detail)
     this.setData({
-      active: event.detail.name,
+      kmlbListFirst: event.detail.name,
       page: 1,
       oldlists: []
     })
@@ -54,17 +58,17 @@ Page({
 
   //获得试卷列表数据
   getSortdtList() {
-    //console.log(this.data.active)
+    console.log(this.data.active)
     let dataLists = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active == 0 ? '' : this.data.active,
+      kmlb: this.data.kmlbListFirst == 0 ? '' : this.data.kmlbListFirst,
       page: this.data.page
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active == 0 ? '' : this.data.active,
+      kmlb: this.data.kmlbListFirst == 0 ? '' : this.data.kmlbListFirst,
       page: this.data.page
     }
     wx.showLoading({
@@ -99,23 +103,49 @@ Page({
   //跳到全部解析页面
   goToAnswerGrade(e) {
     let sendList = e.currentTarget.dataset.item
-    //console.log(sendList)
-    let jjztList = {
-      shijuan_id: sendList.sj_id,
-      xl_id: sendList.id,
-      xh: sendList.dyxh,
-      // ys: 2000,
+    console.log(sendList)
+    if (sendList.cs_lx == '真题模考') {
+      if (sendList.zt == 1) {
+        let jjztList = {
+          shijuan_id: sendList.sj_id,
+          xl_id: sendList.id,
+          xh: sendList.dyxh,
+        }
+        wx.setStorage({
+          key: "jjztList",
+          data: jjztList
+        })
+        wx.navigateTo({
+          url: '/pages/errorsAnalysis/errorsAnalysis',
+        })
+      } else if (sendList.zt == 2) {
+        wx.navigateTo({
+          url: '/pages/answerPage/answerPage?shijuan_id=' + sendList.sj_id,
+        })
+      }
+    } else if (sendList.cs_lx == '练习模式') {
+      // if (sendList.zt == 1) {
+      //   let jjztList = {
+      //     shijuan_id: sendList.sj_id,
+      //     xl_id: sendList.id,
+      //     xh: sendList.dyxh,
+      //   }
+      //   wx.setStorage({
+      //     key: "jjztList",
+      //     data: jjztList
+      //   })
+      //   wx.navigateTo({
+      //     url: '/pages/errorsAnalysis/errorsAnalysis',
+      //   })
+      // } else if (sendList.zt == 2) {
+      wx.navigateTo({
+        url: '/pages/exercisePage/exercisePage?shijuan_id=' + sendList.sj_id,
+      })
+      // }
     }
-    wx.setStorage({
-      key: "jjztList",
-      data: jjztList
-    })
-    wx.navigateTo({
-      url: '/pages/errorsAnalysis/errorsAnalysis',
-    })
-    // wx.navigateTo({
-    //   url: '/pages/answerGrade/answerGrade',
-    // })
+
+
+
   },
 
 
@@ -124,6 +154,20 @@ Page({
    */
   onLoad: function (options) {
     //console.log(options)
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
     var that = this;
     wx.getStorage({
       key: 'cache_key',
@@ -143,24 +187,8 @@ Page({
           AllXmName: res.data.lb,
         })
         that.getkmlbList();
-        that.getSortdtList();
       }
     });
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
   },
 
   /**

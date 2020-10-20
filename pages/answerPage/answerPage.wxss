@@ -1,5 +1,17 @@
 /* pages/start-swiper/index.wxss */
 
+.left-jian .van-icon {
+  color: #000;
+  font-size: 20px !important;
+  font-weight: 500;
+}
+
+.fixedBottom-item {
+  width: 100rpx;
+  display: flex;
+  align-items: center;
+}
+
 .change-question {
   width: 750rpx;
   display: flex;
@@ -239,7 +251,7 @@
   margin-right: 0;
 } */
 
-.quMargin{
+.quMargin {
   margin-right: 0;
 }
 
@@ -335,7 +347,7 @@
   height: 180rpx;
 }
 
-.jietu{
+.jietu {
   width: 100%;
   height: 240rpx;
   display: block;

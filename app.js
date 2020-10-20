@@ -29,15 +29,16 @@ App({
                 success: res => {
                   let dataLists = {
                     code: code,
-                    encryptedData: res.encryptedData,
-                    iv: res.iv,
+                    // encryptedData: res.encryptedData,
+                    // iv: res.iv,
                   }
                   let jiamiData = {
                     code: code,
-                    encryptedData: res.encryptedData,
-                    iv: res.iv,
+                    // encryptedData: res.encryptedData,
+                    // iv: res.iv,
                   }
-                  Service.getUserInfoLogin(dataLists, jiamiData).then(res => {
+                  Service.getOpenId(dataLists, jiamiData).then(res => {
+                    console.log(res)
                     if (res.event == 100) {
                       wx.setStorage({
                         key: "cache_key",
@@ -47,9 +48,26 @@ App({
                         key: "userDataList",
                         data: res.data.userInfo
                       })
+                      wx.setStorage({
+                        key: "isTypeThree",
+                        data: 2
+                      })
                       //跳首页
                       wx.switchTab({
                         url: '/pages/index/index'
+                      })
+                    } else if (res.event == 106) {
+                      wx.setStorage({
+                        key: "cache_key",
+                        data: []
+                      })
+                      wx.setStorage({
+                        key: "userDataList",
+                        data: []
+                      })
+                      wx.setStorage({
+                        key: "isTypeThree",
+                        data: 1
                       })
                     }
                   })

@@ -50,7 +50,7 @@
     </view>
 
     <!--试题模块-->
-    <view class="testModule" wx:if="{{isInit}}">
+    <view class="testModule" wx:if="{{isInitFather}}">
       <block wx:if="{{isInit}}">
         <view class="testModule-item" wx:for="{{sortdtList}}" wx:for-index="index" wx:key="index" wx:for-item="item">
           <view class="testItem">

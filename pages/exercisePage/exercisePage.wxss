@@ -1,5 +1,11 @@
 /* pages/start-swiper/index.wxss */
 
+.fixedBottom-item {
+  width: 100rpx;
+  display: flex;
+  align-items: center;
+}
+
 .change-question {
   width: 750rpx;
   display: flex;

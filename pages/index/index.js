@@ -17,6 +17,7 @@ Page({
     cacheKey: "", //唯一标识
     oldlists: [], //老数据
     isInit: false,
+    isInitFather:false,
     total: 0,
   },
 
@@ -79,7 +80,7 @@ Page({
 
   //获得试卷列表数据
   getSortdtList() {
-    //console.log(this.data.active)
+    console.log(this.data.active)
     let dataLists = {
       xmlb_id: this.data.AllXmId,
       cache_key: "",
@@ -104,11 +105,22 @@ Page({
         var oldlists = this.data.oldlists;
         //console.log(oldlists)
         var newlists = oldlists.concat(res.list) //合并数据 res.data 你的数组数据
+        if (res.list == '') {
+          this.setData({
+            isInit: false
+          })
+        } else {
+          this.setData({
+            isInit: true
+          })
+        }
         this.setData({
           sortdtList: newlists,
           total: res.total,
-          isInit: true
+          isInitFather:true
         })
+        wx.hideLoading();
+      } else {
         wx.hideLoading();
       }
     })

@@ -119,6 +119,11 @@ const Services = {
         return util._post(`${config.api}/TkWeChatLogin/bindMobile`,data, jiamiData, 2)
     },
 
+    //登录通用获取信息
+    getOpenId(data, jiamiData){
+        return util._post(`${config.api}/TkWeChatLogin/getOpenId`,data, jiamiData, 2)
+    },
+
 
 }
 module.exports = Services;

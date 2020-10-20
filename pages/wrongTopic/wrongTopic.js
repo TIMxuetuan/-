@@ -11,7 +11,7 @@ Page({
     page: 1,
     kmlbList: [], //科目列表
     sjlxList: [], //试卷类型
-    active: 0,
+    active: null,
     sixActive: "全部",
     sortdtList: [], //试卷列表
     cacheKey: "", //唯一标识
@@ -53,8 +53,11 @@ Page({
       if (res.event == 100) {
         this.setData({
           kmlbList: res.list,
+          kmlbListFirst:res.list[0].id,
+          active:res.list[0].id == '' ? 0 : res.list[0].id,
           sjlxList: res.sjlx
         })
+        this.getSortdtList();
       }
     })
   },
@@ -63,7 +66,7 @@ Page({
   onChangeSubject(event) {
     //console.log(event.detail)
     this.setData({
-      active: event.detail.name,
+      kmlbListFirst: event.detail.name,
       page: 1,
       oldlists: []
     })
@@ -76,13 +79,13 @@ Page({
     let dataLists = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active == 0 ? '' : this.data.active,
+      kmlb: this.data.kmlbListFirst == 0 ? '' : this.data.kmlbListFirst,
       page: this.data.page
     }
     let jiamiData = {
       cache_key: this.data.cacheKey,
       xmlb_id: this.data.AllXmId,
-      kmlb: this.data.active == 0 ? '' : this.data.active,
+      kmlb: this.data.kmlbListFirst == 0 ? '' : this.data.kmlbListFirst,
       page: this.data.page
     }
     wx.showLoading({
@@ -141,7 +144,6 @@ Page({
           AllXmName: res.data.lb,
         })
         that.getkmlbList();
-        that.getSortdtList();
       }
     });
 

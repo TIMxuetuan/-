@@ -8,8 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isInit:false,
-    isListHave:false,
+    isInit: false,
+    isListHave: false,
     keyLists: ["A", "B", "C", "D", "E", "F", "G"],
     shijuan_id: "", //试卷id
     cacheKey: "", //用户cacheKey
@@ -47,9 +47,9 @@ Page({
     wx.previewImage({
       urls: item.pic, //需要预览的图片http链接列表，注意是数组
       current: '', // 当前显示图片的http链接，默认是第一个
-      success: function (res) {},
-      fail: function (res) {},
-      complete: function (res) {},
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
     })
   },
 
@@ -328,13 +328,13 @@ Page({
   //点击序号跳转到那一选项
   goToXuhao(e) {
     var that = this
-    that.setData({
-      threeItemList:[]
-    })
     let item = e.currentTarget.dataset.item
     let array = that.data.errorSerialNum
-    //console.log(item)
+    console.log(item)
     if (item.dct == '错') {
+      that.setData({
+        threeItemList: []
+      })
       for (let index = 0; index < array.length; index++) {
         if (item.xh == array[index]) {
           //console.log(index, array[index])
@@ -472,16 +472,16 @@ Page({
           xhlist: res.list.datika.qbxhlist,
           questionList: this.data.questionList,
           errorSerialNum: res.list.datika.ctxhlist,
-          isInit:true
+          isInit: true
           // current:0
         })
-        if(res.list.stxinxi != '' || res.list.stxinxi != null){
+        if (res.list.stxinxi != '' || res.list.stxinxi != null) {
           this.setData({
-            isListHave:true
+            isListHave: true
           })
-        }else{
+        } else {
           this.setData({
-            isListHave:false
+            isListHave: false
           })
         }
         let nextSeriaNum = this.getSerialNum(0)

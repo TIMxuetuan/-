@@ -3,7 +3,7 @@
   <!--科目列表滑动-->
   <view class="subjectListSlide">
     <van-tabs active="{{ active }}" bind:change="onChangeSubject">
-      <van-tab wx:for="{{kmlbList}}" wx:key="index" wx:for-index="idx" wx:for-item="item" title="{{item.lb}}" name="{{item.id}}">
+      <van-tab wx:for="{{kmlbList}}" wx:key="index" wx:for-index="index" wx:for-item="item" title="{{item.lb}}" name="{{item.id}}">
       </van-tab>
     </van-tabs>
 
@@ -20,7 +20,7 @@
                 已做完
               </view>
               <view class="testItem-number" wx:else>
-                做题进度<text class="yiZuoNum">{{item.yz_ts}}</text>/<text style="margin-left:6rpx">{{item.z_ts}}</text>
+                做题进度<text class="yiZuoNum">{{item.last_xh}}</text>/<text style="margin-left:6rpx">{{item.z_ts}}</text>
               </view>
             </view>
             <view class="testItemBtn">
