@@ -199,3 +199,16 @@
   font-weight: bold;
   color: #CCCCCC;
 }
+
+
+/**/
+.huoshowImg{
+}
+
+.huoDong .van-popup {
+  background-color: transparent;
+}
+
+.huoDong .van-icon{
+  color:#fff;
+}

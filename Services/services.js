@@ -124,6 +124,11 @@ const Services = {
         return util._post(`${config.api}/TkWeChatLogin/getOpenId`,data, jiamiData, 2)
     },
 
+    //活动
+    examination(data, jiamiData){
+        return util._post("https://www.zjtaoke.cn/Eleven/examination",data, jiamiData, 2)
+    },
+
 
 }
 module.exports = Services;

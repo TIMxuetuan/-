@@ -3,7 +3,7 @@
   <view class="userinfo">
     <block>
       <view class="userinfo-content">
-        <block>
+        <block wx:if="isShowSelect">
           <!--头部--未登录获得用户手机号-->
           <view class="contentHead" wx:if="{{isTypeThree==1}}">
             <view class="contentHead-left">

@@ -48,6 +48,7 @@ Page({
     dtyysj: 0, //答题已用时间
 
     tuichuShow: false, //是否退出
+    fenShow: false, //控制得分弹窗
 
   },
 
@@ -737,6 +738,7 @@ Page({
     }
     Service.csbcdt(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
+        that.huodong()
         that.setData({
           danWhenTiem: that.data.second
         })
@@ -773,6 +775,29 @@ Page({
       }
 
     })
+  },
+
+  //活动
+  huodong() {
+    console.log(this.data.userDataList.mobile)
+    let dataLists = {
+      mobile: this.data.userDataList.mobile
+    }
+    let jiamiData = {
+      mobile: this.data.userDataList.mobile
+    }
+    Service.examination(dataLists, jiamiData).then(res => {
+      if (res.event == 100) {
+        console.log(res)
+        this.setData({ fenShow: true });
+      } else {
+      }
+    })
+  },
+
+  //关闭得分弹窗
+  fenShowClose() {
+    this.setData({ fenShow: false });
   },
 
   //点击右下角 交卷图标，打开弹窗
@@ -831,6 +856,15 @@ Page({
           cacheKey: res.data
         })
         that.getLxmsdtList();
+      }
+    })
+    wx.getStorage({
+      key: 'userDataList',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          userDataList: res.data
+        })
       }
     })
   },

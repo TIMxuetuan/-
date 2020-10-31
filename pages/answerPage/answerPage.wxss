@@ -353,3 +353,15 @@
   display: block;
   margin-bottom: 20rpx;
 }
+
+
+/*双十一活动*/
+.fenShowImg {
+  width: 640rpx;
+  height: 600rpx;
+  margin-left: 80rpx;
+}
+
+.huoDong .van-popup {
+  background-color: transparent;
+}

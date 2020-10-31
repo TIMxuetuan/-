@@ -135,10 +135,9 @@ Page({
     }
     Service.logOut(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
-        wx.removeStorage({
-          key: 'userDataList',
-          success(res) {
-          }
+        wx.setStorage({
+          key: "userDataList",
+          data: ''
         })
         // wx.removeStorage({
         //   key: 'AllXmItem',
@@ -146,10 +145,9 @@ Page({
         //     console.log(res)
         //   }
         // })
-        wx.removeStorage({
-          key: 'cache_key',
-          success(res) {
-          }
+        wx.setStorage({
+          key: "cache_key",
+          data: ''
         })
         wx.switchTab({
           url: '/pages/my/my'

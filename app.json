@@ -15,7 +15,8 @@
     "pages/wrongDetails/wrongDetails",
     "pages/collect/collect",
     "pages/compileMy/compileMy",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/huoDong/huoDong"
   ],
   "window":{
     "backgroundTextStyle":"light",

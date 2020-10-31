@@ -256,3 +256,7 @@
 <van-dialog class="jiaoDialog" use-slot title="确定要退出，并保存本次考试？" show="{{ tuichuShow }}" show-cancel-button
   confirm-button-open-type="getUserInfo" bind:close="tuiOnClose" bind:getuserinfo="tuiOut">
 </van-dialog>
+
+<van-popup class="huoDong" show="{{ fenShow }}" bind:close="fenShowClose" close-on-click-overlay>
+  <image bindtap="fenShowClose" class="fenShowImg" src="https://vod.zhongjianedu.com/image/default/7C361C4994F546CAA9AFB587E710FBDD-6-2.gif"></image>
+</van-popup>

@@ -195,3 +195,7 @@
 <van-dialog class="jiaoDialog" use-slot title="休息中" show="{{ timeShow }}" bind:show-cancel-button="true"
   confirm-button-open-type="getUserInfo" confirm-button-text="继续学习" bind:getuserinfo="getTimeServe">
 </van-dialog>
+
+<van-popup class="huoDong" show="{{ fenShow }}" bind:close="fenShowClose" close-on-click-overlay>
+  <image bindtap="fenShowClose" class="fenShowImg" src="https://vod.zhongjianedu.com/image/default/7C361C4994F546CAA9AFB587E710FBDD-6-2.gif"></image>
+</van-popup>

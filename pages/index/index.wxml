@@ -73,3 +73,7 @@
     </view>
   </view>
 </view>
+
+<van-popup show="{{ huoshow }}" class="huoDong" closeable="{{true}}" bind:close="huoonClose">
+  <image class="huoshowImg" src="../../images/dianJi.png" bindtap="goToHuodong"></image>
+</van-popup>

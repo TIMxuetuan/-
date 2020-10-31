@@ -39,21 +39,22 @@ Page({
     setInterTimes: null, //定时器赋值
     second: 0, // 秒
     timeShow: false, //定时器弹窗
+    fenShow: false, //控制得分弹窗
 
   },
 
-    //查看大图
-    clickImg(e) {
-      let item = e.currentTarget.dataset.item
-      //console.log("图片", item)
-      wx.previewImage({
-        urls: item.pic, //需要预览的图片http链接列表，注意是数组
-        current: '', // 当前显示图片的http链接，默认是第一个
-        success: function (res) {},
-        fail: function (res) {},
-        complete: function (res) {},
-      })
-    },
+  //查看大图
+  clickImg(e) {
+    let item = e.currentTarget.dataset.item
+    //console.log("图片", item)
+    wx.previewImage({
+      urls: item.pic, //需要预览的图片http链接列表，注意是数组
+      current: '', // 当前显示图片的http链接，默认是第一个
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
 
   //收藏事件
   collectClick(e) {
@@ -503,9 +504,10 @@ Page({
     }
     Service.csbcdt(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
+        this.huodong()
         this.selectTopic(sendList.xh)
         this.setData({
-          danWhenTiem:this.data.second
+          danWhenTiem: this.data.second
         })
         if (sendList.xh < this.data.questionList.length) {
           this.selectTopic(sendList.xh * 1 + 2)
@@ -517,6 +519,29 @@ Page({
 
       }
     })
+  },
+
+  //活动
+  huodong() {
+    console.log(this.data.userDataList.mobile)
+    let dataLists = {
+      mobile: this.data.userDataList.mobile
+    }
+    let jiamiData = {
+      mobile: this.data.userDataList.mobile
+    }
+    Service.examination(dataLists, jiamiData).then(res => {
+      if (res.event == 100) {
+        console.log(res)
+        this.setData({ fenShow: true });
+      } else {
+      }
+    })
+  },
+
+  //关闭得分弹窗
+  fenShowClose() {
+    this.setData({ fenShow: false });
   },
 
   //点击右下角 交卷图标，打开弹窗
@@ -571,6 +596,15 @@ Page({
           cacheKey: res.data
         })
         that.getLxmsdtList();
+      }
+    })
+    wx.getStorage({
+      key: 'userDataList',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          userDataList: res.data
+        })
       }
     })
   },
@@ -646,7 +680,7 @@ Page({
     }
     Service.tcbc(dataLists, jiamiData).then(res => {
       //console.log(res)
-      if (res.event == 100) {}
+      if (res.event == 100) { }
     })
   },
 

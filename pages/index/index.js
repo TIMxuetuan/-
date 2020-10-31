@@ -17,15 +17,57 @@ Page({
     cacheKey: "", //唯一标识
     oldlists: [], //老数据
     isInit: false,
-    isInitFather:false,
+    isInitFather: false,
     total: 0,
+    huoshow:false, //活动
+  },
+
+  //
+  huoonClose(){
+    this.setData({
+      huoshow:false
+    })
+  },
+
+  //跳转双十一活动页面
+  goToHuodong(){
+    console.log(this.data.userDataList)
+    if(this.data.userDataList.mobile != ''){
+      wx.navigateTo({
+        url: "/pages/huoDong/huoDong?phone=" + this.data.userDataList.mobile,
+      })
+      this.setData({
+        huoshow:false
+      })
+    }else{
+      wx.showToast({
+        title: "去登录",
+        icon: 'none',
+        duration: 1000
+      });
+    }
+    
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that =this
+    wx.getStorage({
+      key: 'userDataList',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          userDataList: res.data
+        })
+        if(res.data.mobile != ''){
+          that.setData({
+            huoshow:true
+          })
+        }
+      }
+    })
   },
 
   //返回项目列表页，并传入id值
@@ -117,7 +159,7 @@ Page({
         this.setData({
           sortdtList: newlists,
           total: res.total,
-          isInitFather:true
+          isInitFather: true
         })
         wx.hideLoading();
       } else {
@@ -128,76 +170,161 @@ Page({
 
   //去练习页面--进入答题
   goToExercise(e) {
-    //console.log(this.data.cacheKey)
-    if (this.data.cacheKey) {
-      wx.navigateTo({
-        url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
-      })
-    } else {
-      wx.switchTab({
-        url: '/pages/my/my'
-      })
-      wx.showToast({
-        title: '请登录',
-        icon: 'none',
-        duration: 2000
-      });
-    }
+    console.log(this.data.cacheKey)
+    var that = this
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res)
+        that.setData({
+          cacheKey: res.data
+        })
+        if (that.data.cacheKey != '') {
+          wx.navigateTo({
+            url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
+          })
+        } else {
+          wx.switchTab({
+            url: '/pages/my/my'
+          })
+          wx.showToast({
+            title: '请登录',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail(error) {
+        console.log(error)
+        wx.switchTab({
+          url: '/pages/my/my'
+        })
+        wx.showToast({
+          title: '请登录',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    })
 
   },
 
   //跳转到历史记录页面
   goToHistory() {
-    if (this.data.cacheKey) {
-      wx.navigateTo({
-        url: '/pages/historyList/historyList',
-      })
-    } else {
-      wx.switchTab({
-        url: '/pages/my/my'
-      })
-      wx.showToast({
-        title: '请登录',
-        icon: 'none',
-        duration: 2000
-      });
-    }
+    var that = this
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res)
+        that.setData({
+          cacheKey: res.data
+        })
+        if (that.data.cacheKey != '') {
+          wx.navigateTo({
+            url: '/pages/historyList/historyList',
+          })
+        } else {
+          wx.switchTab({
+            url: '/pages/my/my'
+          })
+          wx.showToast({
+            title: '请登录',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail(error) {
+        console.log(error)
+        wx.switchTab({
+          url: '/pages/my/my'
+        })
+        wx.showToast({
+          title: '请登录',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    })
   },
 
   //跳转到错题本页面
   goToWrongTopic() {
-    if (this.data.cacheKey) {
-      wx.navigateTo({
-        url: '/pages/wrongTopic/wrongTopic',
-      })
-    } else {
-      wx.switchTab({
-        url: '/pages/my/my'
-      })
-      wx.showToast({
-        title: '请登录',
-        icon: 'none',
-        duration: 2000
-      });
-    }
+    var that = this
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res)
+        that.setData({
+          cacheKey: res.data
+        })
+        if (that.data.cacheKey != '') {
+          wx.navigateTo({
+            url: '/pages/wrongTopic/wrongTopic',
+          })
+        } else {
+          wx.switchTab({
+            url: '/pages/my/my'
+          })
+          wx.showToast({
+            title: '请登录',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail(error) {
+        console.log(error)
+        wx.switchTab({
+          url: '/pages/my/my'
+        })
+        wx.showToast({
+          title: '请登录',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    })
   },
 
-  //跳转到错题本页面
+  //跳转到收藏页面
   goToCollect() {
-    if (this.data.cacheKey) {
-      wx.navigateTo({
-        url: '/pages/collect/collect',
-      })
-    } else {
-      wx.switchTab({
-        url: '/pages/my/my'
-      })
-      wx.showToast({
-        title: '请登录',
-        icon: 'none',
-        duration: 2000
-      });
-    }
+    var that = this
+    wx.getStorage({
+      key: 'cache_key',
+      success(res) {
+        console.log(res)
+        that.setData({
+          cacheKey: res.data
+        })
+        if (that.data.cacheKey != '') {
+          wx.navigateTo({
+            url: '/pages/collect/collect',
+          })
+        } else {
+          wx.switchTab({
+            url: '/pages/my/my'
+          })
+          wx.showToast({
+            title: '请登录',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail(error) {
+        console.log(error)
+        wx.switchTab({
+          url: '/pages/my/my'
+        })
+        wx.showToast({
+          title: '请登录',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    })
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -233,7 +360,10 @@ Page({
         })
       }
     })
+   
+   
   },
+
 
   /**
    * 生命周期函数--监听页面隐藏

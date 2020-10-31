@@ -13,6 +13,7 @@ Page({
     cache_key: null,
     isLogin: false,
     isTypeThree: null, //1：代表用户进行手机号授权， 2：代表用户信息授权， 0：代表已登录
+    isShowSelect: false
   },
   //事件处理函数
   bindViewTap: function () {
@@ -41,10 +42,19 @@ Page({
     wx.getStorage({
       key: 'cache_key',
       success(res) {
-        that.setData({
-          cache_key: res.data
-        })
-        that.getMySjTotal(res.data)
+        console.log("res", res)
+        if (res.data != '') {
+          that.setData({
+            cache_key: res.data
+          })
+          that.getMySjTotal(res.data)
+        } else {
+          that.setData({
+            cache_key: null
+          })
+          that.userInfoGetOpen()
+        }
+
       },
       fail(res) {
         that.setData({
@@ -58,23 +68,31 @@ Page({
       key: 'isTypeThree',
       success(res) {
         that.setData({
-          isTypeThree: res.data
+          isShowSelect: true,
+          isTypeThree: res.data,
         })
       }
     })
     wx.getStorage({
       key: 'userDataList',
       success(res) {
-        that.setData({
-          userDataList: res.data,
-          isLogin: true,
-          isTypeThree: 0
-        })
+        if (res.data != '') {
+          that.setData({
+            userDataList: res.data,
+            isLogin: true,
+            isShowSelect: true,
+            isTypeThree: 0,
+          })
+        } else {
+          that.setData({
+            userDataList: null,
+          })
+        }
+
       },
       fail(res) {
         that.setData({
           userDataList: null,
-          // isTypeThree: 1
         })
       }
     })
@@ -135,7 +153,8 @@ Page({
           if (res.event == 100) {
             this.setData({
               user_phone: res.data,
-              isTypeThree: 2
+              isShowSelect: true,
+              isTypeThree: 2,
             })
             wx.setStorage({
               key: "user_phone",
@@ -180,8 +199,9 @@ Page({
             this.setData({
               userDataList: res.data.userInfo,
               isLogin: true,
+              isShowSelect: true,
               isTypeThree: 0,
-              cache_key:res.data.cache_key
+              cache_key: res.data.cache_key
             })
             wx.setStorage({
               key: "cache_key",
@@ -218,11 +238,13 @@ Page({
           console.log(res)
           if (res.event == 100) {
             this.setData({
+              isShowSelect: true,
               isTypeThree: 2,
               user_phone: res.data.userInfo.mobile
             })
           } else if (res.event == 106) {
             this.setData({
+              isShowSelect: true,
               isTypeThree: 1
             })
           }
