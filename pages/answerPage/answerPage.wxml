@@ -20,7 +20,7 @@
             <view class="danXuanCover">
               <view class="danXuanCover-top">
                 <view class="leftColorChunk"></view>
-                <view class="leftColorTitle">单项选择题</view>
+                <view class="leftColorTitle darkWhite">单项选择题</view>
               </view>
               <view class="danXuanCover-content">共{{lxmsdtList.dtk.xuhao.danxuan.length}}题，每题1分，每题的备选项中，只有一个 符合题意。
               </view>
@@ -66,7 +66,7 @@
             <view class="danXuanCover">
               <view class="danXuanCover-top">
                 <view class="leftColorChunk"></view>
-                <view class="leftColorTitle">多项选择题</view>
+                <view class="leftColorTitle darkWhite">多项选择题</view>
               </view>
               <view class="danXuanCover-content">共{{lxmsdtList.dtk.xuhao.duoxuan.length}}道题，每题两分。每题的备选项中，有2个
                 或2个以上符合题意，至少有1个错项，错选，本 题不得分；少选，所选的每个选项得0。</view>
@@ -117,7 +117,7 @@
             <view class="danXuanCover">
               <view class="danXuanCover-top">
                 <view class="leftColorChunk"></view>
-                <view class="leftColorTitle">材料题</view>
+                <view class="leftColorTitle darkWhite">材料题</view>
               </view>
               <view class="danXuanCover-content">共2题，根据材料完成下列问题（材料题不做得分计算，不计入总分值）。</view>
               <view class="danXuanCover-img">
@@ -146,9 +146,9 @@
                   <view wx:if="{{item.pic != ''}}">
                     <image class="jietu" data-item="{{item}}" src="{{item.pic[0]}}" bindtap='clickImg'></image>
                   </view>
-                  <view class="answerText-title">请对问题做出解答</view>
+                  <view class="answerText-title darkWhite">请对问题做出解答</view>
                   <view class="answerText-content">
-                    <textarea class="answerText-area" value="{{item.uda}}" data-item="{{item}}" maxlength="-1"
+                    <textarea class="answerText-area darkWhite" value="{{item.uda}}" data-item="{{item}}" maxlength="-1"
                       bindblur="bindTextAreaBlur" placeholder="输入答案" />
                     </view>
               <view class="moreConfirm topBottom">
@@ -169,7 +169,7 @@
 </block>
 
 <!--固定底部 功能栏-->
-<view class="fixedBottom">
+<view class="fixedBottom darkbgColor">
   <!--试题收藏-->
   <view class="fixedBottom-item">
     <image bindtap="collectClick" data-type="0" wx:if="{{timeList.sczt == 1}}" class="fixedBottom-img" src="../../images/my/shoucang.png">
@@ -181,7 +181,7 @@
   <view class="fixedBottom-item">
     <image class="fixedBottom-img" catchtap="onClickAnswerCard" src="../../images/my/datika.png"></image>
   </view>
-  <view class="fixedBottom-item">
+  <view class="fixedBottom-item darkWhite">
     <view bindtap="pauseTime">{{filter.timeGeshi(second)}}</view>
   </view>
   <view class="fixedBottom-item" bindtap="handInPaper">
@@ -190,9 +190,9 @@
 </view>
 
 <!--序号弹出层-->
-<van-popup show="{{ xhShow }}" position="bottom" custom-style="height: 80%;" bind:close="onXhshowClose">
+<van-popup show="{{ xhShow }}" class="xuhaoPop" position="bottom" custom-style="height: 80%;" bind:close="onXhshowClose">
   <!--头部内容-->
-  <view class="xhShow-head">
+  <view class="xhShow-head darkbgLan">
     <view class="count-box">
       <view class="count-box-title xhShow-headLeft" bindtap="youJiaojuan">
         <image class="xhShow-headLeft-img" src="../../images/my/jiaojuan.png"></image>
@@ -205,7 +205,7 @@
     </view>
   </view>
   <!--中间类型-->
-  <view class="xhShow-center">
+  <view class="xhShow-center darkbgLan">
     <view class="xhShow-center-item {{timeList.tx == 1 ? 'xuanZhong' : ''}}">单选题 {{lxmsdtList.dtk.xuhao.danxuan.length}}
     </view>
     <view class="xhShow-center-item {{timeList.tx == 2 ? 'xuanZhong' : ''}}">多选题 {{lxmsdtList.dtk.xuhao.duoxuan.length}}
@@ -215,7 +215,7 @@
   </view>
 
   <!--序号列表-->
-  <view class="serialNumber">
+  <view class="serialNumber darkbgLan">
     <view class="serialNumber-dataList">
       <view wx:key="index" wx:for="{{questionList}}" wx:item="item">
         <block wx:if="{{index == 0 || index == lxmsdtList.dtk.xuhao.danxuan.length + 1 || index == (lxmsdtList.dtk.xuhao.danxuan.length + lxmsdtList.dtk.xuhao.duoxuan.length + 2)}}"></block>

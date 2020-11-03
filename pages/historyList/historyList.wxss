@@ -113,3 +113,32 @@
   color: #FF561A;
   margin: 0 6rpx;
 }
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .subjectListSlide .van-tabs__scroll {
+    background-color: #252525;
+  }
+
+  .subjectListSlide .van-ellipsis {
+    color: #fff;
+  }
+
+  .testModule-item{
+    background-color: #1A2736;
+    border: 1px solid #1A2736;
+  }
+
+  .testItem-title {
+    color: #E8E9EA;
+  }
+
+  .testItem-number {
+    color: #A1A1A1;
+  }
+
+
+
+
+}

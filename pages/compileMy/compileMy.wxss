@@ -59,3 +59,22 @@
   color: #ffffff;
   line-height: 80rpx;
 }
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .compileMy-top{
+    background-color: #1A2736;
+    border-bottom: 1px solid #E8E9EA;
+  }
+
+  .compileMy-two{
+    background-color: #1A2736;
+  }
+.compileMy-top-text{
+  color: #E8E9EA;
+}
+
+
+
+
+}

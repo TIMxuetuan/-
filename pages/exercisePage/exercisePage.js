@@ -40,6 +40,7 @@ Page({
     second: 0, // 秒
     timeShow: false, //定时器弹窗
     fenShow: false, //控制得分弹窗
+    guanOff:true, //控制显示失败信息
 
   },
 
@@ -144,22 +145,14 @@ Page({
           // timeList: res.list,
           questionList: this.data.questionList.concat(listL)
         })
-        // if (res.list.tx == 1) {
-        //   let listL = []
-        //   listL.push(res.list)
-        //   this.setData({
-        //     questionList: this.data.questionList.concat(listL)
-        //     // questionList: res.list
-        //   })
-        // } else if (res.list.tx == 2) {
-        //   let listLduo = []
-        //   listLduo.push(res.list)
-        //   this.setData({
-        //     questionListDuo: this.data.questionListDuo.concat(listLduo)
-        //   })
-        // }
+        if (this.data.timeListIndex == res.list.xh) {
+          this.setData({
+            timeList: res.list,
+            timeListIndex: ''
+          })
+        }
         //console.log("滑数据", this.data.questionList)
-        //console.log("当前页数据", this.data.timeList)
+        console.log("当前页数据", this.data.timeList)
         // //console.log(this.data.questionListDuo)
       }
     })
@@ -220,9 +213,9 @@ Page({
 
   //打开序号弹窗
   onClickAnswerCard: function (e) {
-    //console.log("当前数据", this.data.timeList)
-    //console.log("第一条初始数据", this.data.lxmsdtList)
-    //console.log("总数据", this.data.questionList)
+    console.log("当前数据", this.data.timeList)
+    console.log("第一条初始数据", this.data.lxmsdtList)
+    console.log("总数据", this.data.questionList)
     this.setData({
       xhShow: true
     })
@@ -237,7 +230,9 @@ Page({
     this.selectTopic(xuhao + 1)
     this.setData({
       current: xuhao - 1,
-      xhShow: false
+      xhShow: false,
+      timeListIndex: xuhao,
+
     })
   },
 
@@ -535,6 +530,17 @@ Page({
         console.log(res)
         this.setData({ fenShow: true });
       } else {
+        if (this.data.guanOff) {
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+            duration: 1000
+          });
+          this.setData({
+            guanOff:false
+          })
+        }
+        console.log(res)
       }
     })
   },

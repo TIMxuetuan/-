@@ -61,3 +61,24 @@ margin-top: 28rpx;
 .pitchOff{
   background: #FFFFFF;
 }
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .selectStudy-title{
+    color: #E8E9EA;
+  }
+  .selectStudy-futitle{
+    color: #A1A1A1;
+  }
+  .pitchOn{
+    background: #374A60;
+    color: #E8E9EA;
+  }
+  .pitchOff{
+    background: #1A2736;
+  }
+  .listName{
+    color: #A1A1A1;
+  }
+}

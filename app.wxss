@@ -8,3 +8,38 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .darkTitleColor{
+    color: #E8E9EA !important;
+  }
+
+  .darkbgColor{
+    background-color: #191919 !important;
+  }
+
+  .darkBorderNone{
+    border: none !important;
+  }
+
+  .darkWhite{
+    color: #fff !important;
+  }
+
+  .darkbgLan{
+    background-color: #1A2736 !important;
+  }
+
+  .darkBorderLan{
+    border: 1px solid #1A2736 !important;
+  }
+
+
+
+
+
+
+
+}

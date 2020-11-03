@@ -49,6 +49,7 @@ Page({
 
     tuichuShow: false, //是否退出
     fenShow: false, //控制得分弹窗
+    guanOff:true, //控制显示失败信息
 
   },
 
@@ -791,6 +792,16 @@ Page({
         console.log(res)
         this.setData({ fenShow: true });
       } else {
+        if (this.data.guanOff) {
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+            duration: 1000
+          });
+          this.setData({
+            guanOff:false
+          })
+        }
       }
     })
   },

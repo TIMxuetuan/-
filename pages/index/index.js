@@ -19,41 +19,45 @@ Page({
     isInit: false,
     isInitFather: false,
     total: 0,
-    huoshow:false, //活动
+    huoshow: false, //活动
+    heiDarkShow: true, //控制系统主题展示
   },
 
   //
-  huoonClose(){
+  huoonClose() {
     this.setData({
-      huoshow:false
+      huoshow: false
     })
   },
 
   //跳转双十一活动页面
-  goToHuodong(){
+  goToHuodong() {
     console.log(this.data.userDataList)
-    if(this.data.userDataList.mobile != ''){
+    if (this.data.userDataList.mobile != '') {
       wx.navigateTo({
         url: "/pages/huoDong/huoDong?phone=" + this.data.userDataList.mobile,
       })
       this.setData({
-        huoshow:false
+        huoshow: false
       })
-    }else{
+    } else {
       wx.showToast({
         title: "去登录",
         icon: 'none',
         duration: 1000
       });
     }
-    
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that =this
+    var that = this
+    var appInstance = getApp()
+    let theme = appInstance.globalData.theme
+    that.zhuTiSwitch(theme)
     wx.getStorage({
       key: 'userDataList',
       success(res) {
@@ -61,13 +65,27 @@ Page({
         that.setData({
           userDataList: res.data
         })
-        if(res.data.mobile != ''){
+        if (res.data.mobile != '') {
           that.setData({
-            huoshow:true
+            huoshow: true
           })
         }
       }
     })
+  },
+
+  zhuTiSwitch(theme) {
+    var that = this
+    console.log("进入", theme)
+    if (theme == "dark") {
+      that.setData({
+        heiDarkShow: false
+      })
+    } else {
+      that.setData({
+        heiDarkShow: true
+      })
+    }
   },
 
   //返回项目列表页，并传入id值
@@ -360,8 +378,8 @@ Page({
         })
       }
     })
-   
-   
+
+
   },
 
 

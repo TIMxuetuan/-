@@ -213,7 +213,7 @@
 }
 
 .xuanZhong {
-  color: #FF5519;
+  color: #FF5519 !important;
 }
 
 .serialNumber {
@@ -364,4 +364,60 @@
 
 .huoDong .van-popup {
   background-color: transparent;
+}
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .jiaoDialog .van-dialog__header {
+    color: #000;
+  }
+
+  .left-jian .van-nav-bar{
+    background-color: #191919;
+  }
+
+  .left-jian .van-nav-bar__title{
+    color: #fff;
+  }
+
+  .left-jian .van-icon{
+    color: #fff;
+  }
+
+  .left-jian .van-hairline--bottom:after{
+    border: none;
+  }
+
+  .xhShow-head {
+    border-bottom: 1px solid#242F3B;
+  }
+
+  .xhShow-center-item {
+    color: #E8E9EA;
+  }
+
+  .xuhaoPop .van-popup {
+    background-color: #1A2736;
+  }
+
+  .dataList-item {
+    background-color: #1A2736;
+    border: 1px solid #E8E9EA;
+    box-sizing: border-box;
+    color: #E8E9EA;
+  }
+
+  .bgDang {
+    background-color: #1A2736;
+    color: #FF671D;
+    border: 1px solid #FF5519;
+  }
+
+  .baYida {
+    background: #FF671D !important;
+    color: #fff !important;
+    border: none !important;
+  }
+
 }

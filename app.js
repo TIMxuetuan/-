@@ -2,7 +2,22 @@
 const Service = require("./Services/services")
 
 App({
+  onThemeChange:function(){
+    var that =this
+    wx.onThemeChange(function(res){
+      console.log(res.theme)
+      that.globalData.theme = res.theme
+      wx.setStorageSync('theme', res.theme)
+    })
+  },
   onLaunch: function () {
+    var that =this
+    wx.getSystemInfo({
+      success (res) {
+        that.globalData.theme = res.theme
+        wx.setStorageSync('theme', res.theme)
+      }
+    })
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

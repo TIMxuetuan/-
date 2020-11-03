@@ -204,3 +204,20 @@
   justify-content: center;
   align-items: center;
 }
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .bottomTwo{
+    background-color: #191919;
+  }
+
+  .answerGrade-head{
+    background-color: #1D2B3B;
+  }
+
+
+
+
+
+}

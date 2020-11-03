@@ -9,7 +9,12 @@
   <!--错题本、做题记录、收藏模块-->
   <view class="threeModul">
     <view class="wrongTopic">
-      <image class="wrongTopic-backUrl" src="../../images/index/bg_cuotiben@2x.png"></image>
+      <block wx:if="{{heiDarkShow}}">
+        <image class="wrongTopic-backUrl" src="../../images/index/bg_cuotiben@2x.png"></image>
+      </block>
+      <block wx:else>
+        <image class="wrongTopic-backUrl" src="../../images/index/hei_cuotiben@2x.png"></image>
+      </block>
       <view class="wrongTopic-content">
         <view class="wrongTopic-content-title">错题本</view>
         <view class="wrongTopic-content-nei">错题收集，打破错题</view>
@@ -18,11 +23,13 @@
     </view>
     <view class="threeModul-right">
       <view class="threeModul-right-top" bindtap="goToHistory">
-        <image class="right-top-backUrl" src="../../images/index/bg_jilu@2x.png"></image>
+        <image wx:if="{{heiDarkShow}}" class="right-top-backUrl" src="../../images/index/bg_jilu@2x.png"></image>
+        <image wx:else class="right-top-backUrl" src="../../images/index/hei_jilu@2x.png"></image>
         <view class="right-top-text">做题记录</view>
       </view>
       <view class="threeModul-right-top" bindtap="goToCollect">
-        <image class="right-top-backUrl" src="../../images/index/bg_shoucang@2x.png"></image>
+        <image wx:if="{{heiDarkShow}}" class="right-top-backUrl" src="../../images/index/bg_shoucang@2x.png"></image>
+        <image wx:else class="right-top-backUrl" src="../../images/index/hei_shoucang@2x.png"></image>
         <view class="right-top-text">我的收藏</view>
       </view>
     </view>
@@ -31,7 +38,8 @@
   <!--科目列表滑动-->
   <view class="subjectListSlide">
     <van-tabs active="{{ active }}" bind:change="onChangeSubject">
-      <van-tab wx:for="{{kmlbList}}" wx:key="index" wx:for-index="idx" wx:for-item="item" title="{{item.lb}}" name="{{item.id}}">
+      <van-tab wx:for="{{kmlbList}}" wx:key="index" wx:for-index="idx" wx:for-item="item" title="{{item.lb}}"
+        name="{{item.id}}">
       </van-tab>
     </van-tabs>
 
@@ -40,7 +48,8 @@
       <view>
         <van-tabbar active="{{ sixActive }}" bind:change="onChangeSjlx" fixed="{{false}}" active-color="#2595E4"
           inactive-color="#999999">
-          <van-tabbar-item wx:for="{{sjlxList}}" wx:key="index" wx:for-index="idx" wx:for-item="item" name="{{item.name}}">
+          <van-tabbar-item class="sixBgYe" wx:for="{{sjlxList}}" wx:key="index" wx:for-index="idx" wx:for-item="item"
+            name="{{item.name}}">
             <image slot="icon" src="{{ item.Android }}" mode="aspectFit" style="width: 30px; height: 18px;" />
             <image slot="icon-active" src="{{ item.Android_on }}" mode="aspectFit" style="width: 30px; height: 18px;" />
             {{item.name}}

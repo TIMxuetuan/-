@@ -89,3 +89,17 @@
   background-color: #FF5519;
   border: 1px solid #FF5519;
 }
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .answerIndex-title{
+    color: #E8E9EA;
+  }
+
+
+
+
+
+
+}

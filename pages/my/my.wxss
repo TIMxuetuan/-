@@ -149,3 +149,40 @@
   font-size: 28rpx;
   line-height: 68rpx;
 }
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .userinfo-nickname, .userinfo-fubiao{
+    color: #E8E9EA;
+  }
+
+  .contentHead-compile .van-button--info{
+    background-color: #DBDBDB;
+  }
+
+  .addUpExercise{
+    background-color: #1A2736;
+  }
+
+  .threebg-one {
+    background: #1A2736;
+  }
+  
+  .threebg-two {
+    background: #1A2736;
+  }
+  
+  .threebg-three {
+    background: #1A2736;
+  }
+
+  .threeModul-title{
+    color: #DBDBDB;
+  }
+
+
+
+
+
+}

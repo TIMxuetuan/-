@@ -1,6 +1,6 @@
 <!--pages/answerIndex/answerIndex.wxml-->
 <view class="answerIndex-content">
-  <view class="answerIndex-title">{{sjztsyLists.sj_name}}</view>
+  <view class="answerIndex-title darkTitleColor">{{sjztsyLists.sj_name}}</view>
 
   <view class="answerIndex-three">
     <view class="threeItem">
@@ -19,15 +19,15 @@
 
   <!--单、多选-->
   <view class="answerIndex-oneMore">
-    <view class="oneMoreItem marbottom">
+    <view class="oneMoreItem marbottom darkTitleColor">
       <view>一、 单项选择题</view>
       <view>{{sjztsyLists.danNum}}道</view>
     </view>
-    <view class="oneMoreItem marbottom">
+    <view class="oneMoreItem marbottom darkTitleColor">
       <view>二、 多项选择题</view>
       <view>{{sjztsyLists.duoNum}}道</view>
     </view>
-    <view class="oneMoreItem" wx:if="{{sjztsyLists.caiNum != ''}}">
+    <view class="oneMoreItem darkTitleColor" wx:if="{{sjztsyLists.caiNum != ''}}">
       <view>三、 材料题</view>
       <view>{{sjztsyLists.caiNum}}道</view>
     </view>

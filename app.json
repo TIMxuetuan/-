@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/selectStudyItem/selectStudyItem",
     "pages/my/my",
@@ -18,13 +18,18 @@
     "pages/logs/logs",
     "pages/huoDong/huoDong"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+  "window": {
+    "backgroundTextStyle": "@bgTxtStyle",
+    "navigationBarBackgroundColor": "@navBgColor",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "@navTxtStyle"
   },
+  "darkmode": true,
+  "themeLocation": "theme.json",
   "tabBar": {
+    "color": "@tabFontColor",
+    "selectedColor": "@tabSelectedColor",
+    "backgroundColor": "@tabBgColor",
     "list": [
       {
         "selectedIconPath": "/images/tabbar/on_lianximoshi.png",
@@ -44,10 +49,7 @@
         "pagePath": "pages/my/my",
         "text": "我的"
       }
-    ],
-    "color": "#A1A1A1",
-    "backgroundColor": "#fff",
-    "selectedColor": "#373737"
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }

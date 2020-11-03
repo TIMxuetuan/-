@@ -40,21 +40,21 @@
         <text class="analyseOne-time">{{filter.pingFenTimeGeshi(pageLists.ys * 1)}}</text>
         <!-- <text class="analyseOne-unit">分钟</text> -->
       </view>
-      <view class="analyseOne-title">用时</view>
+      <view class="analyseOne-title darkWhite">用时</view>
     </view>
     <view class="threeAnalyse-one">
       <view class="analyseOne-top">
         <text class="analyseOne-time">{{pageLists.zql}}</text>
-        <text class="analyseOne-unit">%</text>
+        <text class="analyseOne-unit darkWhite">%</text>
       </view>
-      <view class="analyseOne-title">得分率</view>
+      <view class="analyseOne-title darkWhite">得分率</view>
     </view>
     <view class="threeAnalyse-one">
       <view class="analyseOne-top">
         <text class="analyseOne-time">{{pageLists.userpjf}}</text>
-        <text class="analyseOne-unit">分</text>
+        <text class="analyseOne-unit darkWhite">分</text>
       </view>
-      <view class="analyseOne-title">全站平均分</view>
+      <view class="analyseOne-title darkWhite">全站平均分</view>
     </view>
   </view>
 
@@ -66,12 +66,12 @@
       </view>
       <view class="wrongHint-leftNum">{{pageLists.cuonum}}道</view>
     </view>
-    <view class="wrongHint-right">错题已经添加至“我的错题”，记得及时复习哦</view>
+    <view class="wrongHint-right darkWhite">错题已经添加至“我的错题”，记得及时复习哦</view>
   </view>
 
   <!--点击序号查看解析-->
   <view class="serialNumber">
-    <view class="serialNumber-title">
+    <view class="serialNumber-title darkWhite">
       点击序号查看解析
     </view>
     <view class="serialNumber-dataList">
