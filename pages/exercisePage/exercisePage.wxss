@@ -360,6 +360,23 @@
   margin-bottom: 20rpx;
 }
 
+.bankIndex .van-popup {
+  padding-top: 80rpx;
+}
+
+.bankIndex .van-popup__close-icon--top-right {
+  right: 0;
+}
+
+.bankIndex .van-popup__close-icon {
+  color: #fff;
+}
+
+.bankShowImg {
+  width: 400rpx;
+  height: 400rpx;
+}
+
 /*双十一活动*/
 .fenShowImg {
   width: 640rpx;

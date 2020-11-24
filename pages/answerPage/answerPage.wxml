@@ -10,7 +10,7 @@
 
 <!--第一版-->
 <block wx:if="{{isListHave}}">
-  <swiper style="height:{{swiperHeight}}px" easing-functio="linear" duration="{{swiperDuration}}" current="{{current}}"
+  <swiper style="height:{{swiperHeight}}px" easing-function="linear" duration="{{swiperDuration}}" current="{{current}}"
     bindchange="swiperChange" circular>
     <swiper-item wx:key="idx" wx:for="{{threeItemList}}" wx:item="item">
       <scroll-view style="height:{{swiperHeight}}px" scroll-y>

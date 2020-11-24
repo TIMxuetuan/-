@@ -35,7 +35,8 @@
 
   <!--开始答题按钮-->
   <view class="startingWork">
-    <van-button class="startingWork-btn" round type="info" bindtap="goToAnswerPage">{{shiType==1?'开始练习':'开始考试'}}
+    <van-button class="startingWork-btn" class="{{isLx == 1 ? 'startBtnColor' : isLx == 2 ? 'againBtnColor' : 'cacthBtnColor'}}" round type="info" bindtap="goToAnswerPage">
+      {{ isLx == 1 ? (shiType == 0 ? '开始练习' : '开始考试') : isLx == 2 ? (shiType == 0 ? '重新练习' : '重新考试') : (shiType == 0 ? '继续练习' : '继续考试')}}
     </van-button>
   </view>
 </view>

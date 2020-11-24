@@ -33,9 +33,15 @@ Page({
   //跳转双十一活动页面
   goToHuodong() {
     console.log(this.data.userDataList)
-    if (this.data.userDataList.mobile != '') {
+    let mobile = ''
+    if (this.data.userDataList != null) {
+      mobile = this.data.userDataList.mobile
+    } else {
+      mobile = ''
+    }
+    if (mobile != '') {
       wx.navigateTo({
-        url: "/pages/huoDong/huoDong?phone=" + this.data.userDataList.mobile,
+        url: "/pages/huoDong/huoDong?phone=" + mobile,
       })
       this.setData({
         huoshow: false
@@ -55,6 +61,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    console.log("height",wx.getSystemInfoSync()['statusBarHeight'])
     var appInstance = getApp()
     let theme = appInstance.globalData.theme
     that.zhuTiSwitch(theme)
@@ -66,9 +73,10 @@ Page({
           userDataList: res.data
         })
         if (res.data.mobile != '') {
-          that.setData({
-            huoshow: true
-          })
+          //活动模块显示
+          // that.setData({
+          //   huoshow: true
+          // })
         }
       }
     })
@@ -129,7 +137,7 @@ Page({
 
   //六个模块选择
   onChangeSjlx(event) {
-    //console.log(event)
+    console.log(event)
     this.setData({
       sixActive: event.detail,
       page: 1,
@@ -199,7 +207,7 @@ Page({
         })
         if (that.data.cacheKey != '') {
           wx.navigateTo({
-            url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=1',
+            url: '/pages/answerIndex/answerIndex?shijuan_id=' + e.currentTarget.dataset.item.id + '&shiType=0',
           })
         } else {
           wx.switchTab({

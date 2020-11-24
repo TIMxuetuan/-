@@ -45,10 +45,12 @@
 
         <!--累计做题-->
         <view class="addUpExercise">
-          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.sj != null ? leijiNum.sj:'?'}}</text>
+          <view class="addUpExercise-text">累积做题 <text
+              class="exercise-num">{{leijiNum.sj != null ? leijiNum.sj:'?'}}</text>
             套</view>
           <view class="addUpExercise-wire"></view>
-          <view class="addUpExercise-text">累积做题 <text class="exercise-num">{{leijiNum.st != null ?leijiNum.st:'?'}}</text>
+          <view class="addUpExercise-text">累积做题 <text
+              class="exercise-num">{{leijiNum.st != null ?leijiNum.st:'?'}}</text>
             道</view>
         </view>
 
@@ -68,6 +70,11 @@
           </view>
         </view>
       </view>
+
+      <!--双十一活动 -- 以后活动走这里-->
+      <!-- <view class="shuangActivity" bindtap="goToHuodong">
+        <image src="https://vod.zhongjianedu.com/image/default/B3425B03D190410EB00C821B5631EDA8-6-2.png"></image>
+      </view> -->
 
     </block>
   </view>

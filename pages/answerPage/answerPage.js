@@ -46,8 +46,9 @@ Page({
     second: 0, // 秒
     timeShow: false, //定时器弹窗
     dtyysj: 0, //答题已用时间
-
     tuichuShow: false, //是否退出
+
+    //双十一活动，以后走这里
     fenShow: false, //控制得分弹窗
     guanOff:true, //控制显示失败信息
 
@@ -325,6 +326,7 @@ Page({
   swiperChange(e) {
     let that = this
     that.disposeAllList(e.detail.current)
+    console.log("滑动swiper",e.detail.current,that.data.currentIndex,that.data.timeList)
     let current = e.detail.current
     let currentIndex = that.data.currentIndex
     let zongList = that.data.questionList
@@ -344,6 +346,7 @@ Page({
 
     // 如果滑到了右边界，弹回去
     if (that.data.timeList.isLastPlaceholder) {
+      console.log("右弹回去", currentIndex)
       that.setData({
         current: currentIndex,
         show: true
@@ -429,7 +432,7 @@ Page({
     let danXuanXu = this.data.lxmsdtList.dtk.xuhao.danxuan.length
     let duoXuanXu = this.data.lxmsdtList.dtk.xuhao.duoxuan.length
     let caiXuanXu = this.data.lxmsdtList.dtk.xuhao.cailiao.length
-    console.log(index)
+    console.log(index, item, danXuanXu, duoXuanXu, caiXuanXu);
     this.setData({
       threeItemList: []
     })
@@ -694,6 +697,11 @@ Page({
   transformShape(item) {
     let stxx = item.stxx;
     let obj = []
+    if (item.uda != '') {
+      let itemCopy = item.uda
+      item.uda = itemCopy.split(',');
+    }
+
     for (const key in stxx) {
       var zanli = {}
       zanli['name'] = stxx[key]
@@ -739,7 +747,7 @@ Page({
     }
     Service.csbcdt(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
-        that.huodong()
+        //that.huodong()  //双十一活动事件，以后走这里
         that.setData({
           danWhenTiem: that.data.second
         })
@@ -856,7 +864,6 @@ Page({
     that.setData({
       swiperHeight: wx.getSystemInfoSync().windowHeight,
     })
-    // that.requestQuestionInfo()
     that.setData({
       shijuan_id: options.shijuan_id
     });

@@ -64,36 +64,75 @@
   line-height: 48rpx;
 }
 
-.marbottom{
+.marbottom {
   margin-bottom: 70rpx;
 }
 
-.startingWork{
+.startingWork {
   position: absolute;
   bottom: 110rpx;
 }
 
-.startingWork-btn{
+.startingWork-btn {
   height: 68rpx;
   display: flex;
 }
 
-.startingWork-btn .van-button{
-  width: 450rpx;
-  height: 68rpx;
+.startingWork-btn .van-button {
+  width: 500rpx;
+  height: 90rpx;
   padding: 0;
   font-size: 30rpx;
   font-weight: 500;
   color: #ffffff;
-  line-height: 68rpx;
+  line-height: 90rpx;
+  /* background-color: #FF5519;
+  border: 1px solid #FF5519; */
+}
+
+/*开始答题颜色*/
+.startBtnColor .van-button {
+  width: 500rpx;
+  height: 90rpx;
+  padding: 0;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 90rpx;
   background-color: #FF5519;
   border: 1px solid #FF5519;
+}
+
+/*重新答题颜色*/
+.againBtnColor .van-button {
+  width: 500rpx;
+  height: 90rpx;
+  padding: 0;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 90rpx;
+  background-color: #E73827;
+  border: 1px solid #E73827;
+}
+
+/*接着答题颜色*/
+.cacthBtnColor .van-button {
+  width: 500rpx;
+  height: 90rpx;
+  padding: 0;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 90rpx;
+  background-color: #FB7E48;
+  border: 1px solid #FB7E48;
 }
 
 
 /* 暗黑模式下应用的样式 */
 @media (prefers-color-scheme: dark) {
-  .answerIndex-title{
+  .answerIndex-title {
     color: #E8E9EA;
   }
 

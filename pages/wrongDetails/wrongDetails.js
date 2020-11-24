@@ -77,7 +77,7 @@ Page({
     }
     Service.scst(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
-        this.selectTopic(sendList.xh)
+        // this.selectTopic(sendList.xh)
         var sczt = 'timeList.sczt';
         if (res.msg == "取消收藏") {
           this.setData({
@@ -198,9 +198,9 @@ Page({
     let current = e.detail.current
     let currentIndex = that.data.currentIndex
     let currentItem = that.data.questionList[current]
-    //console.log("下一个", currentItem)
-    //console.log("滑动时", current)
-    //console.log("滑动时当前", that.data.timeList)
+    console.log("下一个", currentItem)
+    console.log("滑动时", current)
+    console.log("滑动时当前", that.data.timeList)
 
     // 如果是滑到了左边界，弹回去
     if (that.data.timeList.isFirstPlaceholder) {

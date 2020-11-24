@@ -18,6 +18,7 @@ Page({
   afterRead(event) {
     let that = this
     const file = event.detail.file;
+    console.log("file",file)
 
     let jiamiData = {
       cache_key: that.data.cacheKey,

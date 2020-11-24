@@ -1,11 +1,21 @@
 <!--pages/index/index.wxml-->
-<view class="indexContainer">
+<!--自定义头部-->
+<view class="left-jian">
+  <van-nav-bar z-index="999" safe-area-inset-top title="中题库" :left-arrow="false" :border="false" fixed placeholder
+    custom-style="{{leftIconStyle}}">
+    <view class="container-title" slot="left">
+      <view class="container-text" wx:if="{{AllXmName != ''}}" bindtap="goToSelectStudy">{{AllXmName}}</view>
+      <view class="container-text" wx:else bindtap="goToSelectStudy">请选择学习项目</view>
+      <view class="sanjiao"></view>
+    </view>
+  </van-nav-bar>
+
+  <!-- <view class="leftJian-title">中题库</view> -->
   <!--头部标题模块-->
-  <view class="container-title">
-    <view class="container-text" wx:if="{{AllXmName != ''}}" bindtap="goToSelectStudy">{{AllXmName}}</view>
-    <view class="container-text" wx:else bindtap="goToSelectStudy">请选择学习项目</view>
-    <view class="sanjiao"></view>
-  </view>
+
+</view>
+
+<view class="indexContainer">
   <!--错题本、做题记录、收藏模块-->
   <view class="threeModul">
     <view class="wrongTopic">
@@ -83,6 +93,7 @@
   </view>
 </view>
 
-<van-popup show="{{ huoshow }}" class="huoDong" closeable="{{true}}" bind:close="huoonClose">
+<!--活动模块-以后可以走这个-->
+<!-- <van-popup show="{{ huoshow }}" class="huoDong" closeable="{{true}}" bind:close="huoonClose">
   <image class="huoshowImg" src="../../images/dianJi.png" bindtap="goToHuodong"></image>
-</van-popup>
+</van-popup> -->

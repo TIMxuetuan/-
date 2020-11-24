@@ -22,6 +22,33 @@ Page({
     // })
   },
 
+  //跳转双十一活动页面
+  goToHuodong() {
+    console.log(this.data.userDataList)
+    let mobile = ''
+    if (this.data.userDataList != null) {
+      mobile = this.data.userDataList.mobile
+    } else {
+      mobile = ''
+    }
+    if (mobile != '') {
+      wx.navigateTo({
+        url: "/pages/huoDong/huoDong?phone=" + mobile,
+      })
+      this.setData({
+        huoshow: false
+      })
+    } else {
+      wx.showToast({
+        title: "去登录",
+        icon: 'none',
+        duration: 1000
+      });
+    }
+
+  },
+
+
   //跳转到 我的编辑资料页面
   goToCompileMy() {
     wx.navigateTo({

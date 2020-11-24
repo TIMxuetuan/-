@@ -207,7 +207,7 @@
 }
 
 .xuanZhong {
-  color: #FF5519;
+  color: #FF5519 !important;
 }
 
 .serialNumber {
@@ -348,13 +348,13 @@
 }
 
 .daDui {
-  color: #ffffff;
-  background: #48E08E;
+  color: #ffffff !important;
+  background: #48E08E !important;
 }
 
 .daCuo{
-  color: #ffffff;
-  background: #FF5E5E;
+  color: #ffffff !important;
+  background: #FF5E5E !important;
 }
 
 .jietu{
@@ -383,4 +383,55 @@
   font-size: 26rpx;
   font-weight: bold;
   color: #CCCCCC;
+}
+
+
+/* 暗黑模式下应用的样式 */
+@media (prefers-color-scheme: dark) {
+  .jiaoDialog .van-dialog__header {
+    color: #000;
+  }
+
+  .xhShow-head {
+    border-bottom: 1px solid#242F3B;
+  }
+
+  .xhShow-center-item {
+    color: #E8E9EA;
+  }
+
+  .xuhaoPop .van-popup {
+    background-color: #1A2736;
+  }
+
+  .dataList-item {
+    width: 78rpx;
+    height: 78rpx;
+    background-color: #1A2736;
+    border: 1px solid #E8E9EA;
+    box-sizing: border-box;
+    border-radius: 50%;
+    color: #E8E9EA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 75rpx 50rpx 0;
+  }
+
+  .dataList-item:nth-child(5n) {
+    margin-right: 0;
+  }
+
+  .bgDang {
+    background-color: #1A2736;
+    color: #FF671D;
+    border: 1px solid #FF5519;
+  }
+
+  .baYida {
+    background: #FF671D !important;
+    color: #fff !important;
+    border: none !important;
+  }
+
 }

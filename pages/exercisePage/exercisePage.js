@@ -39,8 +39,11 @@ Page({
     setInterTimes: null, //定时器赋值
     second: 0, // 秒
     timeShow: false, //定时器弹窗
+    //双十一活动
     fenShow: false, //控制得分弹窗
-    guanOff:true, //控制显示失败信息
+    guanOff: true, //控制显示失败信息
+    rightTishi: false, //控制返回首页弹窗值rightTishiShow是否变化
+    rightTishiShow: false, //控制返回弹窗显示
 
   },
 
@@ -179,11 +182,15 @@ Page({
     let that = this
     that.disposeAllList(e.detail.current)
     let current = e.detail.current
+    console.log("current", current)
+    console.log("that.data.current", that.data.current)
     if (current > that.data.current && current > 0) {
+      console.log(111)
       let topicXh = this.data.timeList.xh * 1 + 1
       that.selectTopic(topicXh)
     }
     if (current < that.data.current) {
+      console.log(222)
       let topicXh = this.data.timeList.xh * 1
       that.selectTopic(topicXh - 1)
     }
@@ -209,6 +216,45 @@ Page({
       })
       return
     }
+  },
+
+  animationZui(e) {
+    console.log(e.detail)
+    if (e.detail.current == this.data.questionList.length - 1) {
+      console.log("最后一题了")
+      this.showIndexModal()
+      this.setData({
+        rightTishi: true
+      })
+    } else {
+      this.setData({
+        rightTishi: false
+      })
+    }
+  },
+
+  //取消弹窗
+  offBankModal() {
+    this.setData({
+      rightTishiShow: false
+    })
+  },
+
+  //做完回首页弹窗
+  showIndexModal() {
+    if (this.data.rightTishi) {
+      console.log("首页弹窗")
+      this.setData({
+        rightTishiShow: true
+      })
+    }
+  },
+
+  //点击图片返回练习列表页面
+  bankFanhui() {
+    wx.navigateBack({
+      delta: 1
+    })
   },
 
   //打开序号弹窗
@@ -499,7 +545,16 @@ Page({
     }
     Service.csbcdt(dataLists, jiamiData).then(res => {
       if (res.event == 100) {
-        this.huodong()
+        //最后一道题，出现返回首页弹窗--暂不需要
+        // console.log(this.data.current)
+        // console.log(this.data.questionList.length)
+        // if (this.data.current == this.data.questionList.length - 1) {
+        //   this.setData({
+        //     rightTishiShow: true
+        //   })
+        // }
+
+        // this.huodong()   //双十一活动事件，以后走这里
         this.selectTopic(sendList.xh)
         this.setData({
           danWhenTiem: this.data.second
@@ -537,7 +592,7 @@ Page({
             duration: 1000
           });
           this.setData({
-            guanOff:false
+            guanOff: false
           })
         }
         console.log(res)

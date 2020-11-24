@@ -147,7 +147,7 @@
 </view> -->
 
 <!--固定底部 功能栏-->
-<view class="fixedBottom">
+<view class="fixedBottom darkbgColor">
   <!--试题收藏-->
   <view class="fixedBottom-item">
     <image bindtap="collectClick" data-type="1" wx:if="{{timeList.sczt == 0}}" class="fixedBottom-img"
@@ -164,9 +164,9 @@
 </view>
 
 <!--序号弹出层-->
-<van-popup show="{{ xhShow }}" position="bottom" custom-style="height: 80%;" bind:close="onXhshowClose">
+<van-popup show="{{ xhShow }}" class="xuhaoPop" position="bottom" custom-style="height: 80%;" bind:close="onXhshowClose">
   <!--头部内容-->
-  <view class="xhShow-head">
+  <view class="xhShow-head darkbgLan">
     <view class="count-box">
       <view>
         <text class="text-current-count">{{timeList.xh}}</text>
@@ -175,7 +175,7 @@
     </view>
   </view>
   <!--中间类型-->
-  <view class="xhShow-center">
+  <view class="xhShow-center darkbgLan">
     <view class="xhShow-center-item {{timeList.tx == 1 ? 'xuanZhong' : ''}}">单选题 {{lxmsdtList.dtk.xuhao.danxuan.length}}
     </view>
     <view class="xhShow-center-item {{timeList.tx == 2 ? 'xuanZhong' : ''}}">多选题 {{lxmsdtList.dtk.xuhao.duoxuan.length}}
@@ -185,7 +185,7 @@
   </view>
 
   <!--序号列表-->
-  <view class="serialNumber">
+  <view class="serialNumber darkbgLan">
     <view class="serialNumber-dataList">
       <view
         class="dataList-item {{item.id != null ? (timeList.xh == index + 1 ? 'bgDang': (item.dct=='对'?'daDui':(item.dct=='错'?'daCuo':''))) : ''}}"

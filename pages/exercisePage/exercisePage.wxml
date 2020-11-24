@@ -2,7 +2,7 @@
 <wxs module="filter" src="../../utils/filter.wxs"></wxs>
 
 <!--第一版-->
-<swiper style="height:{{swiperHeight}}px" easing-functio="linear" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
+<swiper style="height:{{swiperHeight}}px" bindanimationfinish="animationZui" easing-functio="linear" duration="{{swiperDuration}}" current="{{current}}" bindchange="swiperChange">
   <!-- <swiper-item>
     单选封面页
   </swiper-item> -->
@@ -196,6 +196,13 @@
   confirm-button-open-type="getUserInfo" confirm-button-text="继续学习" bind:getuserinfo="getTimeServe">
 </van-dialog>
 
-<van-popup class="huoDong" show="{{ fenShow }}" bind:close="fenShowClose" close-on-click-overlay>
-  <image bindtap="fenShowClose" class="fenShowImg" src="https://vod.zhongjianedu.com/image/default/7C361C4994F546CAA9AFB587E710FBDD-6-2.gif"></image>
+<!--练习模式 最后一题时，滑动弹出返回首页弹窗-->
+<van-popup class="huoDong bankIndex" show="{{ rightTishiShow }}" closeable="{{true}}" bind:close="offBankModal" close-on-click-overlay>
+  <image bindtap="bankFanhui" class="bankShowImg" src="../../images/tc.png"></image>
 </van-popup>
+
+<!--双十一活动模块--以后走这里-->
+<!-- <van-popup class="huoDong" show="{{ fenShow }}" bind:close="fenShowClose" close-on-click-overlay>
+  <image bindtap="fenShowClose" class="fenShowImg" src="https://vod.zhongjianedu.com/image/default/7C361C4994F546CAA9AFB587E710FBDD-6-2.gif"></image>
+</van-popup> -->
+
