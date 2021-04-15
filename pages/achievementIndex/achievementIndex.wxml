@@ -1,0 +1,53 @@
+<view>
+  <!--等级列表-可以滑动-->
+  <view class="grade-content">
+    <!--用户成就信息-->
+    <view>
+      <view class="left-item">
+        <view class="leftItem-top">
+          <view class="left-score">10985</view>
+          <view>分</view>
+        </view>
+        <view class="title-subhead">分数值</view>
+      </view>
+      <view class="center-item">
+        <view class="centerItem-bg">
+          <image src="../../images/my/morentouxing.png"></image>
+        </view>
+      </view>
+      <view class="right-item">
+        <view class="leftItem-top">
+          <view class="left-score">10985</view>
+          <view>天</view>
+        </view>
+        <view class="title-subhead">坚持做题</view>
+      </view>
+
+    </view>
+    <!--滑动等级-->
+    <view class="slide-rank">
+      <swiper style="height:300px" easing-functio="linear" duration="{{swiperDuration}}" current="{{current}}"
+        bindchange="swiperChange">
+        <swiper-item>
+          <view>
+            <view class="rankBg">
+              <image src="../../images/my/toubu_bg.png"></image>
+            </view>
+            <!--等级模块-->
+            <view class="rank-grade">
+              <!--当前等级-->
+              <view class="rankGrade-item">
+                <view class="rankGrade-item-num"><image src="../../images/achievement/dengji_icon_two.png" alt="" /></view>
+                <view></view>
+              </view>
+              <!--已达成-->
+              <!--未达成-->
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+
+  <!--成就勋章-->
+</view>

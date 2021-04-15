@@ -338,6 +338,7 @@ Page({
     // 如果是滑到了左边界，弹回去
     //console.log("currentItem.isFirstPlaceholder", that.data.timeList)
     if (that.data.timeList.isFirstPlaceholder) {
+      console.log("左弹回去", currentIndex)
       that.setData({
         current: currentIndex
       })

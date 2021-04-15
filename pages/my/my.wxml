@@ -34,11 +34,22 @@
               <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userDataList.avatar}}" mode="cover"></image>
               <view class="contentHead-text">
                 <text class="userinfo-nickname">{{userDataList.nickname}}</text>
-                <text class="userinfo-fubiao">中题库</text>
+                <!-- <text class="userinfo-fubiao">中题库</text> -->
+                <view class="biaoAll">
+                  <view class="biaoImg">
+                    <image src="../../images/my/dj.png"></image>
+                    <text class="biaoImg-text">Lv.1</text>
+                  </view>
+                  <view class="biaoImg-two">
+                    <image src="../../images/my/xz.png"></image>
+                    <text class="biaoImg-text">勋章 2</text>
+                  </view>
+                </view>
               </view>
             </view>
             <view class="contentHead-compile">
-              <van-button round type="info" bindtap="goToCompileMy">编辑资料</van-button>
+              <!-- <van-button round type="info" bindtap="goToCompileMy">编辑资料</van-button> -->
+              <van-icon name="arrow" color="#CCCCCC" size="15px" bind:click="goToCompileMy" />
             </view>
           </view>
         </block>
@@ -56,18 +67,46 @@
 
         <!--三个模块 历史记录、错题本、收藏中心-->
         <view class="threeModul">
-          <view class="threeModul-item threebg-one" bindtap="goToHistory">
-            <image class="threeModul-image" src="../../images/my/wo_lishiliju.png"></image>
-            <view class="threeModul-title">历史记录</view>
+          <view class="threeModul-one" bindtap="goToHistory">
+            <view class="threeModul-item">
+              <image class="threeModul-image" src="../../images/my/wo_lishiliju.png"></image>
+              <view class="threeModul-title">历史记录</view>
+            </view>
+            <van-icon name="arrow" color="#CCCCCC" size="15px" />
           </view>
-          <view class="threeModul-item threebg-two" bindtap="goToWrongTopic">
-            <image class="threeModul-image" src="../../images/my/wo_cuotiben.png"></image>
-            <view class="threeModul-title">错题本</view>
+
+          <view class="threeModul-one" bindtap="goToWrongTopic">
+            <view class="threeModul-item">
+              <image class="threeModul-image" src="../../images/my/wode_ctb.png"></image>
+              <view class="threeModul-title">错题本</view>
+            </view>
+            <van-icon name="arrow" color="#CCCCCC" size="15px" />
           </view>
-          <view class="threeModul-item threebg-three" bindtap="goToCollect">
-            <image class="threeModul-image" src="../../images/my/wo_shoucang.png"></image>
-            <view class="threeModul-title">收藏中心</view>
+
+          <view class="threeModul-one" bindtap="goToCollect">
+            <view class="threeModul-item">
+              <image class="threeModul-image" src="../../images/my/wode_sczx.png"></image>
+              <view class="threeModul-title">收藏中心</view>
+            </view>
+            <van-icon name="arrow" color="#CCCCCC" size="15px" />
           </view>
+
+          <view class="threeModul-one" bindtap="goToCollect">
+            <view class="threeModul-item">
+              <image class="threeModul-image" src="../../images/my/wode_wgsz.png"></image>
+              <view class="threeModul-title">外观设置</view>
+            </view>
+            <van-icon name="arrow" color="#CCCCCC" size="15px" />
+          </view>
+
+          <view class="threeModul-one" bindtap="goToChengjiu">
+            <view class="threeModul-item">
+              <image class="threeModul-image" src="../../images/my/wode_cjxz.png"></image>
+              <view class="threeModul-title">成就勋章</view>
+            </view>
+            <van-icon name="arrow" color="#CCCCCC" size="15px" />
+          </view>
+
         </view>
       </view>
 
@@ -75,6 +114,8 @@
       <!-- <view class="shuangActivity" bindtap="goToHuodong">
         <image src="https://vod.zhongjianedu.com/image/default/B3425B03D190410EB00C821B5631EDA8-6-2.png"></image>
       </view> -->
+
+      <!-- <view bindtap="tiaoXiao">跳小程序</view> -->
 
     </block>
   </view>

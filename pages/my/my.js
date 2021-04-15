@@ -103,6 +103,7 @@ Page({
     wx.getStorage({
       key: 'userDataList',
       success(res) {
+        console.log("userDataList",res.data)
         if (res.data != '') {
           that.setData({
             userDataList: res.data,
@@ -342,5 +343,37 @@ Page({
         duration: 2000
       });
     }
+  },
+
+  //跳转到成就勋章页面
+  goToChengjiu() {
+    console.log(this.data.cache_key)
+    if (this.data.cache_key) {
+      wx.navigateTo({
+        url: '/pages/achievementIndex/achievementIndex',
+      })
+    } else {
+      wx.showToast({
+        title: '请登录',
+        icon: 'none',
+        duration: 2000
+      });
+    }
+  },
+
+
+  tiaoXiao() {
+    wx.navigateToMiniProgram({
+      appId: 'wx266f297b4b45d66a',  //appid
+      path: '/pages/index/index',//path
+      extraData: {  //参数
+       
+      },
+      envVersion: 'release', //开发版develop 开发版 trial   体验版 release 正式版 
+      success(res) {
+        console.log('成功')
+        // 打开成功
+      }
+    })
   }
 })

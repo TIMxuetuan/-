@@ -16,7 +16,8 @@
     "pages/collect/collect",
     "pages/compileMy/compileMy",
     "pages/logs/logs",
-    "pages/huoDong/huoDong"
+    "pages/huoDong/huoDong",
+    "pages/achievementIndex/achievementIndex"
   ],
   "window": {
     "backgroundTextStyle": "@bgTxtStyle",
@@ -51,5 +52,8 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList": [
+    "wx266f297b4b45d66a"
+  ]
 }

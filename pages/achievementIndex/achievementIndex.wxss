@@ -1,0 +1,113 @@
+.grade-content {
+  width: 100%;
+  height: 600rpx;
+  position: relative;
+}
+
+/*个人成就信息*/
+.left-item {
+  position: fixed;
+  top: 90rpx;
+  left: 86rpx;
+  z-index: 10;
+}
+
+.leftItem-top {
+  display: flex;
+  align-items: baseline;
+  font-size: 24rpx;
+  color: #BF9B5F;
+  background: linear-gradient(0deg, #BF9B5F 0%, #F4DEAD 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.left-score {
+  font-size: 40rpx;
+  font-weight: 400;
+  color: #EAF4F5;
+}
+
+.title-subhead {
+  font-size: 22rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: 10rpx;
+}
+
+.center-item {
+  position: fixed;
+  top: 52rpx;
+  /* left: 320rpx; */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.centerItem-bg {
+  width: 120rpx;
+  height: 120rpx;
+  background: rgba(158, 158, 158, 0.24);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centerItem-bg image{
+  width: 85rpx;
+  height: 85rpx;
+  border-radius: 50%;
+}
+
+.right-item{
+  position: fixed;
+  top: 90rpx;
+  right: 86rpx;
+  z-index: 10;
+}
+
+/*滑动级别*/
+.slide-rank{
+  width: 100%;
+  height: 600rpx;
+  position: absolute;
+  color: red;
+}
+
+.rankBg{
+  width: 100%;
+  height: 470rpx;
+}
+
+.rankBg image{
+  width: 100%;
+  height: 100%;
+}
+
+.rank-grade{
+  position: absolute;
+  width: 100%;
+  height: 350rpx;
+  border: 1px solid red;
+  padding: 0 30rpx;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
+
+.rankGrade-item-num{
+  width: 190rpx;
+  height: 120rpx;
+}
+
+.rankGrade-item{
+  display: flex;
+  justify-content: center;
+}
+
+.rankGrade-item-num image{
+  width: 100%;
+  height: 100%;
+}

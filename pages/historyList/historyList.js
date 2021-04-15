@@ -181,7 +181,7 @@ Page({
     wx.getStorage({
       key: 'AllXmItem',
       success(res) {
-        //console.log(res.data)
+       
         that.setData({
           AllXmId: res.data.id,
           AllXmName: res.data.lb,
